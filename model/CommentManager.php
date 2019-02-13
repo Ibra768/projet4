@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenClassrooms\Blog\Model;
+namespace Model;
 
 require_once("model/Manager.php");
 

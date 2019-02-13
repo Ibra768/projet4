@@ -1,5 +1,7 @@
 <?php
+
 require('controller/frontend.php');
+
 
 try {
     if (isset($_GET['action'])) {
@@ -28,6 +30,9 @@ try {
             }
         }
     }
+    else if (isset($_GET['deconnexion'])) {
+        disconnect();
+    }
     else {
         listPosts();
     }
@@ -35,3 +40,4 @@ try {
 catch(Exception $e) {
     echo 'Erreur : ' . $e->getMessage();
 }
+
