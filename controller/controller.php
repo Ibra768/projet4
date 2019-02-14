@@ -6,6 +6,8 @@ require_once('model/CommentManager.php');
 require_once('model/AdminManager.php');
 require_once('model/PostManager.php');
 
+
+// Foonction qui récupère toutes les news
 function listPosts()
 {
     $postManager = new \Model\PostManager();
@@ -14,6 +16,7 @@ function listPosts()
     require('view/listPostsView.php');
 }
 
+// Fonction qui récupère 1 news et les commentaires associés
 function post()
 {
     $postManager = new \Model\PostManager();
@@ -25,11 +28,12 @@ function post()
     require('view/postView.php');
 }
 
+// Fonction qui permet l'ajout de commentaire
 function addComment($postId, $author, $comment)
 {
-    $commentManager = new \Model\CommentManager();
+    $addComments = new \Model\CommentManager();
 
-    $affectedLines = $commentManager->postComment($postId, $author, $comment);
+    $affectedLines = $addComments->postComment($postId, $author, $comment);
 
     if ($affectedLines === false) {
         throw new Exception('Impossible d\'ajouter le commentaire !');
@@ -38,13 +42,26 @@ function addComment($postId, $author, $comment)
         header('Location: index.php?action=post&id=' . $postId);
     }
 }
+function addPost($title, $content)
+{
+    $newPost = new \Model\PostManager();
+
+    $addedPost = $newPost->addPost($title, $content);
+
+    if ($addedPost === false) {
+        throw new Exception('Impossible d\'ajouter le billet !');
+    }
+    else {
+        header('Location: index.php');
+    }
+}
+// Fonction qui permet de vérifier le pseudo et le mot de passe pour la connexion
 function getAdministrator() {
 
 
     $pseudo = $_POST['pseudo']; 
     $checkAdmin = new \Model\AdminManager();
     $resultat = $checkAdmin->getAdmin($pseudo);
-    var_dump($resultat);
     
     $isPasswordCorrect = password_verify($_POST['pass'], $resultat['pass']);
     
@@ -65,12 +82,16 @@ function getAdministrator() {
         }
     }
 }
+
+// Fonction qui permet la deconnexion de l'admin
 function disconnect () {
     
     session_unset();
     session_destroy();
     listPosts();
 }
+
+
 
 
 
