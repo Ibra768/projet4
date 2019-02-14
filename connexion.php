@@ -1,4 +1,4 @@
-<?php require('controller/frontend.php');   ?>
+<?php require('controller/controller.php');   ?>
 
 <form action="connexion.php" method="post">
 <label>Votre pseudo<input type="text" name="pseudo" /></label>

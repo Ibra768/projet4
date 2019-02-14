@@ -1,6 +1,6 @@
 <?php
 
-require('controller/frontend.php');
+require('controller/controller.php');
 
 
 try {
@@ -29,11 +29,13 @@ try {
                 throw new Exception('Aucun identifiant de billet envoyé');
             }
         }
-    }
-    else if (isset($_GET['deconnexion'])) {
-        disconnect();
+        else if (isset($_GET['action']) == 'deconnexion') {
+            disconnect();
+        }
     }
     else {
+        session_unset();
+        session_destroy();
         listPosts();
     }
 }
