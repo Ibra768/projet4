@@ -14,6 +14,14 @@ function listPosts()
     $posts = $postManager->getPosts();
 
     require('view/listPostsView.php');
+
+}
+function listPostsDelete()
+{
+    $postManagerDelete = new \Model\PostManager();
+    $postsDelete = $postManagerDelete->getPosts();
+    require('view/deletePosts.php');
+
 }
 
 // Fonction qui récupère 1 news et les commentaires associés
@@ -55,30 +63,37 @@ function addPost($title, $content)
         header('Location: index.php');
     }
 }
+function deletePost()
+{
+    $postManagerDeletePosts = new \Model\PostManager();
+
+    $post = $postManagerDeletePosts->deletePost($_GET['id']);
+
+    listPostsDelete();
+}
 // Fonction qui permet de vérifier le pseudo et le mot de passe pour la connexion
-function getAdministrator() {
+function getAdministrator($pseudo, $mdp) {
 
-
-    $pseudo = $_POST['pseudo']; 
     $checkAdmin = new \Model\AdminManager();
     $resultat = $checkAdmin->getAdmin($pseudo);
     
-    $isPasswordCorrect = password_verify($_POST['pass'], $resultat['pass']);
+    $isPasswordCorrect = password_verify($mdp, $resultat['pass']);
     
     if (!$resultat)
     {
-        header('Location: connexion.php?erreur');
+        header('Location: view/connexion.php?erreur');
     }
     else
     {
         if ($isPasswordCorrect) {
             session_start();
             $_SESSION['pseudo'] = $pseudo;
-            $_SESSION['pass'] = $_POST['pass'];
-            header('Location: admin.php');
+            $_SESSION['pass'] = $mdp;
+            header('Location: view/admin.php');
+            
         }
         else {
-            header('Location: connexion.php?erreur');
+            header('Location: view/connexion.php?erreur');
         }
     }
 }

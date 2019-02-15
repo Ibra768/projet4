@@ -45,7 +45,7 @@ try {
         }
         else if($_GET['action'] == 'addPost') {
 
-            if (!empty($_POST['title']) && !empty($_POST['content'])) { // Si ?action=addPost&id>0 et lles valeurs $POST ne sont pas vides
+            if (!empty($_POST['title']) && !empty($_POST['content'])) { // Si ?action=addPost&id>0 et les valeurs $POST ne sont pas vides
                 addPost($_POST['title'], $_POST['content']); 
             }
 
@@ -53,7 +53,18 @@ try {
                 throw new Exception('Tous les champs ne sont pas remplis !');
             }
         }
-
+        else if($_GET['action'] == 'delete') {
+        
+            if (isset($_GET['id']) && $_GET['id'] > 0) {
+                deletePost($_GET['id']);
+            }
+            else {
+                listPostsDelete();
+            }
+        }
+        else if ($_GET['action'] == 'connexion' && !empty($_POST['pseudo']) && !empty($_POST['pass']) ) {
+            getAdministrator($_POST['pseudo'], $_POST['pass']);
+        }
         else if (isset($_GET['action']) == 'deconnexion') { // Si ?action=deconnexion
             disconnect();
         }

@@ -11,17 +11,19 @@
     </head>
         
     <body>
+    <div>
     <?php
     if(isset($_SESSION['pseudo']) && isset($_SESSION['pass'])) {
     echo "Bonjour" . $_SESSION['pseudo'];
     ?>
     <a href="index.php?action=deconnexion">Deconnexion</a>
+    </div>
     <?php
 }
 else {
     ?>
     
-    <a href='connexion.php'>Connexion</a>
+    <a href='view/connexion.php'>Connexion</a>
     <?php
 }
 ?>
