@@ -1,6 +1,7 @@
 <?php
+
 // Si pas de session ouverte
-if (isset($_SESSION['pseudo']) && isset($_SESSION['pass'])) {
+if (!isset($_SESSION['pseudo']) && isset($_SESSION['pass'])) {
     echo "Vous n'avez pas le droit d'accéder à cette page.";
 }
 else {

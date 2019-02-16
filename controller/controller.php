@@ -8,19 +8,25 @@ require_once('model/PostManager.php');
 
 
 // Foonction qui récupère toutes les news
-function listPosts()
+function listPostsHome()
 {
     $postManager = new \Model\PostManager();
     $posts = $postManager->getPosts();
 
     require('view/listPostsView.php');
+    require('view/admin.php');
 
 }
-function listPostsDelete()
+function listPostsAdmin()
 {
-    $postManagerDelete = new \Model\PostManager();
-    $postsDelete = $postManagerDelete->getPosts();
-    require('view/deletePosts.php');
+    $postManagerAdmin = new \Model\PostManager();
+    $commentReport = new \Model\CommentManager();
+
+    $postsAdmin = $postManagerAdmin->getPosts();
+    $commentsReporting = $commentReport->getCommentsReport();
+
+    require('view/admin.php');
+
 
 }
 
@@ -34,6 +40,43 @@ function post()
     $comments = $commentManager->getComments($_GET['id']);
 
     require('view/postView.php');
+}
+
+function updatePost()
+{
+    $postUpdate = new \Model\PostManager();
+
+    $postUp = $postUpdate->getPost($_GET['id']);
+
+    require('view/updateNews.php');
+}
+function confirmUpdatePost($idUpdate, $titleUpdate, $contentUpdate)
+{
+    $confirmPostUpdate = new \Model\PostManager();
+
+    $confirmUp = $confirmPostUpdate->updatePost($idUpdate, $titleUpdate, $contentUpdate);
+
+
+    if ($confirmUp === false) {
+        throw new Exception('Impossible de modifier le billet !');
+    }
+    else {
+        header('Location: index.php?action=admin'); 
+    }
+}
+function report($idReport)
+{
+    $report = new \Model\CommentManager();
+
+    $reporting = $report->reportDB($idReport);
+
+    if ($reporting === false) {
+        throw new Exception('Impossible de signaler le commentaire !');
+    }
+    else {
+        header('Location: index.php?action=post&id=' . $postId);
+    }
+
 }
 
 // Fonction qui permet l'ajout de commentaire
@@ -60,7 +103,7 @@ function addPost($title, $content)
         throw new Exception('Impossible d\'ajouter le billet !');
     }
     else {
-        header('Location: index.php');
+        header('Location: index.php?action=admin'); 
     }
 }
 function deletePost()
@@ -69,7 +112,8 @@ function deletePost()
 
     $post = $postManagerDeletePosts->deletePost($_GET['id']);
 
-    listPostsDelete();
+    header('Location: index.php?action=admin');  
+
 }
 // Fonction qui permet de vérifier le pseudo et le mot de passe pour la connexion
 function getAdministrator($pseudo, $mdp) {
@@ -88,9 +132,8 @@ function getAdministrator($pseudo, $mdp) {
         if ($isPasswordCorrect) {
             session_start();
             $_SESSION['pseudo'] = $pseudo;
-            $_SESSION['pass'] = $mdp;
-            header('Location: view/admin.php');
-            
+            $_SESSION['pass'] = $mdp;    
+            header('Location: index.php?action=admin');  
         }
         else {
             header('Location: view/connexion.php?erreur');
@@ -103,7 +146,7 @@ function disconnect () {
     
     session_unset();
     session_destroy();
-    listPosts();
+    listPostsHome();
 }
 
 
