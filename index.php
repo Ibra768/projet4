@@ -17,11 +17,27 @@ try {
         else if ($_GET['action'] == 'post') { // Si ?action=post
 
             if (isset($_GET['id']) && $_GET['id'] > 0) {  // Si ?action=post&id>0
-                post();
+                post($_GET['id']);
             }
 
             else {
                 throw new Exception('Aucun identifiant de billet envoyé');
+            }
+        }
+        else if($_GET['action'] == "deleteComment") {
+            if(isset($_GET['id']) && $_GET['id'] > 0) {
+                deleteComment($_GET['id']);
+            }
+            else {
+                throw new Exception('Aucun identifiant de commentaire envoyé');
+            }
+        }
+        else if($_GET['action'] == "ignore") {
+            if(isset($_GET['id']) && $_GET['id'] > 0) {
+                deleteComment($_GET['id']);
+            }
+            else {
+                throw new Exception('Aucun identifiant de commentaire envoyé');
             }
         }
 
@@ -45,11 +61,11 @@ try {
         }
         else if($_GET['action'] == 'report') {
 
-            if(isset($_GET['id']) && $_GET['id'] > 0) {
-                report($_GET['id']);
+            if(isset($_GET['id']) && $_GET['id'] > 0 && isset($_GET['postid']) && $_GET['postid'] > 0) {
+                report($_GET['id'], $_GET['postid']);
             }
             else{
-                echo "sisi";
+                throw new Exception('Aucun identifiant de commentaire envoyé');
             }
         }
         else if ($_GET['action'] == 'admin') {

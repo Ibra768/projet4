@@ -9,7 +9,7 @@ class CommentManager extends Manager
     public function getComments($postId)
     {
         $db = $this->dbConnect();
-        $comments = $db->prepare('SELECT id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr FROM comments WHERE post_id = ? ORDER BY comment_date DESC');
+        $comments = $db->prepare('SELECT id, post_id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr FROM comments WHERE post_id = ? ORDER BY comment_date DESC');
         $comments->execute(array($postId));
 
         return $comments;
@@ -29,12 +29,24 @@ class CommentManager extends Manager
         $req = $db->prepare('UPDATE comments SET signalement = "TRUE" WHERE id = ?');
         $req->execute(array($idReport));
     }
+    public function autorisationComment($idAutorisation)
+    {
+        $db = $this->dbConnect();
+        $req = $db->prepare('UPDATE comments SET signalement = "FALSE" WHERE id = ?');
+        $req->execute(array($idAutorisation));
+    }
     public function getCommentsReport()
     {
         $db = $this->dbConnect();
-        $commentsReporting = $db->prepare('SELECT id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr FROM comments WHERE signalement = ? ORDER BY comment_date DESC');
+        $commentsReporting = $db->prepare('SELECT id, post_id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr FROM comments WHERE signalement = ? ORDER BY comment_date DESC');
         $commentsReporting->execute(array("TRUE"));
 
         return $commentsReporting;
+    }
+    public function deleteComment($idComment)
+    {
+        $db = $this->dbConnect();
+        $req = $db->prepare('DELETE FROM comments WHERE id = ?');
+        $req->execute(array($idComment));
     }
 }

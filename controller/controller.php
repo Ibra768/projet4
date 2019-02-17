@@ -14,7 +14,7 @@ function listPostsHome()
     $posts = $postManager->getPosts();
 
     require('view/listPostsView.php');
-    require('view/admin.php');
+
 
 }
 function listPostsAdmin()
@@ -64,7 +64,7 @@ function confirmUpdatePost($idUpdate, $titleUpdate, $contentUpdate)
         header('Location: index.php?action=admin'); 
     }
 }
-function report($idReport)
+function report($idReport, $postidReport)
 {
     $report = new \Model\CommentManager();
 
@@ -73,10 +73,23 @@ function report($idReport)
     if ($reporting === false) {
         throw new Exception('Impossible de signaler le commentaire !');
     }
-    else {
-        header('Location: index.php?action=post&id=' . $postId);
+    else{
+        header('Location: index.php?action=post&id=' . $postidReport);
     }
 
+}
+function autorisationComment($idReport)
+{
+    $report = new \Model\CommentManager();
+
+    $reporting = $report->reportDB($idReport);
+
+    if ($reporting === false) {
+        throw new Exception('Impossible d\'autoriser le commentaire !');
+    }
+    else {
+        header('Location: index.php?action=admin');
+    }
 }
 
 // Fonction qui permet l'ajout de commentaire
@@ -115,6 +128,16 @@ function deletePost()
     header('Location: index.php?action=admin');  
 
 }
+function deleteComment($id)
+{
+    $deleteComment = new \Model\CommentManager();
+
+    $deleteComment->deleteComment($id);
+
+    header('Location: index.php?action=admin');  
+
+}
+
 // Fonction qui permet de vérifier le pseudo et le mot de passe pour la connexion
 function getAdministrator($pseudo, $mdp) {
 
