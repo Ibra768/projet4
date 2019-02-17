@@ -4,7 +4,7 @@
     }
 ?>
 
-<form action="../index.php?action=connexion" method="post">
+<form action="../../index.php?action=connexion" method="post">
 <label>Votre pseudo<input type="text" name="pseudo" /></label>
 <label>Votre mot de Passe<input type="text" name="pass" /></label>
 <input type="submit" value="Valider" />

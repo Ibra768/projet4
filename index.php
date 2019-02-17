@@ -5,110 +5,94 @@ session_start();
 // Appel du controller
 require('controller/controller.php');
 
+// Bloc qui regroupe toutes les actions effectués, en fonction des requêtes GET & POST envoyées
 
 try {
     
-    if (isset($_GET['action'])) { // Si ?action
+    if (isset($_GET['action'])) { 
 
-        if ($_GET['action'] == 'listPosts') { // Si ?action=listPosts
-            listPostsHome();
-        }
 
-        else if ($_GET['action'] == 'post') { // Si ?action=post
+                /*                                             Requêtes UTILISATEUR                                    */
 
-            if (isset($_GET['id']) && $_GET['id'] > 0) {  // Si ?action=post&id>0
+
+        if ($_GET['action'] == 'post') { // Lance la fonction post() pour afficher le billet selectionné
+
+            if (isset($_GET['id']) && $_GET['id'] > 0) {  
                 post($_GET['id']);
             }
 
             else {
-                throw new Exception('Aucun identifiant de billet envoyé');
-            }
-        }
-        else if($_GET['action'] == "deleteComment") {
-            if(isset($_GET['id']) && $_GET['id'] > 0) {
-                deleteComment($_GET['id']);
-            }
-            else {
-                throw new Exception('Aucun identifiant de commentaire envoyé');
-            }
-        }
-        else if($_GET['action'] == "ignore") {
-            if(isset($_GET['id']) && $_GET['id'] > 0) {
-                deleteComment($_GET['id']);
-            }
-            else {
-                throw new Exception('Aucun identifiant de commentaire envoyé');
+                header('Location : error.php');
             }
         }
 
-        elseif ($_GET['action'] == 'addComment') { // Si ?action=addComment
+        elseif ($_GET['action'] == 'addComment') { // Lance la fonction addComment() pour ajouter un commentaire
 
-            if (isset($_GET['id']) && $_GET['id'] > 0) { // Si ?action=addComment&id>0
+            if (isset($_GET['id']) && $_GET['id'] > 0) { 
 
-                if (!empty($_POST['author']) && !empty($_POST['comment'])) { // Si ?action=addComment&id>0 et lles valeurs $POST ne sont pas vides
+                if (!empty($_POST['author']) && !empty($_POST['comment'])) { 
                     addComment($_GET['id'], $_POST['author'], $_POST['comment']); 
                 }
 
                 else {
-                    throw new Exception('Tous les champs ne sont pas remplis !');
+                    header('Location : error.php');
                 }
             }
 
             else {
-                throw new Exception('Aucun identifiant de billet envoyé');
+                header('Location : error.php');
             }
 
         }
-        else if($_GET['action'] == 'report') {
+
+        else if($_GET['action'] == 'report') { // Lance la fonction reportComment() pour signaler un commentaire
 
             if(isset($_GET['id']) && $_GET['id'] > 0 && isset($_GET['postid']) && $_GET['postid'] > 0) {
-                report($_GET['id'], $_GET['postid']);
+                reportComment($_GET['id'], $_GET['postid']);
             }
             else{
-                throw new Exception('Aucun identifiant de commentaire envoyé');
+                header('Location : error.php');
             }
         }
-        else if ($_GET['action'] == 'admin') {
-        
-            listPostsAdmin();
+
+                        /*                                             Requêtes ADMINISTRATEUR                                    */
+
+
+        else if ($_GET['action'] == 'connexion' && !empty($_POST['pseudo']) && !empty($_POST['pass']) ) { // Lance la fonction getAdministrator() qui connecte l'utilisateur si il est référencé comme administrateur dans la DB
+            getAdministrator($_POST['pseudo'], $_POST['pass']);
         }
-        else if ($_GET['action'] == 'deletePost') {
 
-            if (isset($_GET['id']) && $_GET['id'] > 0) { // Si ?action=addComment&id>0
-        
-            deletePost($_GET['id']);
-            
-            }
-            else{
+        else if ($_GET['action'] == 'admin') { // Lance la fonction dataAdmin() qui récupérer la liste des posts, et la liste des commentaires signalés
 
-                throw new Exception('Aucun identifiant de billet envoyé');
-
-            }
+            dataAdmin();
         }
-        else if($_GET['action'] == 'addPost') {
 
-            if (!empty($_POST['title']) && !empty($_POST['content'])) { // Si ?action=addPost&id>0 et les valeurs $POST ne sont pas vides
+        else if($_GET['action'] == 'addPost') { // Lance la fonction addPost() pour ajouter un nouveau billet
+
+            if (!empty($_POST['title']) && !empty($_POST['content'])) { 
                 addPost($_POST['title'], $_POST['content']); 
             }
 
             else {
-                throw new Exception('Tous les champs ne sont pas remplis !');
+                header('Location : error.php');
             }
         }
-        else if ($_GET['action'] == 'updatePost') {
 
-            if (isset($_GET['id']) && $_GET['id'] > 0) { // Si ?action=addComment&id>0
+        else if ($_GET['action'] == 'updatePost') { // Lance la fonction updatePost() qui selectionne le billet a modifier, et le renvoie dans un formulaire a modifier
+
+            if (isset($_GET['id']) && $_GET['id'] > 0) {
         
                 updatePost($_GET['id']);
             
             }
             else{
 
-                throw new Exception('Aucun identifiant de billet envoyé');
+                header('Location : error.php');
 
             }
         }
-        else if($_GET['action'] == 'confirmUpdatePost') {
+
+        else if($_GET['action'] == 'confirmUpdatePost') { // Lance la fonction confirmUpdatePost() qui modifie le commentaire selectionné precedemment
 
             if(isset($_POST['id']) && $_POST["id"] > 0) {
 
@@ -116,27 +100,60 @@ try {
                     confirmUpdatePost($_POST['id'], $_POST['titleUpdate'], $_POST['contentUpdate']); 
                 }
                 else {
-                    throw new Exception('Tous les champs ne sont pas remplis !');
+                    header('Location : error.php');
                 }
             }
             else {
-                throw new Exception('Aucun identifiant de billet envoyé');
+                header('Location : error.php');
             }
         }
-        else if ($_GET['action'] == 'connexion' && !empty($_POST['pseudo']) && !empty($_POST['pass']) ) {
-            getAdministrator($_POST['pseudo'], $_POST['pass']);
+
+        else if ($_GET['action'] == 'deletePost') { // Lance la fonction deletePost() qui supprime un billet
+
+            if (isset($_GET['id']) && $_GET['id'] > 0) { 
+        
+            deletePost($_GET['id']);
+            
+            }
+            else{
+
+                header('Location : error.php');
+
+            }
         }
-        else if (isset($_GET['action']) == 'deconnexion') { // Si ?action=deconnexion
+
+        else if($_GET['action'] == "ignore") { // Lance la fonction allowComment() pour autoriser un commentaire signalé
+
+            if(isset($_GET['id']) && $_GET['id'] > 0) {
+                allowComment($_GET['id']);
+            }
+            else {
+                header('Location : error.php');
+            }
+        }
+
+        else if($_GET['action'] == "deleteComment") { // Lance la fonction deleteComment() pour supprimer un commentaire
+
+            if(isset($_GET['id']) && $_GET['id'] > 0) {
+                deleteComment($_GET['id']);
+            }
+            else {
+                header('Location : error.php');
+            }
+        }
+
+        else if (isset($_GET['action']) == 'deconnexion') { // Lance la fonctionne disconnect() qui déconnecte l'administrateur
             disconnect();
         }
+
         else if ($_GET['action'] == 'updatePost') {
         
-        listPostsAdmin();
+            dataAdmin();
 
         }
     }
     else {
-        listPostsHome();
+        listPostsHome(); // Sinon on lance la fonction listPostsHome() qui affiche les derniers billets
     }
 }
 catch(Exception $e) {

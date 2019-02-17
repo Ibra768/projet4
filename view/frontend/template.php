@@ -23,7 +23,7 @@
 else {
     ?>
     
-    <a href='view/connexion.php'>Connexion</a>
+    <a href='view/frontend/connexion.php'>Connexion</a>
     <?php
 }
 ?>

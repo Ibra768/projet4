@@ -6,7 +6,7 @@ require_once("model/Manager.php");
 
 class PostManager extends Manager
 {
-    public function getPosts()
+    public function getPosts() // Récupère la liste des billets
     {
         $db = $this->dbConnect();
         $req = $db->query('SELECT id, title, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr FROM posts ORDER BY creation_date DESC');
@@ -14,7 +14,7 @@ class PostManager extends Manager
         return $req;
     }
 
-    public function getPost($postId)
+    public function getPost($postId) // Récupère 1 billet
     {
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT id, title, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr FROM posts WHERE id = ?');
@@ -23,7 +23,7 @@ class PostManager extends Manager
 
         return $post;
     }
-    public function addPost($title, $content)
+    public function addPost($title, $content) // Ajoute un billet
     {
         $db = $this->dbConnect();
         $insertPost = $db->prepare('INSERT INTO posts(title, content, creation_date) VALUES(?, ?, NOW())');
@@ -31,13 +31,13 @@ class PostManager extends Manager
 
         return $addPost;
     }
-    public function deletePost($idPost)
+    public function deletePost($idPost) // Supprime un billet
     {
         $db = $this->dbConnect();
         $req = $db->prepare('DELETE FROM posts WHERE id = ?');
         $req->execute(array($idPost));
     }
-    public function updatePost($idUpdate,$titleUpdate,$contentUpdate)
+    public function updatePostDB($idUpdate,$titleUpdate,$contentUpdate) // Modifie un billet
     {
         $db = $this->dbConnect();
         $req = $db->prepare('UPDATE posts SET title = ?, content = ? WHERE id = ?');

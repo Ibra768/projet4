@@ -7,93 +7,47 @@ require_once('model/AdminManager.php');
 require_once('model/PostManager.php');
 
 
-// Foonction qui récupère toutes les news
-function listPostsHome()
+                                  /*                  Requêtes UTILISATEUR                      */ 
+
+
+
+function listPostsHome() // Fonction qui récupère toutes les news
 {
     $postManager = new \Model\PostManager();
     $posts = $postManager->getPosts();
 
-    require('view/listPostsView.php');
-
-
-}
-function listPostsAdmin()
-{
-    $postManagerAdmin = new \Model\PostManager();
-    $commentReport = new \Model\CommentManager();
-
-    $postsAdmin = $postManagerAdmin->getPosts();
-    $commentsReporting = $commentReport->getCommentsReport();
-
-    require('view/admin.php');
+    require('view/frontend/listPostsView.php');
 
 
 }
 
-// Fonction qui récupère 1 news et les commentaires associés
-function post()
+function post($postid) // Fonction qui récupère 1 news et les commentaires associés
 {
     $postManager = new \Model\PostManager();
     $commentManager = new \Model\CommentManager();
 
-    $post = $postManager->getPost($_GET['id']);
-    $comments = $commentManager->getComments($_GET['id']);
+    $post = $postManager->getPost($postid);
+    $comments = $commentManager->getComments($postid);
 
-    require('view/postView.php');
+    require('view/frontend/postView.php');
 }
 
-function updatePost()
-{
-    $postUpdate = new \Model\PostManager();
-
-    $postUp = $postUpdate->getPost($_GET['id']);
-
-    require('view/updateNews.php');
-}
-function confirmUpdatePost($idUpdate, $titleUpdate, $contentUpdate)
-{
-    $confirmPostUpdate = new \Model\PostManager();
-
-    $confirmUp = $confirmPostUpdate->updatePost($idUpdate, $titleUpdate, $contentUpdate);
-
-
-    if ($confirmUp === false) {
-        throw new Exception('Impossible de modifier le billet !');
-    }
-    else {
-        header('Location: index.php?action=admin'); 
-    }
-}
-function report($idReport, $postidReport)
+function reportComment($idReport, $postidReport) // Fonction qui permet de signaler un commentaire
 {
     $report = new \Model\CommentManager();
 
-    $reporting = $report->reportDB($idReport);
+    $reporting = $report->reportCommentDB($idReport);
 
     if ($reporting === false) {
         throw new Exception('Impossible de signaler le commentaire !');
     }
     else{
-        header('Location: index.php?action=post&id=' . $postidReport);
+        header('Location: index.php?action=post&report&id=' . $postidReport);
     }
 
 }
-function autorisationComment($idReport)
-{
-    $report = new \Model\CommentManager();
 
-    $reporting = $report->reportDB($idReport);
-
-    if ($reporting === false) {
-        throw new Exception('Impossible d\'autoriser le commentaire !');
-    }
-    else {
-        header('Location: index.php?action=admin');
-    }
-}
-
-// Fonction qui permet l'ajout de commentaire
-function addComment($postId, $author, $comment)
+function addComment($postId, $author, $comment) // Fonction qui permet d'ajouter un commentaire
 {
     $addComments = new \Model\CommentManager();
 
@@ -103,43 +57,11 @@ function addComment($postId, $author, $comment)
         throw new Exception('Impossible d\'ajouter le commentaire !');
     }
     else {
-        header('Location: index.php?action=post&id=' . $postId);
+        header('Location: index.php?action=post&add=' . $author . '&id=' . $postId);
     }
 }
-function addPost($title, $content)
-{
-    $newPost = new \Model\PostManager();
 
-    $addedPost = $newPost->addPost($title, $content);
-
-    if ($addedPost === false) {
-        throw new Exception('Impossible d\'ajouter le billet !');
-    }
-    else {
-        header('Location: index.php?action=admin'); 
-    }
-}
-function deletePost()
-{
-    $postManagerDeletePosts = new \Model\PostManager();
-
-    $post = $postManagerDeletePosts->deletePost($_GET['id']);
-
-    header('Location: index.php?action=admin');  
-
-}
-function deleteComment($id)
-{
-    $deleteComment = new \Model\CommentManager();
-
-    $deleteComment->deleteComment($id);
-
-    header('Location: index.php?action=admin');  
-
-}
-
-// Fonction qui permet de vérifier le pseudo et le mot de passe pour la connexion
-function getAdministrator($pseudo, $mdp) {
+function getAdministrator($pseudo, $mdp) { // Fonction qui permet de savoir si l'utilisateur est administrateur lors de la connexion
 
     $checkAdmin = new \Model\AdminManager();
     $resultat = $checkAdmin->getAdmin($pseudo);
@@ -148,7 +70,7 @@ function getAdministrator($pseudo, $mdp) {
     
     if (!$resultat)
     {
-        header('Location: view/connexion.php?erreur');
+        header('Location: view/frontend/connexion.php?erreur');
     }
     else
     {
@@ -159,13 +81,114 @@ function getAdministrator($pseudo, $mdp) {
             header('Location: index.php?action=admin');  
         }
         else {
-            header('Location: view/connexion.php?erreur');
+            header('Location: view/frontend/connexion.php?erreur');
         }
     }
 }
 
-// Fonction qui permet la deconnexion de l'admin
-function disconnect () {
+
+                                  /*                  Requêtes ADMINISTRATEUR                      */
+                                  
+                                  
+function dataAdmin() // Fonction qui récupère la liste des billets, ainsi que les commentaires à modérer
+{
+    $postManagerAdmin = new \Model\PostManager();
+    $commentReport = new \Model\CommentManager();
+
+    $postsAdmin = $postManagerAdmin->getPosts();
+    $commentsReporting = $commentReport->getCommentsReport();
+
+    require('view/backend/admin.php');
+
+
+}
+
+function updatePost() // Fonction qui récupère le billet à modifier (afin de l'insérer dans un formulaire pour le modifier)
+{
+    $postUpdate = new \Model\PostManager();
+
+    $postUp = $postUpdate->getPost($_GET['id']);
+
+    require('view/backend/updateNews.php');
+}
+
+function confirmUpdatePost($idUpdate, $titleUpdate, $contentUpdate) // Fonction qui modifie le billet
+{
+    $confirmPostUpdate = new \Model\PostManager();
+
+    $confirmUp = $confirmPostUpdate->updatePostDB($idUpdate, $titleUpdate, $contentUpdate);
+
+
+    if ($confirmUp === false) {
+        throw new Exception('Impossible de modifier le billet !');
+    }
+    else {
+        
+        header('Location: index.php?action=admin&amp;update'); 
+
+    }
+}
+
+function addPost($title, $content) // Fonction qui permet d'ajouter un billet
+{
+    $newPost = new \Model\PostManager();
+
+    $addedPost = $newPost->addPost($title, $content);
+
+    if ($addedPost === false) {
+        throw new Exception('Impossible d\'ajouter le billet !');
+    }
+    else {
+        header('Location: index.php?action=admin&amp;add'); 
+    }
+}
+
+function deletePost() // Fonction qui permet de supprimer un billet
+{
+    $postManagerDeletePosts = new \Model\PostManager();
+
+    $deletePost = $postManagerDeletePosts->deletePost($_GET['id']);
+
+    if ($deletePost === false) {
+        throw new Exception('Impossible de supprimer le billet !');
+    }
+    else {
+        header('Location: index.php?action=admin&amp;deletePost'); 
+    }
+
+}
+
+function allowComment($idComment) // Fonction qui autorise un commentaire signalé
+{
+    $allow = new \Model\CommentManager();
+
+    $allowingComment = $allow->allowCommentDB($idComment);
+
+    if ($allowingComment === false) {
+        throw new Exception('Impossible d\'autoriser le commentaire !');
+    }
+    else {
+        header('Location: index.php?action=admin&amp;allow');
+    }
+}
+
+function deleteComment($id) // Fonction qui permet de supprimer un commentaire signalé
+{
+    $deleteComment = new \Model\CommentManager();
+
+    $confirmDeleteComment = $deleteComment->deleteComment($id);
+
+    if ($confirmDeleteComment === false) {
+        throw new Exception('Impossible de supprimer le billet !');
+    }
+    else {
+        header('Location: index.php?action=admin&amp;deleteComment'); 
+    }
+
+}
+
+
+function disconnect () { // Fonction qui permet la deconnexion de l'admin
     
     session_unset();
     session_destroy();

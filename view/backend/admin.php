@@ -11,7 +11,7 @@ if(isset($_SESSION['pseudo']) && isset($_SESSION['pass'])) {
 ?>
 <p>Bonjour <?php echo $_SESSION['pseudo']; ?>, bienvenue sur votre espace d'administration.</p>
 
-<a href="view/addPost.php">Ajouter</a>
+<a href="view/backend/addPost.php">Ajouter</a>
 <?php
 while ($data = $postsAdmin->fetch())
 {

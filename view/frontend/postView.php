@@ -3,7 +3,14 @@
 <?php ob_start(); ?>
 <h1>Mon super blog !</h1>
 <p><a href="index.php">Retour à la liste des billets</a></p>
-
+<?php
+if(isset($_GET['report'])) {
+    echo " Merci pour votre vigilance, on s'en occupe :)"; 
+}
+if(isset($_GET['add'])) {
+    echo  " Merci " . $_GET['add'] . ", votre commentaire a bien été ajouté";
+}
+?>
 <div class="news">
     <h3>
         <?= htmlspecialchars($post['title']) ?>
