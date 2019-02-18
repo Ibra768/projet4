@@ -14,7 +14,6 @@ try {
 
                 /*                                             Requêtes UTILISATEUR                                    */
 
-
         if ($_GET['action'] == 'post') { // Lance la fonction post() pour afficher le billet selectionné
 
             if (isset($_GET['id']) && $_GET['id'] > 0) {  
@@ -61,6 +60,9 @@ try {
         else if ($_GET['action'] == 'connexion' && !empty($_POST['pseudo']) && !empty($_POST['pass']) ) { // Lance la fonction getAdministrator() qui connecte l'utilisateur si il est référencé comme administrateur dans la DB
             getAdministrator($_POST['pseudo'], $_POST['pass']);
         }
+        else if ($_GET['action'] == 'getConnexion') { // Accès a la page de connexion
+            require('view/frontend/connexion.php');
+        }
 
         else if ($_GET['action'] == 'admin') { // Lance la fonction dataAdmin() qui récupérer la liste des posts, et la liste des commentaires signalés
 
@@ -74,7 +76,7 @@ try {
             }
 
             else {
-                header('Location : error.php');
+               header("location: index.php");
             }
         }
 
@@ -87,7 +89,7 @@ try {
             }
             else{
 
-                header('Location : error.php');
+                header('Location : index.php');
 
             }
         }
