@@ -70,7 +70,7 @@ function getAdministrator($pseudo, $mdp) { // Fonction qui permet de savoir si l
     
     if (!$resultat)
     {
-        header('Location: view/frontend/connexion.php?erreur');
+        header('Location: index.php?action=erreurConnexion');
     }
     else
     {
@@ -81,7 +81,7 @@ function getAdministrator($pseudo, $mdp) { // Fonction qui permet de savoir si l
             header('Location: index.php?action=admin');  
         }
         else {
-            header('Location: view/frontend/connexion.php?erreur');
+            header('Location: index.php?action=erreurConnexion');
         }
     }
 }

@@ -1,0 +1,175 @@
+/* Template */
+html{
+    height : 100%;
+} 
+body{
+    height : 100%;
+    font-family : 'Roboto condensed', sans-serif;
+} 
+.navbar-brand{
+    font-family: 'Nova Flat', cursive;
+
+}   
+.page-footer {
+    padding-top: 10px;
+    background-color : #333;
+    text-align: center;
+}
+.page-footer p{
+    color : white;
+}
+.navbar{
+    margin-bottom : 0;
+    text-transform: uppercase;
+}
+form input{
+    color: black;
+    text-align: center;
+}
+
+
+/* Page d'accueil */
+
+#presentation {
+    text-align: center;
+    color : black;
+    text-transform: uppercase;
+}
+#presentation h1{
+    text-transform: none;
+}
+#body_home{
+    background-color : gray;
+}
+#portfolio
+{
+	display: flex;
+    flex-wrap : wrap;
+	justify-content: space-around;
+    width: 100%;
+    text-align: center;
+}
+#portfolio figure
+{
+	height: 200px;
+	position: relative;
+    width: 350px;
+    margin : 16px 20px 16px 20px;
+    border : 2px solid black;
+}
+#portfolio figure img
+{
+	height: 100%;
+    width: 100%;
+   
+}
+#portfolio figcaption
+{
+    background: rgba(0,0,0,0.4);
+    bottom:0;
+    color:#fff;
+    display: none;
+    height: 0;
+    left:0;
+    position:absolute;
+    right:0;
+}
+#portfolio figure:hover figcaption
+{
+	display: block;
+	height: 35%;
+}
+.oeil
+{
+	background-color: #4EB1D5;
+	border: 2px solid #FFFFFF;
+	border-radius: 50%;
+	padding: 10px;
+	position: absolute;
+	right: 10px;
+	top: -20px;
+}
+#portfolio figcaption .title_portfolio
+{
+    display : inline-block;
+    padding-top : 5px;
+	margin-left: 10px;
+}
+#portfolio figcaption p
+{
+	font-size: 0.9em;
+	margin-top: 5px;
+	margin-left: 10px;
+}
+
+/* Page de connexion */
+
+#body_connexion{
+    background : url("../../public/images/background_connexion.jpg") no-repeat fixed center;
+}
+#flexbox_Connexion{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height : 85%;
+}
+#formulaire_Connexion{
+    color: #FFFFFF;
+    background: rgba(0,0,0,0.4);
+    width : 400px;
+    height : 400px;
+    border : 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+#formulaire_Connexion input{
+    color : black;
+}
+
+.boutons {
+    background-color: #4EB1D5;
+    color: #FFFFFF;
+    border-radius: 3px;
+    display: block;
+    font-size: 0.8em;
+    line-height: 35px;
+    text-align: center;
+    text-decoration: none;
+    width: 100px;
+    margin: auto;
+    margin-top : 10px;
+}
+.message{
+    background-color: gray;
+    text-align: center;
+    border : 2px solid black;
+    color : white;
+}
+
+/* Page article + comments */
+
+#body_post{
+background : url("../../public/images/background_home.jpg") no-repeat fixed center;
+}
+#post_wrapper{
+    text-align: center;
+display: flex;
+flex-direction: column;
+margin-top : 40px;
+}
+#billet {
+    font-family: 'Nova Flat', cursive;
+}
+.post{
+    background: rgba(0,0,0,0.4);
+    border : 2px solid black;
+    padding-bottom : 20px;
+    color : white;
+    margin-top: 20px;
+}
+#formulaire_Add textarea {
+    color: black;
+    text-align: center;
+}

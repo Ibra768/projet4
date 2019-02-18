@@ -1,14 +1,16 @@
 <?php 
 $title = 'Connexion'; 
+$meta = "Connection à l'espace ADMIN du site de Jean Forteroche";
+$body = "body_connexion";
 ?>
 
 <?php ob_start(); ?>
 
 <?php
-    if (isset($_GET['erreur'])) {
-                echo '<p id="erreurConnexion>' . 'Votre pseudo et' . '/' . 'ou votre mot de passe sont incorrect.' . '</p>';
-    }
-?>
+                if ($_GET['action'] == 'erreurConnexion') {
+                    echo  '<div class="message">' . 'Votre pseudo et' . '/' . 'ou votre mot de passe sont incorrect.' . '</div>';
+                }
+            ?>
 
         <div id="flexbox_Connexion">
             <div id="formulaire_Connexion">

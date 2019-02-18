@@ -60,7 +60,12 @@ try {
         else if ($_GET['action'] == 'connexion' && !empty($_POST['pseudo']) && !empty($_POST['pass']) ) { // Lance la fonction getAdministrator() qui connecte l'utilisateur si il est référencé comme administrateur dans la DB
             getAdministrator($_POST['pseudo'], $_POST['pass']);
         }
+
         else if ($_GET['action'] == 'getConnexion') { // Accès a la page de connexion
+            require('view/frontend/connexion.php');
+        }
+        
+        else if ($_GET['action'] == 'erreurConnexion') { // Erreur de connexion (login/mdp)
             require('view/frontend/connexion.php');
         }
 
