@@ -7,6 +7,23 @@ ob_start();
 if(!session_id()) {
   session_start();
   }
+
+if(isset($_GET['add'])) {
+  echo "<div class='message'>Le billet a bien été ajouté !</div>";
+}
+else if(isset($_GET['update'])) {
+  echo "<div class='message'>Le billet a bien été modifié !</div>";
+}
+else if(isset($_GET['delete'])) {
+  echo "<div class='message'>Le billet a bien été supprimé !</div>";
+}
+else if(isset($_GET['allow'])) {
+  echo "<div class='message'>Le commentaire a bien été autorisé !</div>";
+}
+else if(isset($_GET['deleteComment'])) {
+  echo "<div class='message'>Le commentaire a bien été supprimé !</div>";
+}
+
 ?>
 
 <div class="instructions_Admin"><p>Bienvenue sur votre espace <?= $_SESSION['pseudo'] ?><br><a class="boutons" href="index.php?action=add">Ajouter un billet</a><br>Voici la liste des billets publiés : <p></div>

@@ -9,7 +9,7 @@ ob_start();
 
     <?php 
     if(isset($_GET['add'])) {
-        echo "<div class='message'>" . "Merci pour votre commentaire !" . "</div>";
+        echo "<div class='message'>" . "Merci pour votre commentaire " .htmlspecialchars($_GET['add']) . " !" . "</div>";
     }
     else if(isset($_GET['report'])) {
         echo "<div class='message'>" . "Merci pour votre signalement, on s'en occupe !" . "</div>";
