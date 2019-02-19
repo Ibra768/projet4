@@ -77,7 +77,7 @@
                         </div>
                     </div>
                     <div class="col-md-12 py-5">
-                    <p><i class="far fa-copyright"></i> Copyright</p>
+                    <p><i class="far fa-copyright"></i> Jean Forteroche</p>
                     </div>
                     <!-- Grid column -->
                 </div>
