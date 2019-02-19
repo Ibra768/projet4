@@ -1,73 +1,66 @@
-<?php
+<?php 
+$title = 'Espace Administration'; 
+$meta = 'Espace Administration du site';
+$body = "body_Admin";
+ob_start(); 
+
 if(!session_id()) {
-session_start();
-}
-
-// Si session ouverte ..
-if(isset($_SESSION['pseudo']) && isset($_SESSION['pass'])) {
-?>  
-<a href="index.php?action=deconnexion">Deconnexion</a>
-<?php
+  session_start();
+  }
 ?>
-<p>Bonjour <?php echo $_SESSION['pseudo']; ?>, bienvenue sur votre espace d'administration.</p>
 
-<a href="view/backend/addPost.php">Ajouter</a>
+<div class="instructions_Admin"><p>Bienvenue sur votre espace <?= $_SESSION['pseudo'] ?><br><a class="boutons" href="index.php?action=add">Ajouter un billet</a><br>Voici la liste des billets publiés : <p></div>
+
 <?php
 while ($data = $postsAdmin->fetch())
 {
 ?>
-<table class="table">
+<div class="table-responsive">
+<table>
   <thead>
     <tr>
-      <th scope="col">Numéro de billet</th>
-      <th scope="col">Titre du billet</th>
-      <th scope="col">Date de création</th>
-      <th scope="col">Action</th>
+      <th width="33%" scope="col">Numéro de billet</th>
+      <th width="33%" scope="col">Titre du billet</th>
+      <th width="33%" scope="col">Date création</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th scope="row"><?= $data['id'] ?></th>
-      <td><?= $data['title'] ?></td>
-      <td><?= $data['creation_date_fr'] ?></td>
-      <td><a href="index.php?action=post&amp;id=<?= $data['id'] ?>">Accéder</a> <a href="index.php?action=updatePost&amp;id=<?= $data['id'] ?>">Modifier</a> <a href="index.php?action=deletePost&amp;id=<?= $data['id'] ?>">Supprimer</a></td>
+      <th scope='row'><?= $data['title'] ?></td>
+      <th scope="row"><?= $data['creation_date_fr'] ?></td>
     </tr>
   </tbody>
 </table>
+</div>
+<div id="boutons_Admin"><a class="boutons" href="index.php?action=post&amp;id=<?= $data['id'] ?>">Accéder</a> <a class="boutons" href="index.php?action=updatePost&amp;id=<?= $data['id'] ?>">Modifier</a> <a class="boutons" href="index.php?action=deletePost&amp;id=<?= $data['id'] ?>">Supprimer</a></div>
+
 
 <?php
 }
 $postsAdmin->closeCursor();
-
+?>
+<div class="instructions_Admin container-fluid"><p>Voici la liste des commentaires signalés :</p></div>
+<?php
 while ($comment = $commentsReporting->fetch())
 {
 ?>
-  <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Auteur</th>
-      <th scope="col">Contenu</th>
-      <th scope="col">Date de publication</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><?= htmlspecialchars($comment['author']) ?></td>
-      <td><?= $comment['comment'] ?></td>
-      <td><?= $comment['comment_date_fr'] ?></td>
-      <td><a href="index.php?action=ignore&amp;id=<?= $comment['id'] ?>">Ignorer</a> <a href="index.php?action=deleteComment&amp;id=<?= $comment['id'] ?>">Supprimer</a>
-    </tr>
-  </tbody>
-</table>
+<div class="container">
+<div class="row">
+<div class="col-lg-12" id="list_Comment">
+<p>Posté par <?= htmlspecialchars($comment['author'])?> le <?= $comment['comment_date_fr'] ?></p>
+<p><?= $comment['comment'] ?></p>
+<p>Que souhaitez-vous faire <?= $_SESSION['pseudo'] ?> ?</p>
+<a class="boutons" href="index.php?action=ignore&amp;id=<?= $comment['id'] ?>">Ignorer</a> <a class="boutons" href="index.php?action=deleteComment&amp;id=<?= $comment['id'] ?>">Supprimer</a>
+</div>
+</div>
+</div>
 <?php
 }
 
-}
-
-// Si pas de session ouverte
-else {
-    echo "Vous n'avez pas le droit d'accéder à cette page.";
-}
 ?>
+
+<?php $content = ob_get_clean(); ?>
+
+<?php require('view/template.php'); ?>
 

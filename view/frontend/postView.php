@@ -1,12 +1,9 @@
 <?php 
-
 $title = htmlspecialchars($post['title']); 
-$meta = "Billet du roman Billet Simple pour l'Alaska";
+$meta = "Billet simple pour l'Alaska";
 $body = "body_post";
-
+ob_start(); 
 ?>
-
-<?php ob_start(); ?>
 
 <div id="post_wrapper">
 
@@ -67,7 +64,7 @@ $body = "body_post";
                         <textarea rows="3" cols="100"id="comment" name="comment"></textarea>
                     </div>
                     <div>
-                        <input type="submit" class="btn btn-primary" />
+                        <input type="submit" class="boutons" />
                     </div>
                 </form>
             </div>
@@ -78,4 +75,4 @@ $body = "body_post";
 
 <?php $content = ob_get_clean(); ?>
 
-<?php require('template.php'); ?>
+<?php require('view/template.php'); ?>

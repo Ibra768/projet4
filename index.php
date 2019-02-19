@@ -77,12 +77,15 @@ try {
         else if($_GET['action'] == 'addPost') { // Lance la fonction addPost() pour ajouter un nouveau billet
 
             if (!empty($_POST['title']) && !empty($_POST['content'])) { 
-                addPost($_POST['title'], $_POST['content']); 
+                addPost(html_entity_decode($_POST['title']), html_entity_decode($_POST['content'])); 
             }
 
             else {
                header("location: index.php");
             }
+        }
+        else if ($_GET['action'] == "add") {
+            require('view/backend/addPost.php');
         }
 
         else if ($_GET['action'] == 'updatePost') { // Lance la fonction updatePost() qui selectionne le billet a modifier, et le renvoie dans un formulaire a modifier

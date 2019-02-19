@@ -10,6 +10,8 @@
     <meta name="description" content= <?= $meta  ?> />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:500,900|Roboto+Condensed:700|Nova+Flat" rel="stylesheet">
+    <script src="https://cloud.tinymce.com/5/tinymce.min.js"></script>
+    <script>tinymce.init({ selector: '.tiny' });</script>
     <link href="public/css/style.css" rel="stylesheet"/> 
     <script src="public/js/script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

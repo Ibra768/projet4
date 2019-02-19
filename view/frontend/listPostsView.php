@@ -1,11 +1,9 @@
 
 <?php 
-$title = 'Liste des billets'; 
-$meta = 'Page d\'accueil du site de Jean Forteroche';
+$title = 'Accueil'; 
+$meta = 'Accueil - Bonjour & bienvenue sur le site de Jean Forteroche';
 $body = "body_home";
-?>
-
-<?php ob_start(); 
+ob_start(); 
 ?>
 
     <div id="presentation" class="container">
@@ -48,5 +46,5 @@ $body = "body_home";
 
 <?php $content = ob_get_clean(); ?>
 
-<?php require('template.php'); ?>
+<?php require('view/template.php'); ?>
 

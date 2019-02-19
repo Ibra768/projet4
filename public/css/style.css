@@ -104,27 +104,30 @@ form input{
 
 /* Page de connexion */
 
-#body_connexion{
+#body_Admin{
     background : url("../../public/images/background_connexion.jpg") no-repeat fixed center;
 }
-#flexbox_Connexion{
+.flexbox_Admin{
     display: flex;
     justify-content: center;
     align-items: center;
     height : 85%;
 }
-#formulaire_Connexion{
+.formulaire_Admin{
     color: #FFFFFF;
     background: rgba(0,0,0,0.4);
-    width : 400px;
-    height : 400px;
+    width : 700px;
+    height : 500px;
     border : 2px solid black;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
 }
-#formulaire_Connexion input{
+.formulaire_Admin input{
+    color : black;
+}
+.formulaire_Admin textarea{
     color : black;
 }
 
@@ -133,7 +136,6 @@ form input{
     color: #FFFFFF;
     border-radius: 3px;
     display: block;
-    font-size: 0.8em;
     line-height: 35px;
     text-align: center;
     text-decoration: none;
@@ -173,3 +175,70 @@ margin-top : 40px;
     color: black;
     text-align: center;
 }
+
+/* Page Admin */
+
+.instructions_Admin{
+    text-align: center;
+    color: white;
+    text-transform: uppercase;
+    margin-top: 50px;
+    margin-bottom : 50px;
+    font-size : 1.5em;
+}
+.instructions_Admin a {
+    width : 150px;
+    font-size : 0.8em;
+}
+#boutons_Admin {
+    display: flex;
+    justify-content: space-around;
+    margin-top : 15px;
+}
+#boutons_Admin a{
+    margin : 0px;
+}
+table{
+    border : 5px solid black;
+    color : white;
+    width: 100%;
+    font-size : 1.3em;
+    margin-top : 50px;
+}
+table th {
+    text-align: center;
+    font-size : 1em;
+    text-transform: uppercase;
+}
+#list_Comment{
+    border : 5px solid black;
+    margin-bottom : 20px;
+    padding-bottom: 10px;
+    text-align: center;
+    color : white;
+    font-size : 1.2em;
+}
+
+/*Page ajout de billet */
+
+#body_Admin h1 {
+    text-align: center;
+}
+
+/*  Media Queries */
+
+@media screen and (max-width: 768px) {
+    .navbar-header a {
+      width: 100%;
+      text-align: center;
+    }
+    .nav{
+        text-align: center;
+    }
+    #boutons_Admin {
+        display: initial;
+    }
+    #boutons_Admin a{
+        margin : 10px auto 10px auto;
+    }
+  }
