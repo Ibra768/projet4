@@ -1,10 +1,12 @@
 /* Template */
+
 html{
     height : 100%;
 } 
 body{
-    height : 100%;
     font-family : 'Roboto condensed', sans-serif;
+    height: 100%;
+
 } 
 .navbar-brand{
     font-family: 'Nova Flat', cursive;
@@ -14,6 +16,7 @@ body{
     padding-top: 10px;
     background-color : #333;
     text-align: center;
+    margin-top: 30px;
 }
 .page-footer p{
     color : white;
@@ -22,11 +25,25 @@ body{
     margin-bottom : 0;
     text-transform: uppercase;
 }
-form input{
-    color: black;
+.boutons {
+    background-color: #4EB1D5;
+    color: #FFFFFF;
+    border-radius: 3px;
+    display: block;
+    line-height: 35px;
     text-align: center;
+    text-decoration: none;
+    width: 100px;
+    margin: auto;
+    margin-top : 10px;
 }
-
+.message{
+    background-color: gray;
+    text-align: center;
+    border : 2px solid black;
+    color : white;
+    font-size : 1.4em;
+}
 
 /* Page d'accueil */
 
@@ -34,6 +51,7 @@ form input{
     text-align: center;
     color : black;
     text-transform: uppercase;
+    font-size: 1.4em;
 }
 #presentation h1{
     text-transform: none;
@@ -103,52 +121,39 @@ form input{
 }
 
 /* Page de connexion */
+#body_Connexion {
+    background : url("../../public/images/background_connexion.jpg") no-repeat fixed center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+#body_Connexion form{
+    font-size : 1.3em;
+    text-align: center;
+}
 
-#body_Admin{
+/* Page d'ajout et de modification de billet */
+
+#body_Form{
     background : url("../../public/images/background_connexion.jpg") no-repeat fixed center;
 }
-.flexbox_Admin{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height : 85%;
+#body_Form .page-footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
-.formulaire_Admin{
-    color: #FFFFFF;
-    background: rgba(0,0,0,0.4);
-    width : 700px;
-    height : 500px;
-    border : 2px solid black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#body_Form h1{
+
     text-align: center;
 }
-.formulaire_Admin input{
-    color : black;
-}
-.formulaire_Admin textarea{
-    color : black;
+#body_Form form{
+    text-align: center;
+    width : 100%;
+    color: black; 
+    font-size : 1.4em;
+    margin-bottom: 30px;
 }
 
-.boutons {
-    background-color: #4EB1D5;
-    color: #FFFFFF;
-    border-radius: 3px;
-    display: block;
-    line-height: 35px;
-    text-align: center;
-    text-decoration: none;
-    width: 100px;
-    margin: auto;
-    margin-top : 10px;
-}
-.message{
-    background-color: gray;
-    text-align: center;
-    border : 2px solid black;
-    color : white;
-}
 
 /* Page article + comments */
 
@@ -157,27 +162,42 @@ background : url("../../public/images/background_home.jpg") no-repeat fixed cent
 }
 #post_wrapper{
     text-align: center;
-display: flex;
-flex-direction: column;
-margin-top : 40px;
+    display: flex;
+    flex-direction: column;
+    margin-top : 40px;
+    color: black;
 }
 #billet {
     font-family: 'Nova Flat', cursive;
 }
 .post{
-    background: rgba(0,0,0,0.4);
-    border : 2px solid black;
+    background: rgba(255,255,255,0.8);
+    border : 2px solid white;
     padding-bottom : 20px;
-    color : white;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
-#formulaire_Add textarea {
-    color: black;
-    text-align: center;
+#body_post input{
+    width : 250px;
+    border : 2px solid black;
 }
-
+#body_post label{
+    font-size : 1.4em;
+    text-transform: uppercase;
+}
+#body_post textarea{
+    width : 400px;
+    height : 200px;
+    order : 2px solid black;
+}
 /* Page Admin */
 
+#body_Admin{
+    background : url("../../public/images/background_connexion.jpg") no-repeat fixed center;
+}
+#body_Admin h1 {
+    text-align: center;
+}
 .instructions_Admin{
     text-align: center;
     color: white;
@@ -219,12 +239,6 @@ table th {
     font-size : 1.2em;
 }
 
-/*Page ajout de billet */
-
-#body_Admin h1 {
-    text-align: center;
-}
-
 /*  Media Queries */
 
 @media screen and (max-width: 768px) {
@@ -235,10 +249,7 @@ table th {
     .nav{
         text-align: center;
     }
-    #boutons_Admin {
-        display: initial;
-    }
-    #boutons_Admin a{
-        margin : 10px auto 10px auto;
+    #body_Form .page-footer{
+        position: initial;
     }
   }

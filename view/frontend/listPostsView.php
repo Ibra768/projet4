@@ -33,7 +33,7 @@ ob_start();
         <figure>
             <img src="public/images/background_home.jpg" alt="Image Roman" />
             <figcaption>
-                <span class="title_portfolio"><?= htmlspecialchars($data['title']) ?></span>
+                <span class="title_portfolio"><?= $data['title'] ?></span>
                 <p>Publié le <?= $data['creation_date_fr'] ?></p>
                 <span class="oeil"><a href="index.php?action=post&amp;id=<?= $data['id'] ?>"><i class="fas fa-eye"></i></a></span>
             </figcaption>

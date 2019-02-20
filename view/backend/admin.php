@@ -65,7 +65,7 @@ while ($comment = $commentsReporting->fetch())
 <div class="container">
 <div class="row">
 <div class="col-lg-12" id="list_Comment">
-<p>Posté par <?= htmlspecialchars($comment['author'])?> le <?= $comment['comment_date_fr'] ?></p>
+<p>Posté par <?= $comment['author']?> le <?= $comment['comment_date_fr'] ?></p>
 <p><?= $comment['comment'] ?></p>
 <p>Que souhaitez-vous faire <?= $_SESSION['pseudo'] ?> ?</p>
 <a class="boutons" href="index.php?action=ignore&amp;id=<?= $comment['id'] ?>">Ignorer</a> <a class="boutons" href="index.php?action=deleteComment&amp;id=<?= $comment['id'] ?>">Supprimer</a>
