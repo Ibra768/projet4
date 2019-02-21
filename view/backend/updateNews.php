@@ -1,7 +1,7 @@
 <?php 
 $title = 'Modifier un billet'; 
 $meta = 'Modifications de billet';
-$body = "body_Form";
+$body = "body_Modif";
 ob_start(); 
 ?>
 

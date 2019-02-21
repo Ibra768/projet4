@@ -17,7 +17,7 @@ ob_start();
                 <p>Bonjour & bienvenue sur mon site</p>
                 <p> Je me présente, je suis Jean Forteroche, auteur d'Un Billet Simple Pour l'Alaska.</p>
                 <p>J'ai eu l'idée novatrice de présenter mon roman sous forme de site internet, avec différents épisodes.</p>
-                <p>Je vous laisse découvrir ce qu'il en est ci-dessous</p>
+                <p>Je vous laisse découvrir ce qu'il en est ci-dessous.</p>
                 <p>N'hésitez pas à laisser des commentaires !</p>
                 <p>Bonne lecture :)<p>
             </div>

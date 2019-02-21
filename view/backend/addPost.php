@@ -1,7 +1,7 @@
 <?php 
 $title = "Ajouter un billet"; 
 $meta = 'Ajout de billet sur le site';
-$body = "body_Form";
+$body = "body_Modif";
 ob_start(); 
 ?>
 

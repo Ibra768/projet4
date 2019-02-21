@@ -24,8 +24,12 @@ function post($postid) // Fonction qui récupère 1 news et les commentaires ass
 
         $post = $postManager->getPost($postid);
         $comments = $commentManager->getComments($postid);
-
-        require('view/frontend/postView.php');
+        if(empty($post['content'])) {
+            require('view/frontend/error.php');
+        }
+        else{
+            require('view/frontend/postView.php');
+        }
     }
     else{
         require('view/frontend/error.php');
@@ -66,6 +70,7 @@ function addComment($postId, $author, $comment) // Fonction qui permet d'ajouter
         }
         else {
             header('Location: index.php?action=post&add=' . $author . '&id=' . $postId);
+            var_dump($affectedLines);
         }
     }else{
         require('view/frontend/error.php');
