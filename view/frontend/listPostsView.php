@@ -27,20 +27,21 @@ ob_start();
 
     <div id="portfolio">
         <?php
-        while ($data = $posts->fetch())
+        for($i=0 ; $i < count($posts) ; $i++)
         {
         ?>
         <figure>
+            <a href="index.php?action=post&amp;id=<?= $posts[$i]['id'] ?>">
             <img src="public/images/background_home.jpg" alt="Image Roman" />
             <figcaption>
-                <span class="title_portfolio"><?= $data['title'] ?></span>
-                <p>Publié le <?= $data['creation_date_fr'] ?></p>
-                <span class="oeil"><a href="index.php?action=post&amp;id=<?= $data['id'] ?>"><i class="fas fa-eye"></i></a></span>
+                <span class="title_portfolio"><?= $posts[$i]['title']  ?></span>
+                <p>Publié le <?= $posts[$i]['title']  ?></p>
+                <span class="oeil"><i class="fas fa-eye"></i></span>
             </figcaption>
+            </a>
         </figure>
         <?php
         }
-        $posts->closeCursor();
         ?>
     </div>
 

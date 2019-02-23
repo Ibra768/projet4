@@ -10,8 +10,8 @@ class PostManager extends Manager
     {
         $db = $this->dbConnect();
         $req = $db->query('SELECT id, title, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr FROM posts ORDER BY creation_date DESC');
-
-        return $req;
+        $posts = $req->fetchAll();
+        return $posts;
     }
 
     public function getPost($postId) // Récupère 1 billet

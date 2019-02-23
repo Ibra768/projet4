@@ -11,8 +11,9 @@ class CommentManager extends Manager
         $db = $this->dbConnect();
         $comments = $db->prepare('SELECT id, post_id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr FROM comments WHERE post_id = ? ORDER BY comment_date DESC');
         $comments->execute(array($postId));
+        $req = $comments->fetchAll();
 
-        return $comments;
+        return $req;
     }
 
     public function postComment($postId, $author, $comment) // Ajoute un commentaire
@@ -40,8 +41,10 @@ class CommentManager extends Manager
         $db = $this->dbConnect();
         $commentsReporting = $db->prepare('SELECT id, post_id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr FROM comments WHERE signalement = ? ORDER BY comment_date DESC');
         $commentsReporting->execute(array("TRUE"));
+        $req = $commentsReporting->fetchAll();
 
-        return $commentsReporting;
+
+        return $req;
     }
     public function deleteComment($idComment) // Supprime un commentaire
     {

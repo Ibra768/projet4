@@ -30,20 +30,20 @@ ob_start();
     </article>
 
     <?php
-    while ($comment = $comments->fetch())
+    for($i=0 ; $i < count($comments) ; $i++)
     {
     ?>
     <div  class=" post container">
         <div class="row">
             <div class=col-lg-12">
-                <p><strong><?= $comment['author'] ?></strong> 
-                <p>Publié le <?= $comment['comment_date_fr'] ?>
+                <p><strong><?= $comments[$i]['author'] ?></strong> 
+                <p>Publié le <?= $comments[$i]['comment_date_fr'] ?>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <p><?= nl2br($comment['comment']) ?></p>
-                <a class="boutons" id="bouton_Signalement" href="index.php?action=report&amp;id=<?= $comment['id'] ?>&amp;postid=<?= $comment['post_id'] ?>"><i class="far fa-flag"></i> Signaler</a>
+                <p><?= nl2br($comments[$i]['comment']) ?></p>
+                <a class="boutons" id="bouton_Signalement" href="index.php?action=report&amp;id=<?= $comments[$i]['id'] ?>&amp;postid=<?= $comments[$i]['post_id'] ?>"><i class="far fa-flag"></i> Signaler</a>
             </div>
         </div>
     </div>

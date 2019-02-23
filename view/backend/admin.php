@@ -29,7 +29,7 @@ else if(isset($_GET['deleteComment'])) {
 <div class="instructions_Admin"><p>Bienvenue sur votre espace <?= $_SESSION['pseudo'] ?><br><a class="boutons" href="index.php?action=add">Ajouter un billet</a><br>Voici la liste des billets publiés : <p></div>
 
 <?php
-while ($data = $postsAdmin->fetch())
+for($i=0 ; $i < count($postsAdmin) ; $i++)
 {
 ?>
 <div class="table-responsive">
@@ -43,34 +43,40 @@ while ($data = $postsAdmin->fetch())
   </thead>
   <tbody>
     <tr>
-      <th scope="row"><?= $data['id'] ?></th>
-      <th scope='row'><?= $data['title'] ?></td>
-      <th scope="row"><?= $data['creation_date_fr'] ?></td>
+      <th scope="row"><?= $postsAdmin[$i]['id'] ?></th>
+      <th scope='row'><?= $postsAdmin[$i]['title'] ?></td>
+      <th scope="row"><?= $postsAdmin[$i]['creation_date_fr'] ?></td>
     </tr>
   </tbody>
 </table>
 </div>
-<div id="boutons_Admin"><a class="boutons" href="index.php?action=post&amp;id=<?= $data['id'] ?>">Accéder</a> <a class="boutons" href="index.php?action=updatePost&amp;id=<?= $data['id'] ?>">Modifier</a> <a class="boutons" href="index.php?action=deletePost&amp;id=<?= $data['id'] ?>">Supprimer</a></div>
+<div id="boutons_Admin"><a class="boutons" href="index.php?action=post&amp;id=<?= $postsAdmin[$i]['id'] ?>">Accéder</a> <a class="boutons" href="index.php?action=updatePost&amp;id=<?= $postsAdmin[$i]['id'] ?>">Modifier</a> <a class="boutons" href="index.php?action=deletePost&amp;id=<?= $postsAdmin[$i]['id'] ?>">Supprimer</a></div>
 
 
 <?php
 }
-$postsAdmin->closeCursor();
+if(count($commentsReporting) == 0){
+?>
+<div class="instructions_Admin container-fluid"><p>Aucun commentaire signalé</p></div>
+<?php
+}
+else{
 ?>
 <div class="instructions_Admin container-fluid"><p>Voici la liste des commentaires signalés :</p></div>
 <?php
-while ($comment = $commentsReporting->fetch())
+}
+for($i=0 ; $i < count($commentsReporting) ; $i++)
 {
 ?>
 <div class="container">
-<div class="row">
-<div class="col-lg-12" id="list_Comment">
-<p>Posté par <?= $comment['author']?> le <?= $comment['comment_date_fr'] ?></p>
-<p><?= $comment['comment'] ?></p>
-<p>Que souhaitez-vous faire <?= $_SESSION['pseudo'] ?> ?</p>
-<a class="boutons" href="index.php?action=ignore&amp;id=<?= $comment['id'] ?>">Ignorer</a> <a class="boutons" href="index.php?action=deleteComment&amp;id=<?= $comment['id'] ?>">Supprimer</a>
-</div>
-</div>
+  <div class="row">
+    <div class="col-lg-12" id="list_Comment">
+      <p>Posté par <?= $commentsReporting[$i]['author']?> le <?= $commentsReporting[$i]['comment_date_fr'] ?></p>
+      <p><?= $commentsReporting[$i]['comment'] ?></p>
+      <p>Que souhaitez-vous faire <?= $_SESSION['pseudo'] ?> ?</p>
+      <a class="boutons" href="index.php?action=ignore&amp;id=<?= $commentsReporting[$i]['id'] ?>">Ignorer</a> <a class="boutons" href="index.php?action=deleteComment&amp;id=<?= $commentsReporting[$i]['id'] ?>">Supprimer</a>
+    </div>
+  </div>
 </div>
 <?php
 }

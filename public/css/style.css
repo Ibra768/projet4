@@ -198,7 +198,7 @@ background : url("../../public/images/background_home.jpg") no-repeat fixed cent
 /* Page Admin */
 
 #body_Admin{
-    background : url("../../public/images/background_connexion.jpg") no-repeat fixed center;
+    background-color : gray;
 }
 #body_Admin h1 {
     text-align: center;
@@ -224,7 +224,6 @@ background : url("../../public/images/background_home.jpg") no-repeat fixed cent
     margin : 0px;
 }
 table{
-    border : 5px solid black;
     color : white;
     width: 100%;
     font-size : 1.3em;
