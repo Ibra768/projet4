@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteRule ^(?!^(index.php|public/css/style.css)$)([a-zA-Z0-9.]*\/?)*$ view/frontend/forbidden.php
+
