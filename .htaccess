@@ -1,3 +1,11 @@
-#RewriteEngine On
-#RewriteRule ^(?!^(index.php|public/css/style.css)$)([a-zA-Z0-9.]*\/?)*$ view/frontend/forbidden.php
+RewriteEngine On
 
+RewriteRule ^view/backend/([a-zA-Z\/.])+$ view/frontend/forbidden.php
+
+RewriteRule ^view/frontend/([a-zA-Z\/.])+$ view/frontend/forbidden.php
+
+RewriteRule ^model/([a-zA-Z\/.])+$ view/frontend/forbidden.php
+
+RewriteRule ^controller/([a-zA-Z\/.])+$ view/frontend/forbidden.php
+
+RewriteRule ^view/template.php$ view/frontend/forbidden.php
