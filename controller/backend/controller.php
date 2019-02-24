@@ -136,6 +136,26 @@ function deleteComment($id) // Fonction qui permet de supprimer un commentaire s
     }
 }
 
+function deleteCommentAdmin($id,$postid) // Fonction qui permet de supprimer un commentaire signalé
+{
+    if(isset($_GET['id']) && $_GET['id'] > 0  && isset($_GET['postid']) && $_GET['postid'] > 0) {
+
+        $deleteComment = new \Model\CommentManager();
+
+        $confirmDeleteComment = $deleteComment->deleteComment($id);
+
+        if ($confirmDeleteComment === false) {
+            require('view/frontend/error.php');
+        }
+        else {
+            header('Location: index.php?action=post&deleteAdminok&id=' . $postid);
+        }
+    }
+    else{
+        require('view/frontend/error.php');
+    }
+}
+
 function disconnect () { // Fonction qui permet la deconnexion de l'admin
     
     session_unset();

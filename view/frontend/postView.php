@@ -14,6 +14,9 @@ ob_start();
     else if(isset($_GET['report'])) {
         echo "<div class='message'>" . "Merci pour votre signalement, on s'en occupe !" . "</div>";
     }
+    else if(isset($_GET['deleteAdminok'])) {
+        echo "<div class='message'>" . "Le commentaire a bien été supprimé" . "</div>";
+    }
     ?>
     <article id="billet" class=" post container">
         <div class="row">
@@ -28,24 +31,24 @@ ob_start();
             </div>
         </div>
     </article>
-
+    <h2>Commentaires</h2>
     <?php
+    
     for($i=0 ; $i < count($comments) ; $i++)
     {
     ?>
-    <div  class=" post container">
-        <div class="row">
-            <div class=col-lg-12">
-                <p><strong><?= $comments[$i]['author'] ?></strong> 
-                <p>Publié le <?= $comments[$i]['comment_date_fr'] ?>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <p><?= nl2br($comments[$i]['comment']) ?></p>
-                <a class="boutons" id="bouton_Signalement" href="index.php?action=report&amp;id=<?= $comments[$i]['id'] ?>&amp;postid=<?= $comments[$i]['post_id'] ?>"><i class="far fa-flag"></i> Signaler</a>
-            </div>
-        </div>
+    <div id="comments" class="post">
+        <p><strong><?= $comments[$i]['author'] ?></strong> 
+        <p>Publié le <?= $comments[$i]['comment_date_fr'] ?>
+        <p><?= nl2br($comments[$i]['comment']) ?></p>
+        <a class="boutons" id="bouton_Signalement" href="index.php?action=report&amp;id=<?= $comments[$i]['id'] ?>&amp;postid=<?= $comments[$i]['post_id'] ?>"><i class="far fa-flag"></i> Signaler</a>
+        <?php
+        if(isset($_SESSION['pseudo']) && isset($_SESSION['pass'])) {
+        ?>
+            <a class="boutons" onclick="if(window.confirm('Voulez-vous vraiment supprimer ce commentaire ?')){return true;}else{return false;}" href="index.php?action=deleteCommentAdmin&id=<?= $comments[$i]['id'] ?>&postid=<?= $_GET['id'] ?>"><i class="far fa-trash-alt"></i></a>
+        <?php
+        }
+        ?>
     </div>
     <?php
     }

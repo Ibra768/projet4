@@ -174,6 +174,7 @@ background : url("../../public/images/background_home.jpg") no-repeat fixed cent
 }
 #billet {
     font-family: 'Nova Flat', cursive;
+    font-size: 1.2em;
 }
 .post{
     background: rgba(255,255,255,0.8);
@@ -189,16 +190,31 @@ background : url("../../public/images/background_home.jpg") no-repeat fixed cent
 #body_post label{
     font-size : 1.4em;
     text-transform: uppercase;
+    text-shadow: 2px 2px white;
 }
 #body_post textarea{
     width : 400px;
     height : 200px;
-    order : 2px solid black;
+    border : 2px solid black;
 }
+#body_post h2 {
+    text-transform: uppercase;
+    text-shadow: 3px 2px white;
+}
+#comments{
+    width: 75%;
+    margin: auto;
+    margin-top: 30px;
+    font-size: 1.2em;
+}
+
 /* Page Admin */
 
 #body_Admin{
     background-color : gray;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 #body_Admin h1 {
     text-align: center;
@@ -207,8 +223,6 @@ background : url("../../public/images/background_home.jpg") no-repeat fixed cent
     text-align: center;
     color: white;
     text-transform: uppercase;
-    margin-top: 50px;
-    margin-bottom : 50px;
     font-size : 1.5em;
 }
 .instructions_Admin a {
@@ -231,12 +245,11 @@ background : url("../../public/images/background_home.jpg") no-repeat fixed cent
     font-size: 1.4em;
 }
 #list_Comment{
-    border : 5px solid black;
     margin-bottom : 20px;
     padding-bottom: 10px;
     text-align: center;
     color : white;
-    font-size : 1.2em;
+    font-size : 1.3em;
 }
 /* Page erreur */
 

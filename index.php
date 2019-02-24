@@ -55,6 +55,9 @@ try {
         else if($_GET['action'] == "deleteComment") { // Lance la fonction deleteComment() pour supprimer un commentaire
                 deleteComment(htmlspecialchars($_GET['id']));
         }
+        else if($_GET['action'] == "deleteCommentAdmin") { // Lance la fonction deleteComment() pour supprimer un commentaire
+            deleteCommentAdmin(htmlspecialchars($_GET['id']),htmlspecialchars($_GET['postid']));
+    }
         else if (isset($_GET['action']) == 'deconnexion') { // Lance la fonctionne disconnect() qui déconnecte l'administrateur
             disconnect();
         }

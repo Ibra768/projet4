@@ -1,6 +1,4 @@
-<?php
 
-?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,7 +11,7 @@
     <style>
     html{height : 100%;}
     body{height :  100%; background-color : gray; font-family : 'Nova Flat', 'sans-serif'; display: flex; flex-direction: column; justify-content: center; text-align : center;} 
-    p { font-size: 2em;} div a{width : 300px;}
+    p{ font-size: 2em;} div a{width : 300px;}
     </style>
     </head>
 
@@ -21,3 +19,5 @@
     <p>L'accès à cette page est interdit</p><br>
     <p><a class="btn btn-primary" href="javascript:history.go(-1)">Retour</a></p>
     </body>
+    
+</html>
