@@ -35,7 +35,7 @@ ob_start();
             <img src="public/images/background_home.jpg" alt="Image Roman" />
             <figcaption>
                 <span class="title_portfolio"><?= $posts[$i]['title']  ?></span>
-                <p>Publié le <?= $posts[$i]['title']  ?></p>
+                <p>Publié le <?= $posts[$i]['creation_date_fr']  ?></p>
                 <span class="oeil"><i class="fas fa-eye"></i></span>
             </figcaption>
             </a>

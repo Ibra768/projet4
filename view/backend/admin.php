@@ -32,26 +32,11 @@ else if(isset($_GET['deleteComment'])) {
 for($i=0 ; $i < count($postsAdmin) ; $i++)
 {
 ?>
-<div class="table-responsive">
-<table>
-  <thead>
-    <tr>
-      <th width="33%" scope="col">Numéro de billet</th>
-      <th width="33%" scope="col">Titre du billet</th>
-      <th width="33%" scope="col">Date création</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row"><?= $postsAdmin[$i]['id'] ?></th>
-      <th scope='row'><?= $postsAdmin[$i]['title'] ?></td>
-      <th scope="row"><?= $postsAdmin[$i]['creation_date_fr'] ?></td>
-    </tr>
-  </tbody>
-</table>
+<div id="tableauAdmin">
+<div><?= $postsAdmin[$i]['title'] ?></div>
+<div><?= $postsAdmin[$i]['creation_date_fr'] ?></div>
+<div id="boutons_Admin"><a class="boutons" href="index.php?action=post&amp;id=<?= $postsAdmin[$i]['id'] ?>"><i class="far fa-eye"></i></a> <a class="boutons" href="index.php?action=updatePost&amp;id=<?= $postsAdmin[$i]['id'] ?>"><i class="fas fa-paint-brush"></i></a> <a class="boutons" href="index.php?action=deletePost&amp;id=<?= $postsAdmin[$i]['id'] ?>"><i class="far fa-trash-alt"></i></a></div>
 </div>
-<div id="boutons_Admin"><a class="boutons" href="index.php?action=post&amp;id=<?= $postsAdmin[$i]['id'] ?>">Accéder</a> <a class="boutons" href="index.php?action=updatePost&amp;id=<?= $postsAdmin[$i]['id'] ?>">Modifier</a> <a class="boutons" href="index.php?action=deletePost&amp;id=<?= $postsAdmin[$i]['id'] ?>">Supprimer</a></div>
-
 
 <?php
 }

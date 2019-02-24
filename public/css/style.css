@@ -148,13 +148,13 @@ body{
     text-align: center;
     color : white;
     text-transform: uppercase;
+    font-size : 2em;
 }
 #body_Modif form{
     text-align: center;
     width : 100%;
     color: white; 
-    font-size : 1.4em;
-    margin-bottom: 30px;
+    font-size : 1.2em;
 }
 #body_Modif input {
     color : black;
@@ -218,21 +218,17 @@ background : url("../../public/images/background_home.jpg") no-repeat fixed cent
 #boutons_Admin {
     display: flex;
     justify-content: space-around;
-    margin-top : 15px;
+    align-items: center;
 }
 #boutons_Admin a{
-    margin : 0px;
+    margin-right: 10px;
 }
-table{
-    color : white;
-    width: 100%;
-    font-size : 1.3em;
-    margin-top : 50px;
-}
-table th {
+#tableauAdmin {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     text-align: center;
-    font-size : 1em;
-    text-transform: uppercase;
+    font-size: 1.4em;
 }
 #list_Comment{
     border : 5px solid black;
@@ -265,5 +261,8 @@ table th {
     }
     #body_Modif .page-footer{
         position: initial;
+    }
+    #tableauAdmin {
+        flex-direction: column;
     }
   }

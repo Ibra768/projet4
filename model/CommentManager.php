@@ -9,7 +9,7 @@ class CommentManager extends Manager
     public function getComments($postId) // Récupère les commentaires d'un billet
     {
         $db = $this->dbConnect();
-        $comments = $db->prepare('SELECT id, post_id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr FROM comments WHERE post_id = ? ORDER BY comment_date DESC');
+        $comments = $db->prepare('SELECT id, post_id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%i\') AS comment_date_fr FROM comments WHERE post_id = ? ORDER BY comment_date DESC');
         $comments->execute(array($postId));
         $req = $comments->fetchAll();
 
@@ -39,7 +39,7 @@ class CommentManager extends Manager
     public function getCommentsReport() // Récupère la liste des commentaires signalés (signalement = "TRUE")
     {
         $db = $this->dbConnect();
-        $commentsReporting = $db->prepare('SELECT id, post_id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr FROM comments WHERE signalement = ? ORDER BY comment_date DESC');
+        $commentsReporting = $db->prepare('SELECT id, post_id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%i\') AS comment_date_fr FROM comments WHERE signalement = ? ORDER BY comment_date DESC');
         $commentsReporting->execute(array("TRUE"));
         $req = $commentsReporting->fetchAll();
 
