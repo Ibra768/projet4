@@ -73,6 +73,7 @@ body{
 	position: relative;
     width: 350px;
     margin : 16px 20px 16px 20px;
+    background-color: white;
     border : 2px solid black;
 }
 #portfolio figure img
@@ -91,6 +92,7 @@ body{
     left:0;
     position:absolute;
     right:0;
+    font-size: 1.3em;
 }
 #portfolio figure:hover figcaption
 {
@@ -123,7 +125,7 @@ body{
 /* Page de connexion */
 
 #body_Connexion {
-    background : url("../../public/images/background_connexion.jpg") no-repeat fixed center;
+    background : url("../../public/images/background/background_connexion.jpg") no-repeat fixed center;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -136,7 +138,7 @@ body{
 /* Page d'ajout et de modification de billet */
 
 #body_Modif{
-    background : url("../../public/images/background_modification.jpg") no-repeat fixed center;
+    background : url("../../public/images/background/background_modification.jpg") no-repeat fixed center;
 }
 #body_Modif .page-footer{
     position: absolute;
@@ -163,7 +165,7 @@ body{
 /* Page article + comments */
 
 #body_post{
-background : url("../../public/images/background_home.jpg") no-repeat fixed center;
+background : url("../../public/images/background/background_post.jpg") no-repeat fixed center;
 }
 #post_wrapper{
     text-align: center;
@@ -212,9 +214,11 @@ background : url("../../public/images/background_home.jpg") no-repeat fixed cent
 
 #body_Admin{
     background-color : gray;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+}
+#body_Admin footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 #body_Admin h1 {
     text-align: center;
@@ -239,10 +243,14 @@ background : url("../../public/images/background_home.jpg") no-repeat fixed cent
 }
 #tableauAdmin {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     text-align: center;
     font-size: 1.4em;
+}
+#tableauAdmin div {
+    width: 33%;
+    text-align: center;
 }
 #list_Comment{
     margin-bottom : 20px;
@@ -277,5 +285,11 @@ background : url("../../public/images/background_home.jpg") no-repeat fixed cent
     }
     #tableauAdmin {
         flex-direction: column;
+    }
+    #tableauAdmin div {
+        width: initial;
+    }
+    #body_Admin footer {
+        position: initial;
     }
   }

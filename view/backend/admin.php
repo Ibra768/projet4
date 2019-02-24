@@ -33,8 +33,8 @@ for($i=0 ; $i < count($postsAdmin) ; $i++)
 {
 ?>
 <div id="tableauAdmin">
-  <div><?= $postsAdmin[$i]['title'] ?></div>
-  <div><?= $postsAdmin[$i]['creation_date_fr'] ?></div>
+  <div><p><?= $postsAdmin[$i]['title'] ?></p></div>
+  <div><p><?= $postsAdmin[$i]['creation_date_fr'] ?></p></div>
   <div id="boutons_Admin">
       <a id="sisi" class="boutons" href="index.php?action=post&amp;id=<?= $postsAdmin[$i]['id'] ?>"><i class="far fa-eye"></i></a> 
       <a class="boutons" href="index.php?action=updatePost&amp;id=<?= $postsAdmin[$i]['id'] ?>"><i class="fas fa-paint-brush"></i></a>

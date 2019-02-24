@@ -57,7 +57,7 @@ ob_start();
         <label for="author">Auteur</label><br>
         <input type="text" name="author" required><br>
         <label for="comment">Contenu</label><br>
-        <textarea type="text"  name="comment"></textarea><br>
+        <textarea type="text"  name="comment" required></textarea><br>
         <input type="submit" class="boutons" value="Envoyer">
     </form>
 
