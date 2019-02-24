@@ -57,7 +57,7 @@ else{
 for($i=0 ; $i < count($commentsReporting) ; $i++)
 {
 ?>
-<div class="container">
+<div id="commentReport" class="container">
   <div class="row">
     <div class="col-lg-12" id="list_Comment">
       <p>Posté par <?= $commentsReporting[$i]['author']?> le <?= $commentsReporting[$i]['comment_date_fr'] ?></p>

@@ -73,7 +73,7 @@ body{
 	position: relative;
     width: 350px;
     margin : 16px 20px 16px 20px;
-    background-color: white;
+    background-color: skyblue;
     border : 2px solid black;
 }
 #portfolio figure img
@@ -195,7 +195,7 @@ background : url("../../public/images/background/background_post.jpg") no-repeat
     text-shadow: 2px 2px white;
 }
 #body_post textarea{
-    width : 400px;
+    width : 50%;
     height : 200px;
     border : 2px solid black;
 }
@@ -215,11 +215,6 @@ background : url("../../public/images/background/background_post.jpg") no-repeat
 #body_Admin{
     background-color : gray;
 }
-#body_Admin footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-}
 #body_Admin h1 {
     text-align: center;
 }
@@ -228,6 +223,7 @@ background : url("../../public/images/background/background_post.jpg") no-repeat
     color: white;
     text-transform: uppercase;
     font-size : 1.5em;
+    margin-top: 15px;
 }
 .instructions_Admin a {
     width : 150px;
@@ -256,7 +252,7 @@ background : url("../../public/images/background/background_post.jpg") no-repeat
     margin-bottom : 20px;
     padding-bottom: 10px;
     text-align: center;
-    color : white;
+    color : black;
     font-size : 1.3em;
 }
 /* Page erreur */
@@ -289,7 +285,10 @@ background : url("../../public/images/background/background_post.jpg") no-repeat
     #tableauAdmin div {
         width: initial;
     }
-    #body_Admin footer {
-        position: initial;
+    #billet{
+        width: 70%;
+    }
+    #comments{
+        width : 50%;
     }
   }

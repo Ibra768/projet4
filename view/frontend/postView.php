@@ -37,7 +37,7 @@ ob_start();
     for($i=0 ; $i < count($comments) ; $i++)
     {
     ?>
-    <div id="comments" class="post">
+    <div id="comments" class="post container">
         <p><strong><?= $comments[$i]['author'] ?></strong> 
         <p>Publié le <?= $comments[$i]['comment_date_fr'] ?>
         <p><?= nl2br($comments[$i]['comment']) ?></p>
