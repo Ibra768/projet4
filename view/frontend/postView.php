@@ -1,22 +1,22 @@
 <?php 
-$title = html_entity_decode($post['title']); 
-$meta = "Billet simple pour l'Alaska";
-$body = "body_post";
-ob_start(); 
+    $title = html_entity_decode($post['title']); 
+    $meta = "Billet simple pour l'Alaska";
+    $body = "body_post";
+    ob_start(); 
 ?>
 
 <div id="post_wrapper">
 
     <?php 
-    if(isset($_GET['add'])) {
-        echo "<div class='message'>" . "Merci pour votre commentaire " . $_GET['add'] . " !" . "</div>";
-    }
-    else if(isset($_GET['report'])) {
-        echo "<div class='message'>" . "Merci pour votre signalement, on s'en occupe !" . "</div>";
-    }
-    else if(isset($_GET['deleteAdminok'])) {
-        echo "<div class='message'>" . "Le commentaire a bien été supprimé" . "</div>";
-    }
+        if(isset($_GET['add'])) {
+            echo "<div class='message'>" . "Merci pour votre commentaire " . $_GET['add'] . " !" . "</div>";
+        }
+        else if(isset($_GET['report'])) {
+            echo "<div class='message'>" . "Merci pour votre signalement, on s'en occupe !" . "</div>";
+        }
+        else if(isset($_GET['deleteAdminok'])) {
+            echo "<div class='message'>" . "Le commentaire a bien été supprimé" . "</div>";
+        }
     ?>
     <article id="billet" class=" post container">
         <div class="row">
@@ -60,9 +60,9 @@ ob_start();
         <textarea type="text"  name="comment" required></textarea><br>
         <input type="submit" class="boutons" value="Envoyer">
     </form>
-
 </div>
 
-<?php $content = ob_get_clean(); ?>
-
-<?php require('view/template.php'); ?>
+<?php 
+$content = ob_get_clean(); 
+require('view/template.php'); 
+?>

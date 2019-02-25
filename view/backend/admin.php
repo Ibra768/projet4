@@ -72,7 +72,8 @@ for($i=0 ; $i < count($commentsReporting) ; $i++)
 
 ?>
 
-<?php $content = ob_get_clean(); ?>
-
-<?php require('view/template.php'); ?>
+<?php 
+$content = ob_get_clean(); 
+require('view/template.php'); 
+?>
 

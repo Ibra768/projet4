@@ -8,9 +8,6 @@ if ($_GET['action'] == 'erreurConnexion') {
         echo  '<div class="message">' . 'Votre pseudo et' . '/' . 'ou votre mot de passe sont incorrect.' . '</div>';
 }
 ?>  
-
-
-
     <div class="container">
         <form method="POST" action="index.php?action=connexion">
             <div class="row">

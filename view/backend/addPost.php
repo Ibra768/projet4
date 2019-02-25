@@ -28,6 +28,7 @@ ob_start();
         </div>
     </form>
 </div>
-<?php $content = ob_get_clean(); ?>
-
-<?php require('view/template.php'); ?>
+<?php 
+$content = ob_get_clean(); 
+require('view/template.php'); 
+?>
