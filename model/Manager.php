@@ -1,4 +1,3 @@
-
 <?php
 
 namespace Model;
@@ -11,3 +10,4 @@ class Manager
         return $db;
     }
 }
+

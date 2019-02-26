@@ -9,6 +9,8 @@ require_once('model/PostManager.php');
                                
 function dataAdmin() // Fonction qui récupère la liste des billets, ainsi que les commentaires à modérer
 {
+    if(isset($_SESSION['pseudo'])){
+
     $postManagerAdmin = new \Model\PostManager();
     $commentReport = new \Model\CommentManager();
 
@@ -16,6 +18,10 @@ function dataAdmin() // Fonction qui récupère la liste des billets, ainsi que 
     $commentsReporting = $commentReport->getCommentsReport();
 
     require('view/backend/admin.php');
+    }
+    else{
+        require('view/frontend/forbidden.php');
+    }
 }
 
 function updatePost() // Fonction qui récupère le billet à modifier (afin de l'insérer dans un formulaire pour le modifier)
