@@ -1,6 +1,6 @@
 <?php 
 $title = 'Connexion'; 
-$meta = "Connection à l'espace ADMIN du site de Jean Forteroche";
+$meta = "Connexion à l'espace ADMIN du site de Jean Forteroche";
 $body = "body_Connexion";
 ob_start(); 
 
@@ -30,6 +30,7 @@ if ($_GET['action'] == 'erreurConnexion') {
         </form>
     </div>
 
-<?php $content = ob_get_clean(); ?>
-
-<?php require('view/template.php'); ?>
+<?php 
+$content = ob_get_clean(); 
+require('view/template.php');
+?>

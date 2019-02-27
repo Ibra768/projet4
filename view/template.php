@@ -6,8 +6,10 @@
     <head>
     <title><?= $title ?></title>
     <meta charset="utf-8">
+    <meta name="language" content="fr-FR" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content= <?= $meta  ?> />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:500,900|Roboto+Condensed:700|Nova+Flat" rel="stylesheet">
     <link href="public/css/style.css" rel="stylesheet"/>

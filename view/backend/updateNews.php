@@ -24,7 +24,7 @@ ob_start();
             <div class="col-75">
             <textarea  type="text"  class="tiny" name="contentUpdate"><?= html_entity_decode($postUp['content']) ?></textarea><br>
             <input type="submit" class="boutons" value="Envoyer">
-            <input type="hidden" name="id" value="<?= $_GET['id']?>">
+            <input type="hidden" name="id" value="<?= htmlspecialchars($_GET['id'])?>">
             </div>
         </div>
     </form>
