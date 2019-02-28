@@ -36,15 +36,21 @@ class CommentManager extends Manager
         $req = $db->prepare('UPDATE comments SET signalement = "FALSE" WHERE id = ?');
         $req->execute(array($idAutorisation));
     }
-    public function getCommentsReport() // Récupère la liste des commentaires signalés (signalement = "TRUE")
+    public function getCommentsReport() // Récupère la liste complete des commentaires signalés
     {
         $db = $this->dbConnect();
-        $commentsReporting = $db->prepare('SELECT id, post_id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%i\') AS comment_date_fr FROM comments WHERE signalement = ? ORDER BY comment_date DESC');
-        $commentsReporting->execute(array("TRUE"));
-        $req = $commentsReporting->fetchAll();
-
-
+        $req = $db->prepare('SELECT ID FROM comments WHERE signalement = ?');
+        $req->execute(array("TRUE"));
         return $req;
+    
+    }
+    public function getCommentsReportByPage($departComments,$commentsParPage) // Récupère la liste des commentaires signalés (signalement = "TRUE") page par page
+    {
+        $db = $this->dbConnect();
+        $req = $db->prepare('SELECT id, post_id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%i\') AS comment_date_fr FROM comments WHERE signalement = ? ORDER BY comment_date DESC LIMIT ' . $departComments . ',' .$commentsParPage);
+        $req->execute(array("TRUE"));
+        $response = $req->fetchAll();
+        return $response;
     }
     public function deleteComment($idComment) // Supprime un commentaire
     {

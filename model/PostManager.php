@@ -13,6 +13,20 @@ class PostManager extends Manager
         $posts = $req->fetchAll();
         return $posts;
     }
+    public function getPostAdmin() // Récupère la liste des billets
+    {
+        $db = $this->dbConnect();
+        $req = $db->query('SELECT ID FROM posts');
+        return $req;
+    }
+
+    public function getPostsPage($depart,$discussionParPage) // Récupère la liste des billets
+    {
+        $db = $this->dbConnect();
+        $req = $db->query('SELECT id, title, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr FROM posts ORDER BY ID LIMIT ' . $depart . ',' .$discussionParPage);
+        $response = $req->fetchAll();
+        return $response;
+    }
 
     public function getPost($postId) // Récupère 1 billet
     {

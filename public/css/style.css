@@ -255,6 +255,31 @@ background : url("../../public/images/background/background_post.jpg") no-repeat
     color : black;
     font-size : 1.3em;
 }
+.pagination{
+    display: flex;
+    justify-content: center;
+    height: 30px;
+    width: 100px;
+    margin: auto;
+}
+.pagination div{
+    font-size : 1.5em;
+    font-weight: bold;
+    width: 30px;
+    background-color: black;
+    color: white;
+}
+.pagination a{
+    color: red;
+}
+#body_Admin .page-footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+#body_AdminComments{
+    background-color : gray;
+}
 /* Page erreur */
 
 #body_Error {
@@ -277,6 +302,9 @@ background : url("../../public/images/background/background_post.jpg") no-repeat
         text-align: center;
     }
     #body_Modif .page-footer{
+        position: initial;
+    }
+    #body_Admin .page-footer{
         position: initial;
     }
     #tableauAdmin {

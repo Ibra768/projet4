@@ -7,21 +7,70 @@ require_once('model/AdminManager.php');
 require_once('model/PostManager.php');
 
                                
-function dataAdmin() // Fonction qui récupère la liste des billets, ainsi que les commentaires à modérer
+function dataAdmin($pageCourante) // Fonction qui récupère la liste des billets page par page
+
 {
     if(isset($_SESSION['pseudo'])){
 
-    $postManagerAdmin = new \Model\PostManager();
-    $commentReport = new \Model\CommentManager();
+        $postManagerAdmin = new \Model\PostManager();
 
-    $postsAdmin = $postManagerAdmin->getPosts();
-    $commentsReporting = $commentReport->getCommentsReport();
+        $postsAdmin = $postManagerAdmin->getPostAdmin();
 
-    require('view/backend/admin.php');
+        $postsParPage = 5;
+
+        $postsTotaleReq = $postsAdmin;
+
+        $postsTotales = $postsTotaleReq->rowCount(); // On compte le nombre de posts
+
+        $pagesTotales = ceil($postsTotales/$postsParPage); // On divise le nombre de post par le nombre de post par page, pour avoir le nombre de page totale
+    
+        $depart = ($pageCourante-1)*$postsParPage; // On fixe un point de départ, qui correspond à la page actuel x le nombre de page.
+        
+        $postManagerAdmin2 = new \Model\PostManager();
+
+        $postsAdminPage = $postManagerAdmin2->getPostsPage($depart,$postsParPage); // On récupère les posts page par page
+
+        require('view/backend/admin.php');
     }
     else{
         require('view/frontend/forbidden.php');
     }
+}
+
+function adminCommentReport($pageCouranteComments) {
+
+    if(isset($_SESSION['pseudo'])){
+
+        $commentReport = new \Model\CommentManager();
+
+        $commentsReporting = $commentReport->getCommentsReport();
+
+
+        $commentsParPage = 3;
+
+        $commentsTotaleReq = $commentsReporting;
+
+        $commentsTotales = $commentsTotaleReq->rowCount();  // On compte le nombre de posts
+
+
+        $pagesTotalesComments = ceil($commentsTotales/$commentsParPage); // On divise le nombre de commentaires par le nombre de commentaires par page, pour avoir le nombre de page totale
+
+    
+
+        $departComments = ($pageCouranteComments-1)*$commentsParPage; // On fixe un point de départ, qui correspond à la page actuel x le nombre de commentaires.
+
+        $commentsByPage = new \Model\CommentManager();
+
+        $getCommentsByPage = $commentsByPage->getCommentsReportByPage($departComments,$commentsParPage); // On récupère les commentaires page par page
+
+
+        require('view/backend/commentAdmin.php');
+    }
+    else{
+        require('view/frontend/forbidden.php');
+    }
+
+
 }
 
 function updatePost() // Fonction qui récupère le billet à modifier (afin de l'insérer dans un formulaire pour le modifier)
@@ -114,7 +163,7 @@ function allowComment($idComment) // Fonction qui autorise un commentaire signal
             require('view/frontend/error.php');
         }
         else {
-            header('Location: index.php?action=admin&allow');
+            header('Location: index.php?action=adminreport&allow');
         }
     }
     else{
@@ -134,7 +183,7 @@ function deleteComment($id) // Fonction qui permet de supprimer un commentaire s
             require('view/frontend/error.php');
         }
         else {
-            header('Location: index.php?action=admin&deleteComment'); 
+            header('Location: index.php?action=adminreport&deleteComment'); 
         }
     }
     else{
