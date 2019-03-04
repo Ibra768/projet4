@@ -141,9 +141,7 @@ body{
     background : url("../../public/images/background/background_modification.jpg") no-repeat fixed center;
 }
 #body_Modif .page-footer{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+    display: none;
 }
 #body_Modif h1{
 

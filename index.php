@@ -22,10 +22,10 @@ if (isset($_GET['action'])) {
             getAdministrator(htmlspecialchars($_POST['pseudo']), htmlspecialchars($_POST['pass']));
             break;
         case 'getConnexion' : // Accès page connexion
-            require('view/frontend/connexion.php');
+            getConnexion();
             break;
         case 'erreurConnexion' : // Erreur de connexion
-            require('view/frontend/connexion.php');
+            getConnexion();
             break;
 
         case 'admin' : // Accès admin post
@@ -54,7 +54,7 @@ if (isset($_GET['action'])) {
             addPost(htmlspecialchars($_POST['title']), htmlspecialchars($_POST['content'])); 
             break;
         case 'add' : // accès à la page d'ajout de post
-            require('view/backend/addPost.php');
+            getAddPage();
             break;
         case 'updatePost' : // accès a la page de modification de post
             updatePost(htmlspecialchars($_GET['id']));
@@ -73,6 +73,9 @@ if (isset($_GET['action'])) {
             break;
         case 'deleteCommentAdmin' : // Suppression du commentaire dans le post directement
             deleteCommentAdmin(htmlspecialchars($_GET['id']),htmlspecialchars($_GET['postid']));
+            break;
+        case 'forbidden' : // Deconnexion
+            forbidden();
             break;
         case 'deconnexion' : // Deconnexion
             disconnect();

@@ -1,11 +1,9 @@
 RewriteEngine On
 
-RewriteRule ^view/backend/([a-zA-Z\/.])+$ view/frontend/forbidden.php
+RewriteRule ^view/(back|front)end/([a-zA-Z\/.])+$ index.php?action=forbidden
 
-RewriteRule ^view/frontend/([a-zA-Z\/.])+$ view/frontend/forbidden.php
+RewriteRule ^model/([a-zA-Z\/.])+$ index.php?action=forbidden
 
-RewriteRule ^model/([a-zA-Z\/.])+$ view/frontend/forbidden.php
+RewriteRule ^controller/([a-zA-Z\/.])+$ index.php?action=forbidden
 
-RewriteRule ^controller/([a-zA-Z\/.])+$ view/frontend/forbidden.php
-
-RewriteRule ^view/template.php$ view/frontend/forbidden.php
+RewriteRule ^view/template.php$ index.php?action=forbidden

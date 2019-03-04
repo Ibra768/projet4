@@ -7,9 +7,9 @@ ob_start();
 
 <h1>Ajouter un billet</h1>
 
-<div class="container">
+<article class="container">
     <form method="POST" action="index.php?action=addPost">
-        <div class="row">
+        <div class="row">                     
             <div class="col-25">
                 <label for="title">Titre du billet</label>
             </div>
@@ -27,7 +27,7 @@ ob_start();
             </div>
         </div>
     </form>
-</div>
+</article>
 <?php 
 $content = ob_get_clean(); 
 require('view/template.php'); 

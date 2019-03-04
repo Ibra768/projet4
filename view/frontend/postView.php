@@ -37,19 +37,19 @@
     for($i=0 ; $i < count($comments) ; $i++)
     {
     ?>
-    <div id="comments" class="post container">
-        <p><strong><?= $comments[$i]['author'] ?></strong> 
-        <p>Publié le <?= $comments[$i]['comment_date_fr'] ?>
-        <p><?= nl2br($comments[$i]['comment']) ?></p>
-        <a class="boutons" id="bouton_Signalement" href="index.php?action=report&amp;id=<?= $comments[$i]['id'] ?>&amp;postid=<?= $comments[$i]['post_id'] ?>"><i class="far fa-flag"></i> Signaler</a>
-        <?php
-        if(isset($_SESSION['pseudo']) && isset($_SESSION['pass'])) {
-        ?>
-            <a class="boutons" onclick="if(window.confirm('Voulez-vous vraiment supprimer ce commentaire ?')){return true;}else{return false;}" href="index.php?action=deleteCommentAdmin&id=<?= $comments[$i]['id'] ?>&postid=<?= $_GET['id'] ?>"><i class="far fa-trash-alt"></i></a>
-        <?php
-        }
-        ?>
-    </div>
+        <div id="comments" class="post container">
+            <p><strong><?= $comments[$i]['author'] ?></strong> 
+            <p>Publié le <?= $comments[$i]['comment_date_fr'] ?>
+            <p><?= nl2br($comments[$i]['comment']) ?></p>
+            <a class="boutons" id="bouton_Signalement" href="index.php?action=report&amp;id=<?= $comments[$i]['id'] ?>&amp;postid=<?= $comments[$i]['post_id'] ?>"><i class="far fa-flag"></i> Signaler</a>
+            <?php
+            if(isset($_SESSION['pseudo']) && isset($_SESSION['pass'])) {
+            ?>
+                <a class="boutons" onclick="if(window.confirm('Voulez-vous vraiment supprimer ce commentaire ?')){return true;}else{return false;}" href="index.php?action=deleteCommentAdmin&id=<?= $comments[$i]['id'] ?>&postid=<?= $_GET['id'] ?>"><i class="far fa-trash-alt"></i></a>
+            <?php
+            }
+            ?>
+        </div>
     <?php
     }
     ?>

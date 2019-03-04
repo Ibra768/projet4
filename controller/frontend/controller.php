@@ -18,7 +18,7 @@ function listPostsHome() // Fonction qui récupère toutes les news
 
 function post($postid) // Fonction qui récupère 1 news et les commentaires associés
 {
-    if (isset($_GET['id']) && $_GET['id'] > 0) {  
+    if (isset($postid) && $postid > 0) {  
         $postManager = new \Model\PostManager();
         $commentManager = new \Model\CommentManager();
 
@@ -38,7 +38,7 @@ function post($postid) // Fonction qui récupère 1 news et les commentaires ass
 
 function reportComment($idReport, $postidReport) // Fonction qui permet de signaler un commentaire
 {
-    if (isset($_GET['id']) && $_GET['id'] > 0 && isset($_GET['postid']) && $_GET['postid'] > 0) {
+    if (isset($idReport) && $idReport > 0 && isset($postidReport) && $postidReport > 0) {
 
         $report = new \Model\CommentManager();
 
@@ -59,7 +59,7 @@ function reportComment($idReport, $postidReport) // Fonction qui permet de signa
 
 function addComment($postId, $author, $comment) // Fonction qui permet d'ajouter un commentaire
 {
-    if (isset($_GET['id']) && $_GET['id'] > 0 && !empty($_POST['author']) && !empty($_POST['comment'])) { 
+    if (isset($postId) && $postId > 0 && !empty($author) && !empty($comment)) { 
 
         $addComments = new \Model\CommentManager();
 
@@ -79,7 +79,7 @@ function addComment($postId, $author, $comment) // Fonction qui permet d'ajouter
 
 function getAdministrator($pseudo, $mdp) { // Fonction qui permet de savoir si l'utilisateur est administrateur lors de la connexion
 
-    if(!empty($_POST['pseudo']) && !empty($_POST['pass'])) {
+    if(!empty($pseudo) && !empty($mdp)) {
 
         $checkAdmin = new \Model\AdminManager();
         $resultat = $checkAdmin->getAdmin($pseudo);
@@ -103,4 +103,8 @@ function getAdministrator($pseudo, $mdp) { // Fonction qui permet de savoir si l
             }
         }
     }
+}
+
+function getConnexion() {
+    require('view/frontend/connexion.php');
 }

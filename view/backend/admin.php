@@ -25,7 +25,7 @@ else if(isset($_GET['delete'])) {
 for($i=0 ; $i < count($postsAdminPage) ; $i++)
 {
 ?>
-<div id="tableauAdmin">
+<article id="tableauAdmin">
   <div><p><?= $postsAdminPage[$i]['title'] ?></p></div>
   <div><p><?= $postsAdminPage[$i]['creation_date_fr'] ?></p></div>
   <div id="boutons_Admin">
@@ -33,12 +33,12 @@ for($i=0 ; $i < count($postsAdminPage) ; $i++)
       <a class="boutons" href="index.php?action=updatePost&amp;id=<?= $postsAdminPage[$i]['id'] ?>"><i class="fas fa-paint-brush"></i></a>
       <a id="bouton_delete"class="boutons" href="index.php?action=deletePost&amp;id=<?= $postsAdminPage[$i]['id'] ?>" onclick="if(window.confirm('Voulez-vous vraiment supprimer ce billet ?')){return true;}else{return false;}"><i class="far fa-trash-alt"></i></a>
   </div>
-</div>
+</article>
 <?php
 }
 ?>
 
-<div class="pagination">
+<aside class="pagination">
   <?php
     for($i=1 ; $i <= $pagesTotales ; $i++){
       if($i == $pageCourante){
@@ -48,7 +48,7 @@ for($i=0 ; $i < count($postsAdminPage) ; $i++)
         }
     } 
   ?>
-</div>
+</aside>
 
 <?php
 $content = ob_get_clean(); 
