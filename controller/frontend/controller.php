@@ -24,9 +24,7 @@ function post($postid) // Fonction qui récupère 1 news et les commentaires ass
 
         $post = $postManager->getPost($postid);
         $comments = $commentManager->getComments($postid);
-        else{
             require('view/frontend/postView.php');
-        }
     }
     else{
         require('view/frontend/error.php');
