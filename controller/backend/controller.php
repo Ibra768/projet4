@@ -1,7 +1,5 @@
 <?php
-
 // Chargement des classes
-
 require_once('model/CommentManager.php');
 require_once('model/AdminManager.php');
 require_once('model/PostManager.php');
@@ -73,12 +71,12 @@ function adminCommentReport($pageCouranteComments) {
 
 }
 
-function updatePost($id) // Fonction qui récupère le billet à modifier (afin de l'insérer dans un formulaire pour le modifier)
+function updatePost() // Fonction qui récupère le billet à modifier (afin de l'insérer dans un formulaire pour le modifier)
 {
-    if (isset($id) && $id > 0) {
+    if (isset($_GET['id']) && $_GET['id'] > 0) {
         $postUpdate = new \Model\PostManager();
 
-        $postUp = $postUpdate->getPost($id);
+        $postUp = $postUpdate->getPost($_GET['id']);
 
         require('view/backend/updateNews.php');
     }
@@ -89,83 +87,54 @@ function updatePost($id) // Fonction qui récupère le billet à modifier (afin 
 
 function confirmUpdatePost($idUpdate, $titleUpdate, $contentUpdate) // Fonction qui modifie le billet
 {
-    try{
+    if(isset($_POST['id']) && $_POST["id"] > 0 && !empty($_POST['titleUpdate']) && !empty($_POST['contentUpdate'])) {
 
-        if(!isset($idUpdate) && $idUpdate < 0) {
+        $confirmPostUpdate = new \Model\PostManager();
+
+        $confirmUp = $confirmPostUpdate->updatePostDB($idUpdate, $titleUpdate, $contentUpdate);
+
+
+        if ($confirmUp === false) {
             require('view/frontend/error.php');
         }
-        else if(empty($titleUpdate)){
-            throw new Exception('Impossible d\'envoyer votre post, le titre n\'a pas été renseigné');
-        }
-        else if(empty($contentUpdate)) {
-            throw new Exception('Impossible d\'envoyer votre post, le contenu n\'a pas été renseigné');
-        }
-        else{
+        else {
+            
+            header('Location: index.php?action=admin&update'); 
 
-            $confirmPostUpdate = new \Model\PostManager();
-
-            $confirmUp = $confirmPostUpdate->updatePostDB($idUpdate, $titleUpdate, $contentUpdate);
-
-
-            if ($confirmUp === false) {
-                require('view/frontend/error.php');
-            }
-            else {
-                
-                header('Location: index.php?action=admin&update'); 
-
-            }
         }
     }
-    catch (Exception $e){
+    else{
         require('view/frontend/error.php');
-        ?>
-        <script>document.getElementById("paragraphe_Error").innerHTML = "<?= $e->getMessage(); ?>";</script>
-        <?php
-
     }
 }
 
 function addPost($title, $content) // Fonction qui permet d'ajouter un billet
 {
-    try{
+    if (!empty($_POST['title']) && !empty($_POST['content'])) { 
 
-        if (empty($title)){
-            throw new Exception('Impossible d\'envoyer votre post, le titre n\'a pas été renseigné');
+        $newPost = new \Model\PostManager();
+
+        $addedPost = $newPost->addPost($title, $content);
+
+        if ($addedPost === false) {
+            require('view/frontend/error.php');
         }
-        else if(empty($content)) { 
-            throw new Exception('Impossible d\'envoyer votre post, le contenu n\'a pas été renseigné');
-        }
-        else{
-
-            $newPost = new \Model\PostManager();
-
-            $addedPost = $newPost->addPost($title, $content);
-
-            if ($addedPost === false) {
-                require('view/frontend/error.php');
-            }
-            else {
-                header('Location: index.php?action=admin&add'); 
-            }
+        else {
+            header('Location: index.php?action=admin&add'); 
         }
     }
-    catch (Exception $e){
+    else{
         require('view/frontend/error.php');
-        ?>
-        <script>document.getElementById("paragraphe_Error").innerHTML = "<?= $e->getMessage(); ?>";</script>
-        <?php
-
     }
 }   
 
-function deletePost($id) // Fonction qui permet de supprimer un billet
+function deletePost() // Fonction qui permet de supprimer un billet
 {
-    if(isset($id) && $id > 0) { 
+    if(isset($_GET['id']) && $_GET['id'] > 0) { 
 
         $postManagerDeletePosts = new \Model\PostManager();
 
-        $deletePost = $postManagerDeletePosts->deletePost($id);
+        $deletePost = $postManagerDeletePosts->deletePost($_GET['id']);
 
         if ($deletePost === false) {
             require('view/frontend/error.php');
@@ -182,7 +151,7 @@ function deletePost($id) // Fonction qui permet de supprimer un billet
 
 function allowComment($idComment) // Fonction qui autorise un commentaire signalé
 {
-    if (isset($idComment) && $idComment > 0) {
+    if (isset($_GET['id']) && $_GET['id'] > 0) {
 
         $allow = new \Model\CommentManager();
 
@@ -202,7 +171,7 @@ function allowComment($idComment) // Fonction qui autorise un commentaire signal
 
 function deleteComment($id) // Fonction qui permet de supprimer un commentaire signalé
 {
-    if(isset($id) && $id > 0) {
+    if(isset($_GET['id']) && $_GET['id'] > 0) {
 
         $deleteComment = new \Model\CommentManager();
 
@@ -222,7 +191,7 @@ function deleteComment($id) // Fonction qui permet de supprimer un commentaire s
 
 function deleteCommentAdmin($id,$postid) // Fonction qui permet de supprimer un commentaire signalé
 {
-    if(isset($id) && $id > 0  && isset($postid) && $postid > 0) {
+    if(isset($_GET['id']) && $_GET['id'] > 0  && isset($_GET['postid']) && $_GET['postid'] > 0) {
 
         $deleteComment = new \Model\CommentManager();
 
@@ -241,14 +210,8 @@ function deleteCommentAdmin($id,$postid) // Fonction qui permet de supprimer un 
 }
 
 function disconnect () { // Fonction qui permet la deconnexion de l'admin
-    
+
     session_unset();
     session_destroy();
     listPostsHome();
-}
-function getAddPage() {
-    require('view/backend/addPost.php');
-}
-function forbidden() {
-    require('view/frontend/forbidden.php');
 }

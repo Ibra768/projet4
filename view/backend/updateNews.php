@@ -7,7 +7,7 @@ ob_start();
 
 <h1>Modifier un billet</h1>
 
-<article class="container form">
+<div class="container form">
     <form method="POST" action="index.php?action=confirmUpdatePost">
         <div class="row">
             <div class="col-25">
@@ -28,7 +28,7 @@ ob_start();
             </div>
         </div>
     </form>
-</article>
+</div>
 
 <?php 
 $content = ob_get_clean(); 

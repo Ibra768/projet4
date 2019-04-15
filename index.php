@@ -1,6 +1,11 @@
 <?php
 // Début de la session
-session_start();
+if(!isset($_SESSION)) 
+    { 
+        session_start(); 
+    } 
+ini_set('display_errors','on');
+error_reporting(E_ALL);
 // Appel du controller
 require('controller/frontend/controller.php');
 require('controller/backend/controller.php');

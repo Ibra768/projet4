@@ -6,7 +6,7 @@
     ob_start(); 
 ?>
 
-<article id="presentation" class="container">
+<div id="presentation" class="container">
     <div class="row">
         <div class=col-lg-12">
             <h1> Billet simple pour l'Alaska </h1>
@@ -22,26 +22,26 @@
             <p>Bonne lecture :)<p>
         </div>
     </div>
-</article>
-<aside id="portfolio">
+</div>
+<div id="portfolio">
     <?php
     for($i=0 ; $i < count($posts) ; $i++)
     {
     ?>
-        <figure>
-            <a href="index.php?action=post&amp;id=<?= $posts[$i]['id'] ?>">
-            <img src="public/images/episodes/episode_<?= $posts[$i]['id'] ?>.png" alt="Illustration de l'épisode" />
-            <figcaption>
-                <span class="title_portfolio"><?= $posts[$i]['title']  ?></span>
-                <p>Publié le <?= $posts[$i]['creation_date_fr']  ?></p>
-                <span class="oeil"><i class="fas fa-eye"></i></span>
-            </figcaption>
-            </a>
-        </figure>
+    <figure>
+        <a href="index.php?action=post&amp;id=<?= $posts[$i]['id'] ?>">
+        <img src="public/images/episodes/episode_<?= $posts[$i]['id'] ?>.png" alt="Illustration de l'épisode" />
+        <figcaption>
+            <span class="title_portfolio"><?= $posts[$i]['title']  ?></span>
+            <p>Publié le <?= $posts[$i]['creation_date_fr']  ?></p>
+            <span class="oeil"><i class="fas fa-eye"></i></span>
+        </figcaption>
+        </a>
+    </figure>
     <?php
     }
     ?>
-</aside>
+</div>
 
 <?php 
 $content = ob_get_clean(); 

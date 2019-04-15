@@ -1,10 +1,8 @@
 <?php
-
 // Chargement des classes
-
-require_once('model/CommentManager.php');
-require_once('model/AdminManager.php');
-require_once('model/PostManager.php');
+require('model/CommentManager.php');
+require('model/AdminManager.php');
+require('model/PostManager.php');
 
 function listPostsHome() // Fonction qui récupère toutes les news
 {
@@ -18,13 +16,18 @@ function listPostsHome() // Fonction qui récupère toutes les news
 
 function post($postid) // Fonction qui récupère 1 news et les commentaires associés
 {
-    if (isset($postid) && $postid > 0) {  
+    if (isset($_GET['id']) && $_GET['id'] > 0) {  
         $postManager = new \Model\PostManager();
         $commentManager = new \Model\CommentManager();
 
         $post = $postManager->getPost($postid);
         $comments = $commentManager->getComments($postid);
+        if(empty($post['content'])) {
+            require('view/frontend/error.php');
+        }
+        else{
             require('view/frontend/postView.php');
+        }
     }
     else{
         require('view/frontend/error.php');
@@ -33,7 +36,7 @@ function post($postid) // Fonction qui récupère 1 news et les commentaires ass
 
 function reportComment($idReport, $postidReport) // Fonction qui permet de signaler un commentaire
 {
-    if (isset($idReport) && $idReport > 0 && isset($postidReport) && $postidReport > 0) {
+    if (isset($_GET['id']) && $_GET['id'] > 0 && isset($_GET['postid']) && $_GET['postid'] > 0) {
 
         $report = new \Model\CommentManager();
 
@@ -54,7 +57,7 @@ function reportComment($idReport, $postidReport) // Fonction qui permet de signa
 
 function addComment($postId, $author, $comment) // Fonction qui permet d'ajouter un commentaire
 {
-    if (isset($postId) && $postId > 0 && !empty($author) && !empty($comment)) { 
+    if (isset($_GET['id']) && $_GET['id'] > 0 && !empty($_POST['author']) && !empty($_POST['comment'])) { 
 
         $addComments = new \Model\CommentManager();
 
@@ -74,7 +77,7 @@ function addComment($postId, $author, $comment) // Fonction qui permet d'ajouter
 
 function getAdministrator($pseudo, $mdp) { // Fonction qui permet de savoir si l'utilisateur est administrateur lors de la connexion
 
-    if(!empty($pseudo) && !empty($mdp)) {
+    if(!empty($_POST['pseudo']) && !empty($_POST['pass'])) {
 
         $checkAdmin = new \Model\AdminManager();
         $resultat = $checkAdmin->getAdmin($pseudo);
@@ -88,7 +91,6 @@ function getAdministrator($pseudo, $mdp) { // Fonction qui permet de savoir si l
         else
         {
             if ($isPasswordCorrect) {
-                session_start();
                 $_SESSION['pseudo'] = $pseudo;
                 $_SESSION['pass'] = $mdp;    
                 header('Location: index.php?action=admin');  

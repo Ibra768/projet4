@@ -8,28 +8,27 @@ if ($_GET['action'] == 'erreurConnexion') {
         echo  '<div class="message">' . 'Votre pseudo et' . '/' . 'ou votre mot de passe sont incorrect.' . '</div>';
 }
 ?>  
-
-<article class="container">
-    <form method="POST" action="index.php?action=connexion">
-        <div class="row">
-            <div class="col-25">
-                <label for="pseudo">Votre Pseudo</label>
+    <div class="container">
+        <form method="POST" action="index.php?action=connexion">
+            <div class="row">
+                <div class="col-25">
+                    <label for="pseudo">Votre Pseudo</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" name="pseudo" required>
+                </div>
             </div>
-            <div class="col-75">
-                <input type="text" name="pseudo" required>
+            <div class="row">
+                <div class="col-25">
+                    <label for="pass">Votre mot de passe</label>
+                </div>
+                <div class="col-75">
+                    <input type="password" name="pass" required><br>
+                    <input type="submit" class="boutons" value="Envoyer">
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-25">
-                <label for="pass">Votre mot de passe</label>
-            </div>
-            <div class="col-75">
-                <input type="password" name="pass" required><br>
-                <input type="submit" class="boutons" value="Envoyer">
-            </div>
-        </div>
-    </form>
-</article>
+        </form>
+    </div>
 
 <?php 
 $content = ob_get_clean(); 
