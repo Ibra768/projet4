@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // Chargement des classes
 require('model/CommentManager.php');
 require('model/AdminManager.php');
@@ -104,4 +104,8 @@ function getAdministrator($pseudo, $mdp) { // Fonction qui permet de savoir si l
 
 function getConnexion() {
     require('view/frontend/connexion.php');
+}
+
+function forbidden() {
+require('view/frontend/forbidden.php');
 }
