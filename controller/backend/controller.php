@@ -107,7 +107,9 @@ function confirmUpdatePost($idUpdate, $titleUpdate, $contentUpdate) // Fonction 
         require('view/frontend/error.php');
     }
 }
-
+function getAddPage() {
+    require('view/backend/addPost.php');
+}
 function addPost($title, $content) // Fonction qui permet d'ajouter un billet
 {
     if (!empty($_POST['title']) && !empty($_POST['content'])) { 

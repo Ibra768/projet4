@@ -7,8 +7,8 @@ if(!isset($_SESSION))
 ini_set('display_errors','on');
 error_reporting(E_ALL);
 // Appel du controller
-require('controller/frontend/controller.php');
-require('controller/backend/controller.php');
+require_once('controller/frontend/controller.php');
+require_once('controller/backend/controller.php');
 // Bloc qui regroupe toutes les actions effectués, en fonction des requêtes GET & POST envoyées
 
 if (isset($_GET['action'])) {
