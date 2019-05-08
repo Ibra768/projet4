@@ -4,7 +4,12 @@
     $body = "body_post";
     ob_start(); 
 ?>
-
+<style>
+body {
+    background-image : url("public/images/posts/<?php echo $post['images'];?>");
+    background-size : cover;
+}
+</style>
 <div id="post_wrapper">
 
     <?php 

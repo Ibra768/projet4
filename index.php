@@ -54,9 +54,8 @@ if (isset($_GET['action'])) {
                 adminCommentReport($pageCouranteComments);
             }
             break;
-
-        case 'addPost' : // Accès ajout post
-            addPost(htmlspecialchars($_POST['title']), htmlspecialchars($_POST['content'])); 
+        case 'addPost' : // lancement ajout
+            addPost($_FILES,htmlspecialchars($_POST['title']),htmlspecialchars($_POST['content']),htmlspecialchars($_SESSION['pseudo']));
             break;
         case 'add' : // accès à la page d'ajout de post
             getAddPage();
@@ -65,7 +64,7 @@ if (isset($_GET['action'])) {
             updatePost(htmlspecialchars($_GET['id']));
             break;
         case 'confirmUpdatePost' : // modification du post
-            confirmUpdatePost(htmlspecialchars($_POST['id']), htmlspecialchars($_POST['titleUpdate']), strip_tags($_POST['contentUpdate']));
+        confirmUpdatePost($_FILES,htmlspecialchars($_POST['id']),htmlspecialchars($_POST['title']),htmlspecialchars($_POST['content']),htmlspecialchars($_SESSION['pseudo']));
             break;
         case 'deletePost' : // Suppression de post
             deletePost(htmlspecialchars($_GET['id']));

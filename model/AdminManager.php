@@ -15,4 +15,11 @@ class AdminManager extends Manager
 
         return $resultat;
     }
+    public function addPost($addTitle, $addContent, $addAuthor, $fichier) // Ajoute un billet
+    {
+        $db = $this->dbConnect();
+        $insertPost = $db->prepare('INSERT INTO posts(title, content, author, images, creation_date) VALUES(?, ?, ?, ?, NOW())');
+        $addPost = $insertPost->execute(array($addTitle, $addContent, $addAuthor, $fichier));
+        return $addPost;
+    }
 }

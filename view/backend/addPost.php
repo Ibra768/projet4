@@ -8,13 +8,14 @@ ob_start();
 <h1>Ajouter un billet</h1>
 
 <div class="container">
-    <form method="POST" action="index.php?action=addPost">
+    <form method="POST" action="index.php?action=addPost" enctype="multipart/form-data">
         <div class="row">
             <div class="col-25">
                 <label for="title">Titre du billet</label>
             </div>
             <div class="col-75">
                 <input type="text" name="title" required>
+                <input type="file" id="avatar" name="avatar" required><br>
             </div>
         </div>
         <div class="row">

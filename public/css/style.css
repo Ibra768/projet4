@@ -99,16 +99,6 @@ body{
 	display: block;
 	height: 35%;
 }
-.oeil
-{
-	background-color: #4EB1D5;
-	border: 2px solid #FFFFFF;
-	border-radius: 50%;
-	padding: 10px;
-	position: absolute;
-	right: 10px;
-	top: -20px;
-}
 #portfolio figcaption .title_portfolio
 {
     display : inline-block;
@@ -121,7 +111,23 @@ body{
 	margin-top: 5px;
 	margin-left: 10px;
 }
+.boutonsAdmin
+{
+	background-color: #4EB1D5;
+	border: 2px solid #FFFFFF;
+	border-radius: 50%;
+	padding: 10px;
+	position: absolute;
+	top: -20px;
+}
+#boutonModifier{
 
+    right: 10px;
+}
+#boutonSupprimer
+{
+	left: 10px;
+}
 /* Page de connexion */
 
 #body_Connexion {
@@ -161,12 +167,13 @@ body{
 #body_Modif input {
     color : black;
 }
+#imageUpdate{
+    width: 100px;
+    height : 100px;
+}
 
 /* Page article + comments */
 
-#body_post{
-background : url("../../public/images/background/background_post.jpg") no-repeat fixed center;
-}
 #post_wrapper{
     text-align: center;
     display: flex;

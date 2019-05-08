@@ -85,50 +85,106 @@ function updatePost() // Fonction qui récupère le billet à modifier (afin de 
     }
 }
 
-function confirmUpdatePost($idUpdate, $titleUpdate, $contentUpdate) // Fonction qui modifie le billet
-{
-    if(isset($_POST['id']) && $_POST["id"] > 0 && !empty($_POST['titleUpdate']) && !empty($_POST['contentUpdate'])) {
-
-        $confirmPostUpdate = new \Model\PostManager();
-
-        $confirmUp = $confirmPostUpdate->updatePostDB($idUpdate, $titleUpdate, $contentUpdate);
-
-
-        if ($confirmUp === false) {
-            require('view/frontend/error.php');
-        }
-        else {
-            
-            header('Location: index.php?action=admin&update'); 
-
-        }
-    }
-    else{
-        require('view/frontend/error.php');
-    }
-}
 function getAddPage() {
     require('view/backend/addPost.php');
-}
-function addPost($title, $content) // Fonction qui permet d'ajouter un billet
-{
-    if (!empty($_POST['title']) && !empty($_POST['content'])) { 
+}     
 
-        $newPost = new \Model\PostManager();
-
-        $addedPost = $newPost->addPost($title, $content);
-
-        if ($addedPost === false) {
-            require('view/frontend/error.php');
+function addPost($fichier,$title,$content,$author){
+    try{
+        if(empty($title) && empty($content) && empty($author)) {
+            throw new Exception("Une erreur a été rencontré.");
         }
-        else {
-            header('Location: index.php?action=admin&add'); 
+        else{
+            $maxSize = 2097152;
+            $validExtensions = array('jpg','jpeg','png','gif');
+            
+            if ($fichier['avatar']['size'] <= $maxSize){
+                $uploadExtensions = strtolower(substr(strrchr($fichier['avatar']['name'], '.'),1));
+                if(in_array($uploadExtensions, $validExtensions)){
+                    $folder = "public/images/posts/".$title.".".$uploadExtensions;
+                    $result = move_uploaded_file($fichier['avatar']['tmp_name'],$folder);
+                    var_dump($result);
+                    if($result){
+                        $fichierImage = $title.".".$uploadExtensions;
+                        $add = new \Model\AdminManager();
+                        $addPost = $add->addPost($title,$content,$author,$fichierImage);
+                        var_dump($addPost);
+                        Header('location:index.php?action=admin&add=ok');
+                    }
+                    else{
+                        throw new Exception("Nous avons rencontrer une erreur lors de l'importation de votre fichier.");
+                    }
+                }
+                else{
+                    throw new Exception("L\'illustration de l\'article doit être au format jpg.");
+                }
+            }   
+            else{
+                throw new Exception('L\illustration de l\'article ne doit pas dépasser 2mo.');
+            }
         }
     }
-    else{
+    catch (Exception $e){
         require('view/frontend/error.php');
+        ?>
+        <script>document.getElementById("message_Error").innerHTML = "<?= $e->getMessage(); ?>";</script>
+        <?php
     }
-}   
+}
+
+function confirmUpdatePost($fichier,$id,$title,$content,$author){
+
+    try{
+        if(empty($title) && empty($content) && empty($author)) {
+            throw new Exception("Une erreur a été rencontré.");
+        }
+        else{
+            $maxSize = 2097152;
+            $validExtensions = array('jpg','jpeg','gif','png');
+            
+            if ($fichier['avatar']['size'] <= $maxSize){
+                $uploadExtensions = strtolower(substr(strrchr($fichier['avatar']['name'], '.'),1));
+                $deletePreviousTitle = new \Model\PostManager();
+                $delete = $deletePreviousTitle->getPost($id);
+                
+                if(in_array($uploadExtensions, $validExtensions)){
+                    if (!empty($delete['images'])){
+                        unlink("public/images/posts/". $delete['images']);
+                    }
+                    $folder = "public/images/posts/".$title.".".$uploadExtensions;
+                    $result = move_uploaded_file($fichier['avatar']['tmp_name'],$folder);
+                    var_dump($fichier);
+                    if($result){
+                        $fichierImage = $title.".".$uploadExtensions;
+                        $update = new \Model\PostManager();
+                        $updatePost = $update->updatePostDB($title,$content,$author,$fichierImage,$id);
+                        if(!$updatePost) {
+                            throw new Exception("Une erreur a été rencontré.");
+                        }
+                        else{
+                        Header('location:index.php?action=admin&update=ok');
+                        }
+                    }
+                    else{
+                        throw new Exception("Nous avons rencontrer une erreur lors de l'importation de votre fichier.");
+                    }
+                }
+                else{
+                    throw new Exception("Votre photo de profil doit être au format jpg, jpeg, gif ou png.");
+                }
+            }   
+            else{
+                throw new Exception('Votre photo de profil ne doit pas dépasser 2mo.');
+            }
+        }
+    }
+    catch (Exception $e){
+        require('view/frontend/error.php');
+        ?>
+        <script>document.getElementById("message_Error").innerHTML = "<?= $e->getMessage(); ?>";</script>
+        <?php
+    }
+}
 
 function deletePost() // Fonction qui permet de supprimer un billet
 {

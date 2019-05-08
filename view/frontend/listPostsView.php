@@ -29,12 +29,18 @@
     {
     ?>
     <figure>
-        <a href="index.php?action=post&amp;id=<?= $posts[$i]['id'] ?>">
-        <img src="public/images/episodes/episode_<?= $posts[$i]['id'] ?>.png" alt="Illustration de l'épisode" />
+        <a href="index.php?action=post&amp;id=<?= $posts[$i]['id'] ?>"><img src="public/images/posts/<?= $posts[$i]['images'] ?>" alt="Illustration de l'épisode" /></a>
         <figcaption>
             <span class="title_portfolio"><?= $posts[$i]['title']  ?></span>
             <p>Publié le <?= $posts[$i]['creation_date_fr']  ?></p>
-            <span class="oeil"><i class="fas fa-eye"></i></span>
+            <?php
+            if(isset($_SESSION['pseudo'])) {
+                ?>
+            <a href="index.php?action=updatePost&amp;id=<?= $posts[$i]['id'] ?>"><span id="boutonSupprimer" class="boutonsAdmin"><i class="fas fa-paint-brush"></i></i></span><a>
+            <a href="index.php?action=deletePost&amp;id=<?= $posts[$i]['id'] ?>" onclick="if(window.confirm('Voulez-vous vraiment supprimer ce billet ?')){return true;}else{return false;}"><span id="boutonModifier" class="boutonsAdmin"><i class="far fa-trash-alt"></i></span></a>
+            <?php
+            }
+            ?>
         </figcaption>
         </a>
     </figure>
