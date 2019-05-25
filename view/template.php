@@ -37,7 +37,7 @@
                         }   
                         else{ 
                         ?>
-                    <li><a href="index.php?action=getConnexion"><span class="glyphicon glyphicon-user"></span> Connexion</a></li>
+                    <li><a href="index.php?action=getConnexion"><span class="glyphicon glyphicon-user"></span> Accès Administration</a></li>
                         <?php
                         }
                         ?>

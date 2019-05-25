@@ -40,9 +40,11 @@ body{
 .message{
     background-color: gray;
     text-align: center;
-    border : 2px solid black;
     color : white;
     font-size : 1.4em;
+}
+.messageActive{
+    border : 2px solid black;
 }
 
 /* Page d'accueil */
@@ -74,7 +76,7 @@ body{
     width: 350px;
     margin : 16px 20px 16px 20px;
     background-color: skyblue;
-    border : 2px solid black;
+    border : 3px solid white;
 }
 #portfolio figure img
 {
@@ -128,6 +130,11 @@ body{
 {
 	left: 10px;
 }
+#body_home .page-footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
 /* Page de connexion */
 
 #body_Connexion {
@@ -160,7 +167,8 @@ body{
 }
 #body_Modif form{
     text-align: center;
-    width : 100%;
+    width : 70%;
+    margin: auto;
     color: white; 
     font-size : 1.2em;
 }
@@ -184,13 +192,9 @@ body{
 #billet {
     font-family: 'Nova Flat', cursive;
     font-size: 1.2em;
-}
-.post{
-    background: rgba(255,255,255,0.8);
-    border : 2px solid white;
-    padding-bottom : 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    width: 70%;
+    margin: auto; 
+    background-color: white;
 }
 #body_post input{
     width : 250px;
@@ -213,6 +217,7 @@ body{
 #comments{
     width: 75%;
     margin: auto;
+    background-color: white;
     margin-top: 30px;
     font-size: 1.2em;
 }
@@ -287,6 +292,11 @@ body{
 #body_AdminComments{
     background-color : gray;
 }
+#body_AdminComments .page-footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
 /* Page erreur */
 
 #body_Error {
@@ -314,14 +324,14 @@ body{
     #body_Admin .page-footer{
         position: initial;
     }
+    #body_home .page-footer{
+        position: initial;
+    }
     #tableauAdmin {
         flex-direction: column;
     }
     #tableauAdmin div {
         width: initial;
-    }
-    #billet{
-        width: 70%;
     }
     #comments{
         width : 50%;

@@ -95,7 +95,7 @@ function addPost($fichier,$title,$content,$author){
             throw new Exception("Une erreur a été rencontré.");
         }
         else{
-            $maxSize = 2097152;
+            $maxSize = 5000000;
             $validExtensions = array('jpg','jpeg','png','gif');
             
             if ($fichier['avatar']['size'] <= $maxSize){
@@ -103,7 +103,6 @@ function addPost($fichier,$title,$content,$author){
                 if(in_array($uploadExtensions, $validExtensions)){
                     $folder = "public/images/posts/".$title.".".$uploadExtensions;
                     $result = move_uploaded_file($fichier['avatar']['tmp_name'],$folder);
-                    var_dump($result);
                     if($result){
                         $fichierImage = $title.".".$uploadExtensions;
                         $add = new \Model\AdminManager();
@@ -139,7 +138,7 @@ function confirmUpdatePost($fichier,$id,$title,$content,$author){
             throw new Exception("Une erreur a été rencontré.");
         }
         else{
-            $maxSize = 2097152;
+            $maxSize = 5000000;
             $validExtensions = array('jpg','jpeg','gif','png');
             
             if ($fichier['avatar']['size'] <= $maxSize){

@@ -29,7 +29,9 @@
     {
     ?>
     <figure>
-        <a href="index.php?action=post&amp;id=<?= $posts[$i]['id'] ?>"><img src="public/images/posts/<?= $posts[$i]['images'] ?>" alt="Illustration de l'épisode" /></a>
+        <a href="index.php?action=post&amp;id=<?= $posts[$i]['id'] ?>">
+            <img src="public/images/posts/<?= $posts[$i]['images'] ?>" alt="Illustration de l'épisode" />
+        </a>
         <figcaption>
             <span class="title_portfolio"><?= $posts[$i]['title']  ?></span>
             <p>Publié le <?= $posts[$i]['creation_date_fr']  ?></p>
@@ -42,7 +44,6 @@
             }
             ?>
         </figcaption>
-        </a>
     </figure>
     <?php
     }

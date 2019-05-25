@@ -14,27 +14,26 @@ body {
 
     <?php 
         if(isset($_GET['add'])) {
-            echo "<div class='message'>" . "Merci pour votre commentaire " . htmlspecialchars($_GET['add']) . " !" . "</div>";
+            ?>
+            <script>confirmAddComment();</script>
+            <?php
         }
         else if(isset($_GET['report'])) {
-            echo "<div class='message'>" . "Merci pour votre signalement, on s'en occupe !" . "</div>";
+            ?>
+            <script>confirmReportComment();</script>
+            <?php
         }
         else if(isset($_GET['deleteAdminok'])) {
-            echo "<div class='message'>" . "Le commentaire a bien été supprimé" . "</div>";
+            ?>
+            <script>confirmDeleteComment();</script>
+            <?php
         }
     ?>
-    <article id="billet" class=" post container">
-        <div class="row">
-            <div class=col-lg-12">
-            <h1><?= $post['title'] ?></h1>
-            <em>Publié le <?= $post['creation_date_fr'] ?></em>
-            </div>
-        </div>
-        <div id="contenu" class="row">
-            <div class="col-lg-12">
-            <?= html_entity_decode($post['content']) ?>
-            </div>
-        </div>
+    <p class="message"></p>
+    <article id="billet">
+        <h1><?= $post['title'] ?></h1>
+        <em>Publié le <?= $post['creation_date_fr'] ?></em>
+        <?= html_entity_decode($post['content']) ?>
     </article>
     <h2>Commentaires</h2>
     <?php
@@ -42,7 +41,7 @@ body {
     for($i=0 ; $i < count($comments) ; $i++)
     {
     ?>
-    <div id="comments" class="post container">
+    <div id="comments">
         <p><strong><?= $comments[$i]['author'] ?></strong> 
         <p>Publié le <?= $comments[$i]['comment_date_fr'] ?>
         <p><?= nl2br($comments[$i]['comment']) ?></p>
@@ -71,3 +70,5 @@ body {
 $content = ob_get_clean(); 
 require('view/template.php'); 
 ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script type="text/javascript" src="public/js/script.js"></script>

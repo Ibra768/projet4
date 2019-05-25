@@ -7,21 +7,35 @@ ob_start();
 
 
 if(isset($_GET['add'])) {
-  echo "<div class='message'>Le billet a bien été ajouté !</div>";
+  ?>
+  <script>confirmAddPost();</script>
+  <?php
 }
 else if(isset($_GET['update'])) {
-  echo "<div class='message'>Le billet a bien été modifié !</div>";
+  ?>
+  <script>confirmUpdatePost();</script>
+  <?php
 }
 else if(isset($_GET['delete'])) {
-  echo "<div class='message'>Le billet a bien été supprimé !</div>";
+  ?>
+  <script>confirmDeletePost();</script>
+  <?php
 }
 
 ?>
-
-<div class="instructions_Admin"><p>Bienvenue sur votre espace <?= $_SESSION['pseudo'] ?><br><a class="boutons" href="index.php?action=add">Ajouter un billet</a><br><a class="boutons" href="index.php?action=adminreport">Commentaires signalés</a><br>Voici la liste des billets publiés : <p></div>
+<p class="message"></p>
+<div class="instructions_Admin"><p>Bienvenue sur votre espace <?= $_SESSION['pseudo'] ?><br><a class="boutons" href="index.php?action=add">Ajouter un billet</a><br><a class="boutons" href="index.php?action=adminreport">Commentaires signalés</a><br>
 
 <?php
-
+if(empty($postsAdminPage)){
+  echo "<p>" . "Aucun billet publié" . "</p>";
+}
+else{
+  echo "<p>" . "Voici la liste des billets publiés" . "</p>";
+}
+?>
+</div>
+<?php
 for($i=0 ; $i < count($postsAdminPage) ; $i++)
 {
 ?>
@@ -55,3 +69,5 @@ $content = ob_get_clean();
 require('view/template.php'); 
 ?>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script type="text/javascript" src="public/js/script.js"></script>
