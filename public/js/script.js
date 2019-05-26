@@ -42,7 +42,7 @@ function confirmAddPost () {
 }
 function confirmUpdatePost () {
     $(document).ready(function(){
-        $(".message").html("Merci pour votre signalement, on s'en occupe !");
+        $(".message").html("Le billet a bien été modifié !");
         $(".message").addClass("messageActive");
     });
     setTimeout(function() {
@@ -53,7 +53,7 @@ function confirmUpdatePost () {
 
 function confirmDeletePost () {
     $(document).ready(function(){
-        $(".message").html("Le commentaire a bien été supprimé");
+        $(".message").html("Le billet a bien été supprimé");
         $(".message").addClass("messageActive");
     });
     setTimeout(function() {

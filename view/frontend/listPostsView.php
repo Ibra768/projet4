@@ -25,6 +25,13 @@
 </div>
 <div id="portfolio">
     <?php
+    if(empty($posts) && isset($_SESSION['pseudo'])){
+      ?>
+      <div class="instructions_Admin"><a class="boutons" href="index.php?action=add">Ajouter un billet</a></div>
+      <?php
+    }
+    else{
+    }
     for($i=0 ; $i < count($posts) ; $i++)
     {
     ?>

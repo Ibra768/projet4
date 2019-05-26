@@ -147,12 +147,8 @@ function confirmUpdatePost($fichier,$id,$title,$content,$author){
                 $delete = $deletePreviousTitle->getPost($id);
                 
                 if(in_array($uploadExtensions, $validExtensions)){
-                    if (!empty($delete['images'])){
-                        unlink("public/images/posts/". $delete['images']);
-                    }
                     $folder = "public/images/posts/".$title.".".$uploadExtensions;
                     $result = move_uploaded_file($fichier['avatar']['tmp_name'],$folder);
-                    var_dump($fichier);
                     if($result){
                         $fichierImage = $title.".".$uploadExtensions;
                         $update = new \Model\PostManager();

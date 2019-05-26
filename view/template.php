@@ -16,7 +16,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
     <script src="public/js/script.js"></script>
     <script src="https://cloud.tinymce.com/5/tinymce.min.js"></script>
-    <script>tinymce.init({ selector: '.tiny', height : 320, max_width : 700, theme_advanced_default_foreground_color: "red"});</script>
+    <script>tinymce.init({ selector: '.tiny', height : 280, max_width : 700, theme_advanced_default_foreground_color: "red"});</script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     </head>
     <body id="<?= $body  ?>">

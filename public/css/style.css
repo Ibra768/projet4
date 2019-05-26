@@ -36,6 +36,7 @@ body{
     width: 100px;
     margin: auto;
     margin-top : 10px;
+    margin-bottom : 10px;
 }
 .message{
     background-color: gray;
@@ -154,9 +155,7 @@ body{
     background : url("../../public/images/background/background_modification.jpg") no-repeat fixed center;
 }
 #body_Modif .page-footer{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+    display: none;
 }
 #body_Modif h1{
 
@@ -190,10 +189,11 @@ body{
     color: black;
 }
 #billet {
-    font-family: 'Nova Flat', cursive;
+    font-family: 'Nova Flat', 'cursive';
     font-size: 1.2em;
     width: 70%;
     margin: auto; 
+    padding : 15px;
     background-color: white;
 }
 #body_post input{
@@ -270,7 +270,7 @@ body{
 .pagination{
     display: flex;
     justify-content: center;
-    height: 30px;
+    height: 60px;
     width: 100px;
     margin: auto;
 }
