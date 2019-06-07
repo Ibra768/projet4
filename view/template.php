@@ -16,7 +16,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
     <script src="public/js/script.js"></script>
     <script src="https://cloud.tinymce.com/5/tinymce.min.js"></script>
-    <script>tinymce.init({ selector: '.tiny', height : 280, max_width : 700, theme_advanced_default_foreground_color: "red"});</script>
+    <script>tinymce.init({ selector: '.tiny', height : 280, max_width : 700, theme_advanced_default_foreground_color: "red", plugins: 'code', toolbar: 'undo redo | fontsizeselect fontselect', content_css: ['//fonts.googleapis.com/css?family=Nova+Flat|Anton|Cute+Font|Fjalla+One|Indie+Flower|Ranga'], font_formats: 'Anton = anton; Cute Font = cute font;Fjalla One = fjalla one;Indie Flower = indie flower;Ranga = ranga;Arial Black=arial black,avant garde;Nova Flat=Nova Flat, cursive;Times New Roman=times new roman,times;'});</script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     </head>
     <body id="<?= $body  ?>">
@@ -30,7 +30,7 @@
                     <?php
                         if (isset($_SESSION['pseudo']) && isset($_SESSION['pass'])) {
                     ?>
-                    <li><a href="#"><span><i class="far fa-smile-beam"></i></span> Bonjour <?= $_SESSION['pseudo'] ?> </a></li>
+                    <li id="welcome"><a href="#"><span><i class="far fa-smile-beam"></i></span> Bonjour <?= $_SESSION['pseudo'] ?> </a></li>
                     <li><a href="index.php?action=admin"><span class="glyphicon glyphicon-user"></span> Administration</a></li>
                     <li><a href="index.php?action=deconnexion"><span class="glyphicon glyphicon-log-in"></span> Déconnexion</a></li>
                     <?php

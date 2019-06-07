@@ -8,6 +8,7 @@
 body {
     background-image : url("public/images/posts/<?php echo $post['images'];?>");
     background-size : cover;
+    background-attachment : fixed;    
 }
 </style>
 <div id="post_wrapper">
@@ -35,7 +36,7 @@ body {
         <em>Publié le <?= $post['creation_date_fr'] ?></em>
         <?= html_entity_decode($post['content']) ?>
     </article>
-    <h2>Commentaires</h2>
+    <h2 class="titleComments">Commentaires</h2>
     <?php
     
     for($i=0 ; $i < count($comments) ; $i++)
@@ -57,6 +58,7 @@ body {
     <?php
     }
     ?>
+    <h3 class="titleComments">Ajouter un commentaire</h3>
     <form method="POST" action="index.php?action=addComment&amp;id=<?= $post['id'] ?>">
         <label for="author">Auteur</label><br>
         <input type="text" name="author" required><br>

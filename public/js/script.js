@@ -1,6 +1,6 @@
 function confirmAddComment () {
     $(document).ready(function(){
-        $(".message").html("Merci pour votre signalement, on s'en occupe !");
+        $(".message").html("Votre commentaire a bien été ajouté!");
         $(".message").addClass("messageActive");
     });
     setTimeout(function() {

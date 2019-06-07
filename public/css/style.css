@@ -25,6 +25,9 @@ body{
     margin-bottom : 0;
     text-transform: uppercase;
 }
+#welcome{
+    cursor: default;
+}
 .boutons {
     background-color: #4EB1D5;
     color: #FFFFFF;
@@ -58,6 +61,7 @@ body{
 }
 #presentation h1{
     text-transform: none;
+    font-family: 'Nova Flat', 'cursive';
 }
 #body_home{
     background-color : gray;
@@ -78,30 +82,51 @@ body{
     margin : 16px 20px 16px 20px;
     background-color: skyblue;
     border : 3px solid white;
-}
+    overflow: hidden;
+}   
 #portfolio figure img
 {
 	height: 100%;
     width: 100%;
-   
+    transform: scale(1.5);
+    transition : 1s;
+}
+#portfolio figure img:hover
+{
+    transform: scale(1);
 }
 #portfolio figcaption
 {
     background: rgba(0,0,0,0.4);
+    border-top: 2px solid white;
+    border-top-right-radius: 50px;
+    border-top-left-radius: 50px;
+    transition : 0.7s;
     bottom:0;
-    color:#fff;
-    display: none;
+    color:transparent;
+    visibility: hidden;
     height: 0;
     left:0;
     position:absolute;
     right:0;
     font-size: 1.3em;
 }
+
 #portfolio figure:hover figcaption
 {
-	display: block;
-	height: 35%;
+    visibility: visible;
+    animation: slidein 3s infinite;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    height: 35%;
 }
+
+@keyframes slidein {
+    100% {
+      color: white;
+    }
+  }
+
 #portfolio figcaption .title_portfolio
 {
     display : inline-block;
@@ -116,20 +141,26 @@ body{
 }
 .boutonsAdmin
 {
-	background-color: #4EB1D5;
-	border: 2px solid #FFFFFF;
-	border-radius: 50%;
+    background-color: #111;
+    color: white;
+	border-bottom: 3px solid #fff;
 	padding: 10px;
-	position: absolute;
-	top: -20px;
+    position: absolute;
+    z-index: 1000;
+    transition: 0.8s;
+}
+.boutonsAdmin:hover{
+    font-size: 1.4em;
 }
 #boutonModifier{
 
-    right: 10px;
+    right: 0px;
+    border-left: 3px solid #fff;
 }
 #boutonSupprimer
 {
-	left: 10px;
+    left: 0px;
+    border-right: 3px solid #fff;
 }
 #body_home .page-footer{
     position: absolute;
@@ -173,6 +204,7 @@ body{
 }
 #body_Modif input {
     color : black;
+    text-align: center;
 }
 #imageUpdate{
     width: 100px;
@@ -191,10 +223,11 @@ body{
 #billet {
     font-family: 'Nova Flat', 'cursive';
     font-size: 1.2em;
-    width: 70%;
+    width: 80%;
     margin: auto; 
     padding : 15px;
     background-color: white;
+    word-break: break-all;
 }
 #body_post input{
     width : 250px;
@@ -206,16 +239,16 @@ body{
     text-shadow: 2px 2px white;
 }
 #body_post textarea{
-    width : 50%;
+    width : 70%;
     height : 200px;
     border : 2px solid black;
 }
-#body_post h2 {
+#body_post .titleComments {
     text-transform: uppercase;
     text-shadow: 3px 2px white;
 }
 #comments{
-    width: 75%;
+    width: 60%;
     margin: auto;
     background-color: white;
     margin-top: 30px;
@@ -296,6 +329,11 @@ body{
     position: absolute;
     bottom: 0;
     width: 100%;
+}
+#tableauAdmin p{
+    word-break: break-all;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 /* Page erreur */
 

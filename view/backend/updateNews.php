@@ -9,7 +9,7 @@ ob_start();
 
     <form method="POST" action="index.php?action=confirmUpdatePost" enctype="multipart/form-data">
                 <label for="title">Titre du billet</label><br>
-                <input type="text" name="title"  value="<?= htmlspecialchars($postUp['title']) ?>" required><br>
+                <input type="text" name="title"  size="25" maxlength="20" value="<?= htmlspecialchars($postUp['title']) ?>" required><br>
                 <input type="file" id="avatar" name="avatar" required><br>  
                 <label for="content">Contenu</label>
             <textarea  type="text"  class="tiny" name="content"><?= html_entity_decode($postUp['content']) ?></textarea><br>

@@ -14,7 +14,7 @@ ob_start();
                 <label for="title">Titre du billet</label>
             </div>
             <div class="col-75">
-                <input type="text" name="title" required>
+                <input type="text" maxlength="20" size="25" name="title" required>
                 <input type="file" id="avatar" name="avatar" required><br>
             </div>
         </div>
