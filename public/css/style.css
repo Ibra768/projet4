@@ -12,20 +12,11 @@ body{
     font-family: 'Nova Flat', cursive;
 
 }   
-.page-footer {
-    padding-top: 10px;
-    background-color : #333;
-    text-align: center;
-    margin-top: 30px;
-}
-.page-footer p{
-    color : white;
-}
 .navbar{
     margin-bottom : 0;
     text-transform: uppercase;
 }
-#welcome{
+#welcome a{
     cursor: default;
 }
 .boutons {
@@ -162,11 +153,6 @@ body{
     left: 0px;
     border-right: 3px solid #fff;
 }
-#body_home .page-footer{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-}
 /* Page de connexion */
 
 #body_Connexion {
@@ -184,9 +170,6 @@ body{
 
 #body_Modif{
     background : url("../../public/images/background/background_modification.jpg") no-repeat fixed center;
-}
-#body_Modif .page-footer{
-    display: none;
 }
 #body_Modif h1{
 
@@ -239,7 +222,7 @@ body{
     text-shadow: 2px 2px white;
 }
 #body_post textarea{
-    width : 70%;
+    width : 60%;
     height : 200px;
     border : 2px solid black;
 }
@@ -248,11 +231,12 @@ body{
     text-shadow: 3px 2px white;
 }
 #comments{
-    width: 60%;
+    width: 70%;
     margin: auto;
     background-color: white;
     margin-top: 30px;
     font-size: 1.2em;
+    padding: 10px; 
 }
 
 /* Page Admin */
@@ -317,18 +301,8 @@ body{
 .pagination a{
     color: red;
 }
-#body_Admin .page-footer{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-}
 #body_AdminComments{
     background-color : gray;
-}
-#body_AdminComments .page-footer{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
 }
 #tableauAdmin p{
     word-break: break-all;
@@ -345,6 +319,12 @@ body{
     font-size: 1.5em;
     text-align: center;
 }
+footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: black;
+}
 
 /*  Media Queries */
 
@@ -356,15 +336,6 @@ body{
     .nav{
         text-align: center;
     }
-    #body_Modif .page-footer{
-        position: initial;
-    }
-    #body_Admin .page-footer{
-        position: initial;
-    }
-    #body_home .page-footer{
-        position: initial;
-    }
     #tableauAdmin {
         flex-direction: column;
     }
@@ -373,5 +344,8 @@ body{
     }
     #comments{
         width : 50%;
+    }
+    footer{
+        bottom: initial;
     }
   }

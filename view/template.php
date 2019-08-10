@@ -11,16 +11,16 @@
     <meta name="description" content= <?= $meta  ?> />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:500,900|Roboto+Condensed:700|Nova+Flat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:500,900|Roboto+Condensed:700|Nova+Flat|Anton|Courgette|Luckiest+Guy" rel="stylesheet">
     <link href="public/css/style.css" rel="stylesheet"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
     <script src="public/js/script.js"></script>
     <script src="https://cloud.tinymce.com/5/tinymce.min.js"></script>
-    <script>tinymce.init({ selector: '.tiny', height : 280, max_width : 700, theme_advanced_default_foreground_color: "red", plugins: 'code', toolbar: 'undo redo | fontsizeselect fontselect', content_css: ['//fonts.googleapis.com/css?family=Nova+Flat|Anton|Cute+Font|Fjalla+One|Indie+Flower|Ranga'], font_formats: 'Anton = anton; Cute Font = cute font;Fjalla One = fjalla one;Indie Flower = indie flower;Ranga = ranga;Arial Black=arial black,avant garde;Nova Flat=Nova Flat, cursive;Times New Roman=times new roman,times;'});</script>
+    <script>tinymce.init({ selector: '.tiny', height : 280, max_width : 700, theme_advanced_default_foreground_color: "red", plugins: 'code', toolbar: 'undo redo | fontsizeselect fontselect | bold italic'});</script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     </head>
     <body id="<?= $body  ?>">
-        <nav class="navbar navbar-inverse">
+        <nav class="navbar navbar-inverse"> 
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="index.php">Billet simple pour l'Alaska</a>
@@ -47,17 +47,10 @@
         <?= $content ?>
         <!-- Footer -->
         <footer class="page-footer font-small cyan darken-3">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 py-5">
-                    <p><i class="far fa-copyright"></i> Jean Forteroche</p>
-                    </div>
-                    <!-- Grid column -->
-                </div>
-                <!-- Grid row-->
+            <div>
+                <p><i class="far fa-copyright"></i> Jean Forteroche</p>
             </div>
         </footer>
-        <!-- Footer -->
     </body>
 </html>
 
