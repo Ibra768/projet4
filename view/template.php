@@ -45,12 +45,6 @@
             </div>
         </nav>
         <?= $content ?>
-        <!-- Footer -->
-        <footer class="page-footer font-small cyan darken-3">
-            <div>
-                <p><i class="far fa-copyright"></i> Jean Forteroche</p>
-            </div>
-        </footer>
     </body>
 </html>
 
