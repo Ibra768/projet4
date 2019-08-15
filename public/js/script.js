@@ -63,3 +63,18 @@ function confirmDeletePost () {
 }
 
 
+var ckbox = $('#old');
+
+$('#old').on('click',function () {
+    if (ckbox.is(':checked')) {
+        $("#avatar").css("display","none");
+        $("#avatar").val("");
+        $("#avatar").prop('required',false);
+    } else {
+        $("#avatar").css("display","block");
+        $("#avatar").prop('required',true);
+
+    }
+});
+
+    

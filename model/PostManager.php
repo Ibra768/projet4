@@ -57,4 +57,11 @@ class PostManager extends Manager
         $req->execute(array($titleUpdate,$contentUpdate,$authorUpdate,$fichierImage,$idUpdate));
         return $req;
     }
+    public function updatePostDBWithoutImage($titleUpdate,$contentUpdate,$authorUpdate,$idUpdate) // Modifie un billet
+    {
+        $db = $this->dbConnect();
+        $req = $db->prepare('UPDATE posts SET title = ?, content = ?, author = ? WHERE id = ?');
+        $req->execute(array($titleUpdate,$contentUpdate,$authorUpdate,$idUpdate));
+        return $req;
+    }
 }

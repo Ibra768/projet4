@@ -115,7 +115,7 @@ function addPost($fichier,$title,$content,$author){
                     }
                 }
                 else{
-                    throw new Exception("L\'illustration de l\'article doit être au format jpg.");
+                    throw new Exception("L\'illustration de l\'article doit être au format jpg, jpeg, png.");
                 }
             }   
             else{
@@ -131,33 +131,53 @@ function addPost($fichier,$title,$content,$author){
     }
 }
 
-function confirmUpdatePost($fichier,$id,$title,$content,$author){
+function confirmUpdatePost($fichier,$formulaire,$author){
 
     try{
-        if(empty($title) && empty($content) && empty($author)) {
+        if(empty($formulaire["title"]) || empty($formulaire["content"]) || empty($author)) {
             throw new Exception("Une erreur a été rencontré.");
+            
         }
-        else{
+        if(isset($formulaire["old"]) && !empty($formulaire["title"]) && !empty($formulaire["content"]) && !empty($author)){
+
+            $getExtension = new \Model\PostManager();
+            $get = $getExtension->getPost($formulaire['id']);
+
+            $extension = substr($get['images'], -4, 4);
+
+            $update = new \Model\PostManager();
+            $updatePost = $update->updatePostDB($formulaire["title"],$formulaire["content"],$author['pseudo'],$formulaire['title'].$extension,$formulaire["id"]);
+            rename("public/images/posts/".$get['images'],"public/images/posts/".$formulaire['title'].$extension);
+            if(!$updatePost) {
+                throw new Exception("Une erreur a été rencontré.");
+            }
+            else{
+            Header('location:index.php?action=admin&update=ok');
+            }
+            
+        }
+        if(isset($fichier) && !empty($formulaire["title"]) && !empty($formulaire["content"]) && !empty($author)){
             $maxSize = 5000000;
-            $validExtensions = array('jpg','jpeg','gif','png');
+            $validExtensions = array('jpg','gif','png');
             
             if ($fichier['avatar']['size'] <= $maxSize){
                 $uploadExtensions = strtolower(substr(strrchr($fichier['avatar']['name'], '.'),1));
                 $deletePreviousTitle = new \Model\PostManager();
-                $delete = $deletePreviousTitle->getPost($id);
+                $delete = $deletePreviousTitle->getPost($formulaire['id']);
                 
                 if(in_array($uploadExtensions, $validExtensions)){
-                    $folder = "public/images/posts/".$title.".".$uploadExtensions;
+                    $folder = "public/images/posts/".$formulaire['title'].".".$uploadExtensions;
                     $result = move_uploaded_file($fichier['avatar']['tmp_name'],$folder);
                     if($result){
-                        $fichierImage = $title.".".$uploadExtensions;
+                        $fichierImage = $formulaire['title'].".".$uploadExtensions;
                         $update = new \Model\PostManager();
-                        $updatePost = $update->updatePostDB($title,$content,$author,$fichierImage,$id);
+                        $updatePost = $update->updatePostDB($formulaire['title'],$formulaire['content'],$author['pseudo'],$fichierImage,$formulaire['id']);
                         if(!$updatePost) {
                             throw new Exception("Une erreur a été rencontré.");
                         }
                         else{
                         Header('location:index.php?action=admin&update=ok');
+                        unlink("public/images/posts/".$delete['images']);
                         }
                     }
                     else{
@@ -165,12 +185,15 @@ function confirmUpdatePost($fichier,$id,$title,$content,$author){
                     }
                 }
                 else{
-                    throw new Exception("Votre photo de profil doit être au format jpg, jpeg, gif ou png.");
+                    throw new Exception("Votre photo de profil doit être au format jpg, gif ou png.");
                 }
             }   
             else{
                 throw new Exception('Votre photo de profil ne doit pas dépasser 2mo.');
             }
+        }
+        else{
+            throw new Exception("Une erreur a été rencontré.");
         }
     }
     catch (Exception $e){
@@ -181,18 +204,23 @@ function confirmUpdatePost($fichier,$id,$title,$content,$author){
     }
 }
 
-function deletePost() // Fonction qui permet de supprimer un billet
+function deletePost($id) // Fonction qui permet de supprimer un billet
 {
-    if(isset($_GET['id']) && $_GET['id'] > 0) { 
+    if(isset($id) && $id > 0) { 
+
+        $deletePreviousTitle = new \Model\PostManager();
+        $delete = $deletePreviousTitle->getPost($id);
+        $titleDelete = $delete['images'];
 
         $postManagerDeletePosts = new \Model\PostManager();
+        $deletePost = $postManagerDeletePosts->deletePost($id);
 
-        $deletePost = $postManagerDeletePosts->deletePost($_GET['id']);
 
         if ($deletePost === false) {
             require('view/frontend/error.php');
         }
         else {
+            unlink("public/images/posts/".$titleDelete);
             header('Location: index.php?action=admin&delete'); 
         }
     }

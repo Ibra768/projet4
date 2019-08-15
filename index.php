@@ -64,7 +64,9 @@ if (isset($_GET['action'])) {
             updatePost(htmlspecialchars($_GET['id']));
             break;
         case 'confirmUpdatePost' : // modification du post
-        confirmUpdatePost($_FILES,htmlspecialchars($_POST['id']),htmlspecialchars($_POST['title']),htmlspecialchars($_POST['content']),htmlspecialchars($_SESSION['pseudo']));
+        $_POST = array_map('htmlspecialchars', $_POST);
+        $_SESSION = array_map('htmlspecialchars', $_SESSION);
+        confirmUpdatePost($_FILES,$_POST,$_SESSION);
             break;
         case 'deletePost' : // Suppression de post
             deletePost(htmlspecialchars($_GET['id']));

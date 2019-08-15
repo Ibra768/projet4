@@ -161,13 +161,14 @@ body{
 
 #body_Connexion {
     background : url("../../public/images/background/background_connexion.jpg") no-repeat fixed center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    height: 100%;
 }
 #body_Connexion form{
     font-size : 1.3em;
     text-align: center;
+}
+#body_Connexion form label{
+    color: white;
 }
 
 /* Page d'ajout et de modification de billet */
@@ -189,13 +190,19 @@ body{
     color: white; 
     font-size : 1.2em;
 }
-#body_Modif input {
-    color : black;
-    text-align: center;
-}
 #imageUpdate{
     width: 100px;
     height : 100px;
+}
+input[name="title"]{
+    color: black;
+    text-align: center;
+}
+input[name="avatar"]{
+    color: white;
+}
+#oldBloc{
+    margin-bottom: 20px;
 }
 
 /* Page article + comments */
@@ -317,12 +324,16 @@ body{
 /* Page erreur */
 
 #body_Error {
-    background-color : gray;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    background-color: gray;
     font-size: 1.5em;
     text-align: center;
+    height: 100%;
+}
+.flexbox_Center{
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /*  Media Queries */
