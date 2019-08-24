@@ -24,8 +24,13 @@ else if(isset($_GET['delete'])) {
 
 ?>
 <p class="message"></p>
-<div class="instructions_Admin"><p>Bienvenue sur votre espace <?= $_SESSION['pseudo'] ?><br><a class="boutons" href="index.php?action=add">Ajouter un billet</a><br><a class="boutons" href="index.php?action=adminreport">Commentaires signalés</a><br>
-
+<div class="instructions_Admin">
+  <p>Bienvenue sur votre espace <?= $_SESSION['pseudo'] ?><br>
+  <div>
+    <a class="boutons" href="index.php?action=add">Ajouter un billet</a>
+    <a class="boutons" href="index.php?action=passrequest">Modifier mes accès</a>
+    <a class="boutons" href="index.php?action=adminreport">Commentaires signalés</a>
+  </div>
 <?php
 if(empty($postsAdminPage)){
   echo "<p>" . "Aucun billet publié" . "</p>";

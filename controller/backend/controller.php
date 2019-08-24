@@ -71,6 +71,53 @@ function adminCommentReport($pageCouranteComments) {
 
 }
 
+function passRequest() // Fonction qui permet d'accéder à la page de modification des accès
+{
+    if (isset($_SESSION['pseudo'])) {
+        $get = new \Model\AdminManager();
+        $getAccess = $get->getAdmin($_SESSION['pseudo']);
+    require('view/backend/changeAccess.php');
+    }
+    else{
+        require('view/frontend/forbidden.php');
+    }
+}
+
+function changeAccess($pseudo,$pass,$newPass){
+    try{
+
+        if (isset($pseudo) && isset($pass) && isset($newPass)) {
+
+            $checkAdmin = new \Model\AdminManager();
+            $resultat = $checkAdmin->getAdmin($_SESSION['pseudo']);
+        
+            $pass_hache = password_hash($newPass, PASSWORD_DEFAULT);
+            $isPasswordCorrect = password_verify($pass, $resultat['pass']);
+
+            if (!$resultat)
+            {
+                throw new Exception('Une erreur s\'est produite. Veuillez réessayer.');
+            }
+            else
+            {
+                if ($isPasswordCorrect) {
+                    $changeAccess = new \Model\AdminManager();
+                    $resultat = $changeAccess->changeAccess($pseudo,$pass_hache,$_SESSION['pseudo']);
+                    header('Location: index.php?action=admin');
+                }
+                else{
+                    throw new Exception('Le mot de passe renseigné ne correspond pas.');
+                }   
+            }
+        }
+        else{
+            throw new Exception('Une erreur s\'est produite. Veuillez réessayer.');
+        }
+    }
+    catch (Exception $e){
+        header('Location: index.php?action=passrequest&message='.$e->getMessage());
+    }
+}
 function updatePost() // Fonction qui récupère le billet à modifier (afin de l'insérer dans un formulaire pour le modifier)
 {
     if (isset($_GET['id']) && $_GET['id'] > 0) {

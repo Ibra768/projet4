@@ -202,7 +202,7 @@ input[name="avatar"]{
     color: white;
 }
 #oldBloc{
-    margin-bottom: 20px;
+    margin-bottom: 20px;    
 }
 
 /* Page article + comments */
@@ -270,6 +270,9 @@ input[name="avatar"]{
     width : 150px;
     font-size : 0.8em;
 }
+.instructions_Admin div {
+    display: flex;
+}
 #boutons_Admin {
     display: flex;
     justify-content: space-around;
@@ -320,6 +323,22 @@ input[name="avatar"]{
     word-break: break-all;
     padding-left: 5px;
     padding-right: 5px;
+}
+
+/* Page changement accès */
+
+#body_Access{
+    background : url("../../public/images/background/background_access.jpg") no-repeat fixed center;
+    background-size: cover;
+    height: 100%;
+    color: white;
+}
+#body_Access form{
+    height: 100%;
+}
+
+#body_Access input{
+    color: black;
 }
 /* Page erreur */
 

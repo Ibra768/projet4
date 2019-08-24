@@ -86,6 +86,13 @@ if (isset($_GET['action'])) {
         case 'deconnexion' : // Deconnexion
             disconnect();
             break;
+        case 'passrequest' : // accès page changement mot de passe
+            passRequest();
+            break;
+        case 'changeaccess' : // accès page changement mot de passe
+        changeAccess(htmlspecialchars($_POST['pseudo']),htmlspecialchars($_POST['pass']),htmlspecialchars($_POST['newPass']));
+        break;
+
     }
 }
 else{
