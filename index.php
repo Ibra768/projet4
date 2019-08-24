@@ -92,7 +92,12 @@ if (isset($_GET['action'])) {
         case 'changeaccess' : // accès page changement mot de passe
         changeAccess(htmlspecialchars($_POST['pseudo']),htmlspecialchars($_POST['pass']),htmlspecialchars($_POST['newPass']));
         break;
-
+        case 'forgotpassword' : // accès page changement mot de passe
+        getForgotPassword();
+        break;
+        case 'sendPassword' : // accès page changement mot de passe
+        sendPassword($_POST['pseudo']);
+            break;
     }
 }
 else{

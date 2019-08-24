@@ -103,6 +103,7 @@ function changeAccess($pseudo,$pass,$newPass){
                 if ($isPasswordCorrect) {
                     $changeAccess = new \Model\AdminManager();
                     $resultat = $changeAccess->changeAccess($pseudo,$pass_hache,$_SESSION['pseudo']);
+                    $_SESSION['pseudo'] = $pseudo;
                     header('Location: index.php?action=admin');
                 }
                 else{

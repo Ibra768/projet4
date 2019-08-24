@@ -26,6 +26,7 @@ if ($_GET['action'] == 'erreurConnexion') {
                     <div class="col-75">
                         <input type="password" name="pass" required><br>
                         <input type="submit" class="boutons" value="Connexion">
+                        <a href="index.php?action=forgotpassword">Mot de passe oublié ?</a>
                     </div>
                 </div>
             </form>

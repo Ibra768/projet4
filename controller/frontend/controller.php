@@ -97,6 +97,28 @@ function getAdministrator($pseudo, $mdp) { // Fonction qui permet de savoir si l
 function getConnexion() {
     require('view/frontend/connexion.php');
 }
+function getForgotPassword() {
+    require('view/frontend/forgotPassword.php');
+}
+function sendPassword($pseudo) {
+    try{
+
+        $getPass = new \Model\AdminManager();
+        $resultat = $getPass->getAdmin($pseudo);
+
+        if($resultat){
+            $message = "<p>" . "Bonjour," . "</p>" . "<br>" . "<p>" . "Suite à votre demande, voici votre mot de passe : " . "</p>" . "<br>" . "<strong>" . $resultat['pass'] . "</strong>";
+            mail($resultat['mail'], 'Votre mot de passe', $message);
+            header('Location: index.php?action=forgotpassword&status=ok');
+        }
+        else{
+            throw new Exception('Pas de compte retrouvé pour l\'utilisateur '.$pseudo);
+        }
+    }
+    catch (Exception $e){
+        header('Location: index.php?action=forgotpassword&message='.$e->getMessage());
+    }
+}
 function forbidden() {
     require('view/frontend/forbidden.php');
 }
