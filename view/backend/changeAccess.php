@@ -13,14 +13,29 @@ else{
 }
 ?>
 
-<h1>Modifier mes accès</h1>
-<form method="POST" action="index.php?action=changeaccess">
-    <label>Pseudo<input type="text" name="pseudo" value="<?= $getAccess['pseudo'] ?>" required></label><Br>
-    <label>Mot de passe actuel<input type="password" name="pass" value="" required></label><br>
-    <label>Nouveau mot de passe<input type="password" name= "newPass" value="" required></label><br>
-    <input type="submit" value="Envoyer">
 
-</form>
+<div class="flex">
+    <form method="POST" action="index.php?action=changeaccess">
+    <h1>Modifier mes accès</h1>
+            <div class="flexForm">
+                <div class="formBox">
+                    <label class="labelBox">Pseudo</label>
+                    <input class="inputBox" type="text" name="pseudo" value="<?= $getAccess['pseudo'] ?>" required>
+                </div>
+                <div class="formBox">
+                    <label class="labelBox">Mot de passe actuel</label>
+                    <input class="inputBox" type="password" name="pass" value="" required>
+                </div>
+                <div class="formBox">
+                    <label class="labelBox">Nouveau mot de passe</label>
+                    <input class="inputBox" type="password" name= "newPass" value="" required>
+                </div>
+                <div class="formBox">
+                <input class="boutons" type="submit" value="Envoyer">
+                </div>
+            </div>
+    </form>
+</div>
 <?php 
 $content = ob_get_clean(); 
 require('view/template.php'); 

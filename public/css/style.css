@@ -166,6 +166,7 @@ body{
 #body_Connexion form{
     font-size : 1.3em;
     text-align: center;
+    font-family : "Nova Flat", sans-serif;
 }
 #body_Connexion form label{
     color: white;
@@ -189,6 +190,7 @@ body{
     margin: auto;
     color: white; 
     font-size : 1.2em;
+    font-family : "Nova Flat", sans-serif;
 }
 #imageUpdate{
     width: 100px;
@@ -330,15 +332,52 @@ input[name="avatar"]{
 #body_Access{
     background : url("../../public/images/background/background_access.jpg") no-repeat fixed center;
     background-size: cover;
-    height: 100%;
     color: white;
+    height: 100%;
+}
+.flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+}
+#body_Access h1{
+    text-align: center;
+    margin-bottom: 30px;
+    text-align: center;
+    color: white;
+    text-transform: uppercase;
+    font-size: 2em;
+}
+#body_Access input{
+    width: 70%;
+}
+#body_Access input[type="submit"]{
+    width: 100px;
 }
 #body_Access form{
-    height: 100%;
+    background-color: black;
+    opacity: 0.9;
+    width: 60%;
+    height:auto;
+    font-size: 1.3em;
+    font-family : "Nova Flat", sans-serif;
 }
-
-#body_Access input{
+.inputBox{
+    display: block;
     color: black;
+    text-align: center;
+    width: 50%;
+    margin :20px;
+}
+.labelBox{
+    width: 50%;
+    display: block;
+    text-align: center;
+    margin : 20px;
+}
+.formBox{
+    display: flex;
 }
 /* Page erreur */
 
@@ -373,5 +412,14 @@ input[name="avatar"]{
     }
     #comments{
         width : 50%;
+    }
+    .formBox{
+        display: initial;
+    }
+    .labelBox{
+        margin: auto;
+    }
+    .inputBox{
+        margin: auto;
     }
   }
