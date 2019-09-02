@@ -46,7 +46,7 @@ for($i=0 ; $i < count($postsAdminPage) ; $i++)
 ?>
 <div id="tableauAdmin">
   <div><p><?= $postsAdminPage[$i]['title'] ?></p></div>
-  <div><p><?= $postsAdminPage[$i]['creation_date_fr'] ?></p></div>
+  <div><p>Publié le <?= $postsAdminPage[$i]['creation_date_fr'] ?></p></div>
   <div id="boutons_Admin">
       <a id="sisi" class="boutons" href="index.php?action=post&amp;id=<?= $postsAdminPage[$i]['id'] ?>"><i class="far fa-eye"></i></a> 
       <a class="boutons" href="index.php?action=updatePost&amp;id=<?= $postsAdminPage[$i]['id'] ?>"><i class="fas fa-paint-brush"></i></a>

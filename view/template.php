@@ -11,7 +11,7 @@
     <meta name="description" content= <?= $meta  ?> />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:500,900|Roboto+Condensed:700|Nova+Flat|Anton|Courgette|Luckiest+Guy" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:500,900|Roboto+Condensed:700|Nova+Flat|Rock+Salt|Anton|Courgette|Luckiest+Guy" rel="stylesheet">
     <link href="public/css/style.css" rel="stylesheet"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
     <script src="public/js/script.js"></script>
@@ -20,28 +20,26 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     </head>
     <body id="<?= $body  ?>">
-        <nav class="navbar navbar-inverse"> 
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="index.php">Billet simple pour l'Alaska</a>
-                </div>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="index.php"><span class= "glyphicon glyphicon-home"></span> Accueil</a></li>
-                    <?php
-                        if (isset($_SESSION['pseudo']) && isset($_SESSION['pass'])) {
+        <nav> 
+            <div id="logo">
+                <a href="index.php">Billet simple pour l'Alaska</a>
+            </div>
+            <div id="menu">
+                <a href="index.php"><span class= "glyphicon glyphicon-home"></span> Accueil</a>
+                <?php
+                    if (isset($_SESSION['pseudo']) && isset($_SESSION['pass'])) {
+                ?>
+                <a href="index.php?action=passrequest"><span><i class="far fa-smile-beam"></i></span> Bonjour <?= $_SESSION['pseudo'] ?> </a>
+                <a href="index.php?action=admin"><span class="glyphicon glyphicon-user"></span> Administration</a>
+                <a href="index.php?action=deconnexion"><span class="glyphicon glyphicon-log-in"></span> Déconnexion</a>
+                <?php
+                    }   
+                    else{ 
                     ?>
-                    <li id="welcome"><a href="#"><span><i class="far fa-smile-beam"></i></span> Bonjour <?= $_SESSION['pseudo'] ?> </a></li>
-                    <li><a href="index.php?action=admin"><span class="glyphicon glyphicon-user"></span> Administration</a></li>
-                    <li><a href="index.php?action=deconnexion"><span class="glyphicon glyphicon-log-in"></span> Déconnexion</a></li>
-                    <?php
-                        }   
-                        else{ 
-                        ?>
-                    <li><a href="index.php?action=getConnexion"><span class="glyphicon glyphicon-user"></span> Accès Administration</a></li>
+                <a href="index.php?action=getConnexion"><span class="glyphicon glyphicon-user"></span> Accès Administration</a>
                         <?php
                         }
                         ?>
-                </ul>
             </div>
         </nav>
         <?= $content ?>

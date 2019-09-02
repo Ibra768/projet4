@@ -78,3 +78,14 @@ $('#old').on('click',function () {
 });
 
     
+$(document).ready(function(){
+    document.getElementById("logo").onmouseover = function() 
+{
+    this.style.textShadow = "-1px 0 white, 0 1px white, 1px 0 white, 0 -1px white";
+}
+document.getElementById("logo").onmouseout = function() 
+{
+    this.style.fontFamily = "Rock Salt";
+    this.style.textShadow = "none";
+}
+});
