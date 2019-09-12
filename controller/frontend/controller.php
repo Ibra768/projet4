@@ -1,7 +1,9 @@
 <?php
+
 require_once('model/CommentManager.php');
 require_once('model/AdminManager.php');
 require_once('model/PostManager.php');
+
 function listPostsHome() // Fonction qui récupère toutes les news
 {
     $postManager = new \Model\PostManager();
@@ -11,60 +13,120 @@ function listPostsHome() // Fonction qui récupère toutes les news
 }
 function post($postid) // Fonction qui récupère 1 news et les commentaires associés
 {
-    if (isset($_GET['id']) && $_GET['id'] > 0) {  
-        $postManager = new \Model\PostManager();
-        $commentManager = new \Model\CommentManager();
+    try{
 
-        $post = $postManager->getPost($postid);
-        $comments = $commentManager->getComments($postid);
-        if(empty($post['content'])) {
-            require('view/frontend/error.php');
+        if (isset($postid) && ((int)$postid)) {  
+
+            $getAllPosts = new \Model\PostManager();
+            $posts = $getAllPosts->getPosts();
+
+            for($i = 0 ; $i < count($posts) ; $i++){
+                $tableau[] = $posts[$i]['id']; 
+            }
+            if (!in_array($postid, $tableau)) {
+                throw new Exception("Désolé, le post n°" . $postid . " n'existe pas.");
+            }
+            else{
+
+                $postManager = new \Model\PostManager();
+                $commentManager = new \Model\CommentManager();
+
+                $post = $postManager->getPost($postid);
+                $comments = $commentManager->getComments($postid);
+
+                if(empty($post['content'])) {
+                    throw new Exception('Désolé, une erreur a été rencontré. Réessayez plus tard.');
+                }
+                else{
+                    require('view/frontend/postView.php');
+                }
+            }
         }
         else{
-            require('view/frontend/postView.php');
+            throw new Exception("Aucun post n'a été sélectionné.");
         }
     }
-    else{
-        require('view/frontend/error.php');
+    catch(Exception $e){
+        header('Location: index.php?action=error&message='.$e->getMessage());
+
     }
 }
 function reportComment($idReport, $postidReport) // Fonction qui permet de signaler un commentaire
 {
-    if (isset($_GET['id']) && $_GET['id'] > 0 && isset($_GET['postid']) && $_GET['postid'] > 0) {
+    try{
 
-        $report = new \Model\CommentManager();
+        if(isset($postidReport) && ((int)$postidReport)) {
 
-        $reporting = $report->reportCommentDB($idReport);
+            $getAllPosts = new \Model\PostManager();
+            $posts = $getAllPosts->getPosts();
 
-        if ($reporting === false) {
-            require('view/frontend/error.php');
+            for($i = 0 ; $i < count($posts) ; $i++){
+                $tableau[] = $posts[$i]['id']; 
+            }
+            if (!in_array($postidReport, $tableau)) {
+                throw new Exception("Désolé, le post n°" . $postidReport . " n'existe pas.");
+            }
+            else{
+                if(isset($idReport) && ((int)$idReport)) {
+
+                    $getAllComments = new \Model\CommentManager();
+                    $getComments = $getAllComments->getAllComments();
+
+                    for($i = 0 ; $i < count($getComments) ; $i++){
+                        $tableau[] = $getComments[$i]['id']; 
+                    }
+                    if (!in_array($idReport, $tableau)) {
+                        throw new Exception("Désolé, le commentaire n°" . $idReport . " n'existe pas.");
+                    }
+                    else{
+
+                        $report = new \Model\CommentManager();
+
+                        $reporting = $report->reportCommentDB($idReport);
+
+                        if ($reporting === false) {
+                            throw new Exception('Désolé, une erreur a été rencontré. Réessayez plus tard.');
+                        }
+                        else{
+                            header('Location: index.php?action=post&id=' . $postidReport . '&message=Merci pour votre signalement, on s\'en occupe');
+                        }
+                    }
+                }
+                else{
+                    throw new Exception('Désolé, une erreur a été rencontré. Réessayez plus tard.');
+                }
+            }
         }
         else{
-            header('Location: index.php?action=post&report&id=' . $postidReport);
+            throw new Exception('Désolé, une erreur a été rencontré. Réessayez plus tard.');
         }
     }
-    else {
-        require('view/frontend/error.php');
+    catch (Exception $e){
+        header('Location: index.php?action=error&message='.$e->getMessage());
     }
 
 }
 function addComment($postId, $author, $comment) // Fonction qui permet d'ajouter un commentaire
 {
-    if (isset($_GET['id']) && $_GET['id'] > 0 && !empty($_POST['author']) && !empty($_POST['comment'])) { 
+    try{
+        if (isset($_GET['id']) && $_GET['id'] > 0 && !empty($_POST['author']) && !empty($_POST['comment'])) { 
 
-        $addComments = new \Model\CommentManager();
+            $addComments = new \Model\CommentManager();
 
-        $affectedLines = $addComments->postComment($postId, $author, $comment);
+            $affectedLines = $addComments->postComment($postId, $author, $comment);
 
-        if ($affectedLines === false) {
-            require('view/frontend/error.php');
+            if ($affectedLines === false) {
+                throw new Exception('Désolé ' . $author . ", une erreur a été rencontré. Réessayez plus tard.");
+            }
+            else {
+                header('Location: index.php?action=post&add=' . $author . '&id=' . $postId);
+            }
+        }else{
+            throw new Exception('Désolé ' . $author . ", une erreur a été rencontré. Réessayez plus tard.");
         }
-        else {
-            header('Location: index.php?action=post&add=' . $author . '&id=' . $postId);
-            var_dump($affectedLines);
-        }
-    }else{
-        require('view/frontend/error.php');
+    }
+    catch (Exception $e){
+        header('Location: index.php?action=post&add=' . $author . '&id=' . $postId . "&message=".$e->getMessage());
     }
 }
 function getAdministrator($pseudo, $mdp) { // Fonction qui permet de savoir si l'utilisateur est administrateur lors de la connexion

@@ -17,7 +17,14 @@
     </head>
 
     <body>
-        <p>L'accès à cette page est interdit</p><br>
+        <p>
+        <?php
+        if(isset($_GET['message'])){
+            echo $_GET['message'];
+        }
+        ?>
+        </p>
+        <br>
         <p><a class="btn btn-primary" href="javascript:history.go(-1)">Retour</a></p>
     </body>
 </html>

@@ -42,7 +42,15 @@
                         ?>
             </div>
         </nav>
+        <p class="message">
+        <?php
+        if (isset($_GET['message'])){
+            echo $_GET['message'];
+        }
+        ?>
+        </p>
         <?= $content ?>
     </body>
 </html>
+
 

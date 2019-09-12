@@ -3,14 +3,6 @@ $title = 'Changer vos accès';
 $meta = 'Changements des identifiants';
 $body = "body_Access";
 ob_start(); 
-if(isset($_GET['message'])){
-    ?>
-    <p class='message'><?= $_GET['message'];?></p>
-    <?php
-}
-else{
-    
-}
 ?>
 
 

@@ -6,7 +6,7 @@ ob_start();
 ?>
 <div class="flexbox_Center">
     <div>
-        <p id="message_Error"></p><br><a class="boutons" href="javascript:history.go(-1)">Retour</a>
+        <a class="boutons" href="javascript:history.go(-1)">Retour</a>
     </div>
 </div>
 <?php

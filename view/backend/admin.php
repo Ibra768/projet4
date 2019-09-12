@@ -3,27 +3,7 @@ $title = 'Espace Administration des billets';
 $meta = 'Espace Administration des billets';
 $body = "body_Admin";
 ob_start(); 
-
-
-
-if(isset($_GET['add'])) {
-  ?>
-  <script>confirmAddPost();</script>
-  <?php
-}
-else if(isset($_GET['update'])) {
-  ?>
-  <script>confirmUpdatePost();</script>
-  <?php
-}
-else if(isset($_GET['delete'])) {
-  ?>
-  <script>confirmDeletePost();</script>
-  <?php
-}
-
 ?>
-<p class="message"></p>
 <div class="instructions_Admin">
   <p>Bienvenue sur votre espace <?= $_SESSION['pseudo'] ?><br>
   <div>

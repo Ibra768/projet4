@@ -17,6 +17,9 @@ if (isset($_GET['action'])) {
         case 'post' :
             post(htmlspecialchars($_GET['id']));
             break;
+        case 'error' :
+            error();
+            break;
         case 'addComment' : // Ajout commentaire
             addComment(htmlspecialchars($_GET['id']), htmlspecialchars($_POST['author']), htmlspecialchars($_POST['comment'])); 
             break;
@@ -24,7 +27,12 @@ if (isset($_GET['action'])) {
             reportComment(htmlspecialchars($_GET['id']), htmlspecialchars($_GET['postid']));
             break;
         case 'connexion' : // Connexion
-            getAdministrator(htmlspecialchars($_POST['pseudo']), htmlspecialchars($_POST['pass']));
+            if(isset($_POST['pseudo']) && isset($_POST['pass'])){
+                getAdministrator(htmlspecialchars($_POST['pseudo']), htmlspecialchars($_POST['pass']));
+            }
+            else{
+                listPostsHome();
+            }
             break;
         case 'getConnexion' : // Accès page connexion
             getConnexion();
@@ -64,9 +72,9 @@ if (isset($_GET['action'])) {
             updatePost(htmlspecialchars($_GET['id']));
             break;
         case 'confirmUpdatePost' : // modification du post
-        $_POST = array_map('htmlspecialchars', $_POST);
-        $_SESSION = array_map('htmlspecialchars', $_SESSION);
-        confirmUpdatePost($_FILES,$_POST,$_SESSION);
+            $_POST = array_map('htmlspecialchars', $_POST);
+            $_SESSION = array_map('htmlspecialchars', $_SESSION);
+            confirmUpdatePost($_FILES,$_POST,$_SESSION);
             break;
         case 'deletePost' : // Suppression de post
             deletePost(htmlspecialchars($_GET['id']));
@@ -78,7 +86,7 @@ if (isset($_GET['action'])) {
             deleteComment(htmlspecialchars($_GET['id']));
             break;
         case 'deleteCommentAdmin' : // Suppression du commentaire dans le post directement
-            deleteCommentAdmin(htmlspecialchars($_GET['id']),htmlspecialchars($_GET['postid']));
+            deleteCommentAdmin(htmlspecialchars($_GET['commentid']),htmlspecialchars($_GET['postid']));
             break;
         case 'forbidden' : // Deconnexion
             forbidden();
@@ -91,13 +99,15 @@ if (isset($_GET['action'])) {
             break;
         case 'changeaccess' : // accès page changement mot de passe
         changeAccess(htmlspecialchars($_POST['pseudo']),htmlspecialchars($_POST['pass']),htmlspecialchars($_POST['newPass']));
-        break;
+            break;
         case 'forgotpassword' : // accès page changement mot de passe
         getForgotPassword();
-        break;
+            break;
         case 'sendPassword' : // accès page changement mot de passe
         sendPassword($_POST['pseudo']);
             break;
+        default :
+        listPostsHome();
     }
 }
 else{

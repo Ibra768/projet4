@@ -4,14 +4,6 @@ $meta = 'Espace Administration des commentaires';
 $body = "body_AdminComments";
 ob_start(); 
 
-
- if(isset($_GET['allow'])) {
-  echo "<div class='message'>Le commentaire a bien été autorisé !</div>";
-}
-else if(isset($_GET['deleteComment'])) {
-  echo "<div class='message'>Le commentaire a bien été supprimé !</div>";
-}
-
 if(count($getCommentsByPage) == 0){
     ?>
     <div class="instructions_Admin container-fluid"><p>Aucun commentaire signalé</p></div>

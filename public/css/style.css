@@ -195,6 +195,11 @@ nav a:visited {
     text-align: center;
     font-family : "Nova Flat", sans-serif;
 }
+#body_Connexion form a{
+    color : gray;
+    font-weight: bold;
+    text-shadow: -1px 0 black;
+}
 #body_Connexion form label{
     color: white;
 }
@@ -397,6 +402,9 @@ input[name="avatar"]{
     text-align: center;
     width: 50%;
     margin :20px;
+}
+.inputBox input{
+    text-align: center;
 }
 .labelBox{
     width: 50%;

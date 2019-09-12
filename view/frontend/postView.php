@@ -12,25 +12,6 @@ body {
 }
 </style>
 <div id="post_wrapper">
-
-    <?php 
-        if(isset($_GET['add'])) {
-            ?>
-            <script>confirmAddComment();</script>
-            <?php
-        }
-        else if(isset($_GET['report'])) {
-            ?>
-            <script>confirmReportComment();</script>
-            <?php
-        }
-        else if(isset($_GET['deleteAdminok'])) {
-            ?>
-            <script>confirmDeleteComment();</script>
-            <?php
-        }
-    ?>
-    <p class="message"></p>
     <article id="billet">
         <h1><?= $post['title'] ?></h1>
         <em>Publié le <?= $post['creation_date_fr'] ?></em>
@@ -50,7 +31,7 @@ body {
         <?php
         if(isset($_SESSION['pseudo']) && isset($_SESSION['pass'])) {
         ?>
-            <a class="boutons" onclick="if(window.confirm('Voulez-vous vraiment supprimer ce commentaire ?')){return true;}else{return false;}" href="index.php?action=deleteCommentAdmin&id=<?= $comments[$i]['id'] ?>&postid=<?= $_GET['id'] ?>"><i class="far fa-trash-alt"></i></a>
+            <a class="boutons" onclick="if(window.confirm('Voulez-vous vraiment supprimer ce commentaire ?')){return true;}else{return false;}" href="index.php?action=deleteCommentAdmin&commentid=<?= $comments[$i]['id'] ?>&postid=<?= $_GET['id'] ?>"><i class="far fa-trash-alt"></i></a>
         <?php
         }
         ?>

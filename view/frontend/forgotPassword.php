@@ -3,19 +3,6 @@ $title = 'Oubli de mot de passe';
 $meta = 'Demande de récupération de mot de passe';
 $body = "body_Access";
 ob_start(); 
-if(isset($_GET['message'])){
-    ?>
-    <p class='message'><?= $_GET['message'];?></p>
-    <?php
-}
-else if(isset($_GET['status']) && $_GET['status'] == "ok"){
-    ?>
-    <p class='message'>Le mot de passe a bien été envoyé.</p>
-    <?php
-}
-else{
-
-}
 ?>
 
 <div class="flex">
