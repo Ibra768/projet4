@@ -3,6 +3,7 @@
 require_once('model/CommentManager.php');
 require_once('model/AdminManager.php');
 require_once('model/PostManager.php');
+require_once('model/MyException.php');
 
                                
 function dataAdmin($pageCourante) // Fonction qui récupère la liste des billets page par page
@@ -45,9 +46,7 @@ function dataAdmin($pageCourante) // Fonction qui récupère la liste des billet
 
 function adminCommentReport($pageCouranteComments) 
 {
-
     try{
-
         if(isset($_SESSION['pseudo'])){
 
             $commentReport = new \Model\CommentManager();
@@ -68,7 +67,6 @@ function adminCommentReport($pageCouranteComments)
 
             $getCommentsByPage = $commentsByPage->getCommentsReportByPage($departComments,$commentsParPage); // On récupère les commentaires page par page
 
-
             require('view/backend/commentAdmin.php');
         }
         else{
@@ -86,14 +84,23 @@ function passRequest() // Fonction qui permet d'accéder à la page de modificat
         if (isset($_SESSION['pseudo'])) {
             $get = new \Model\AdminManager();
             $getAccess = $get->getAdmin($_SESSION['pseudo']);
-        require('view/backend/changeAccess.php');
+
+            if($getAccess) {
+                require('view/backend/changeAccess.php');
+            }
+            else{
+                throw new Exception("Une erreur a été rencontré. Veuillez réessayer.");
+            }
         }
         else{
-            throw new Exception("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
+            throw new MyException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
         }
     }
-    catch(Exception $e){
+    catch(MyException $e){
         header('Location: index.php?action=getConnexion&message='.$e->getMessage());
+    }
+    catch(Exception $e){
+        header('Location: index.php?action=admin&message='.$e->getMessage());
     }
 }
 
@@ -103,7 +110,7 @@ function changeAccess($pseudo,$pass,$newPass)
 
         if(isset($_SESSION['pseudo'])){
 
-            if (isset($pseudo) && isset($pass) && isset($newPass)) {
+            if (isset($pseudo,$pass,$newPass) && !empty($pseudo) && !empty($pass) && !empty($newPass)) {
 
                 $checkAdmin = new \Model\AdminManager();
                 $resultat = $checkAdmin->getAdmin($_SESSION['pseudo']);
@@ -113,7 +120,7 @@ function changeAccess($pseudo,$pass,$newPass)
 
                 if (!$resultat)
                 {
-                    throw new Exception('Une erreur s\'est produite. Veuillez réessayer.');
+                    throw new Exception("Une erreur s'est produite. Veuillez réessayer.");
                 }
                 else
                 {
@@ -141,11 +148,14 @@ function changeAccess($pseudo,$pass,$newPass)
             }
         }
         else{
-            throw new Exception("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
+            throw new MyException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
         }
     }
     catch (Exception $e){
         header('Location: index.php?action=passrequest&message='.$e->getMessage());
+    }
+    catch (MyException $e){
+        header('Location: index.php?action=getConnexion&message='.$e->getMessage());
     }
 }
 function updatePost($postid) // Fonction qui récupère le billet à modifier (afin de l'insérer dans un formulaire pour le modifier)
@@ -184,6 +194,9 @@ function updatePost($postid) // Fonction qui récupère le billet à modifier (a
     catch(Exception $e){
         header('Location: index.php?action=admin&message='.$e->getMessage());
     }
+    catch(Exception $e){
+        header('Location: index.php?action=getConnexion&message='.$e->getMessage());
+    }
 }
 
 function getAddPage() {
@@ -192,11 +205,11 @@ function getAddPage() {
             require('view/backend/addPost.php');
         }
         else{
-            throw new Exception("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
+            throw new MyException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
         }
     }
-    catch(Exception $e){
-        header('Location: index.php?action=admin&message='.$e->getMessage());
+    catch(MyException $e){
+        header('Location: index.php?action=getConnexion&message='.$e->getMessage());
     }
     
 }     
@@ -204,8 +217,17 @@ function getAddPage() {
 function addPost($fichier,$title,$content,$author){
     try{
         if(isset($_SESSION['pseudo'])){
-            if(empty($title) && empty($content) && empty($author)) {
-                throw new Exception("Une erreur a été rencontré.");
+            if(empty($title) || !isset($title)) {
+                throw new Exception("Le champ " . "<span class='cible_Erreur'>" . "titre" . "</span>" . " est manquant.");
+            }
+            else if(empty($content) || !isset($content)){
+                throw new Exception("Le champ " . "<span class='cible_Erreur'>" . "contenu" . "</span>" . " est manquant.");
+            }
+            else if(empty($author) || !isset($author)){
+                throw new Exception("Le champ " . "<span class='cible_Erreur'>" . "auteur" . "</span>" . " est manquant.");
+            }
+            else if(empty($fichier) || !isset($fichier)){
+                throw new Exception("Le" . "<span class='cible_Erreur'>" . "fichier du post" . "</span>" . " est manquant.");
             }
             else{
                 $maxSize = 5000000;
@@ -223,7 +245,7 @@ function addPost($fichier,$title,$content,$author){
                             Header("location:index.php?action=admin&message=L'article a bien été ajouté !");
                         }
                         else{
-                            throw new Exception("Nous avons rencontrer une erreur lors de l'importation de votre fichier.");
+                            throw new Exception("Nous avons rencontré une erreur lors de l'importation de votre fichier.");
                         }
                     }
                     else{
@@ -236,8 +258,11 @@ function addPost($fichier,$title,$content,$author){
             }
         }
         else{
-            throw new Exception("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
+            throw new MyException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
         }
+    }
+    catch (MyException $e){
+        header('Location: index.php?action=getConnexion&message='.$e->getMessage());
     }
     catch (Exception $e){
         header('Location: index.php?action=add&message='.$e->getMessage());
@@ -248,71 +273,81 @@ function confirmUpdatePost($fichier,$formulaire,$author){
 
     try{
         if(isset($_SESSION['pseudo'])){
-            if(empty($formulaire["title"]) || empty($formulaire["content"]) || empty($author)) {
-                throw new Exception("Une erreur a été rencontré.");
-                
+            if(empty($formulaire["title"]) || !isset($formulaire["title"])){
+                throw new Exception("Le champ " . "<span class='cible_Erreur'>" . "titre" . "</span>" . " est manquant.");
             }
-            else if(isset($formulaire["old"]) && !empty($formulaire["title"]) && !empty($formulaire["content"]) && !empty($author)){
-
-                $getExtension = new \Model\PostManager();
-                $get = $getExtension->getPost($formulaire['id']);
-
-                $extension = substr($get['images'], -4, 4);
-
-                $update = new \Model\PostManager();
-                $updatePost = $update->updatePostDB($formulaire["title"],$formulaire["content"],$author['pseudo'],$formulaire['title'].$extension,$formulaire["id"]);
-                rename("public/images/posts/".$get['images'],"public/images/posts/".$formulaire['title'].$extension);
-                if(!$updatePost) {
-                    throw new Exception("Une erreur a été rencontré.");
-                }
-                else{
-                    Header('location:index.php?action=admin&update=ok');
-                }
-                
+            else if(empty($formulaire["content"]) || !isset($formulaire["content"])){
+                throw new Exception("Le champ " . "<span class='cible_Erreur'>" . "contenu" . "</span>" . " est manquant.");
             }
-            else if(isset($fichier) && !empty($formulaire["title"]) && !empty($formulaire["content"]) && !empty($author)){
-                $maxSize = 5000000;
-                $validExtensions = array('jpg','gif','png');
-                
-                if ($fichier['avatar']['size'] <= $maxSize){
-                    $uploadExtensions = strtolower(substr(strrchr($fichier['avatar']['name'], '.'),1));
-                    $deletePreviousTitle = new \Model\PostManager();
-                    $delete = $deletePreviousTitle->getPost($formulaire['id']);
+            else if(empty($author) || !isset($author)){
+                throw new Exception("Le champ " . "<span class='cible_Erreur'>" . "contenu" . "</span>" . " est manquant.");
+            }
+            else{
+
+                if(isset($formulaire["old"])){
+
+                    $getExtension = new \Model\PostManager();
+                    $get = $getExtension->getPost($formulaire['id']);
+
+                    $extension = substr($get['images'], -4, 4);
+
+                    $update = new \Model\PostManager();
+                    $updatePost = $update->updatePostDB($formulaire["title"],$formulaire["content"],$author['pseudo'],$formulaire['title'].$extension,$formulaire["id"]);
+                    rename("public/images/posts/".$get['images'],"public/images/posts/".$formulaire['title'].$extension);
+                    if(!$updatePost) {
+                        throw new Exception("Une erreur a été rencontré.");
+                    }
+                    else{
+                        Header('location:index.php?action=admin&update=ok');
+                    }
+                }
+                else if(isset($fichier) && !empty($formulaire["title"]) && !empty($formulaire["content"]) && !empty($author)){
+                    $maxSize = 5000000;
+                    $validExtensions = array('jpg','gif','png');
                     
-                    if(in_array($uploadExtensions, $validExtensions)){
-                        $folder = "public/images/posts/".$formulaire['title'].".".$uploadExtensions;
-                        $result = move_uploaded_file($fichier['avatar']['tmp_name'],$folder);
-                        if($result){
-                            $fichierImage = $formulaire['title'].".".$uploadExtensions;
-                            $update = new \Model\PostManager();
-                            $updatePost = $update->updatePostDB($formulaire['title'],$formulaire['content'],$author['pseudo'],$fichierImage,$formulaire['id']);
-                            if(!$updatePost) {
-                                throw new Exception("Une erreur a été rencontré.");
+                    if ($fichier['avatar']['size'] <= $maxSize){
+                        $uploadExtensions = strtolower(substr(strrchr($fichier['avatar']['name'], '.'),1));
+                        $deletePreviousTitle = new \Model\PostManager();
+                        $delete = $deletePreviousTitle->getPost($formulaire['id']);
+                        
+                        if(in_array($uploadExtensions, $validExtensions)){
+                            $folder = "public/images/posts/".$formulaire['title'].".".$uploadExtensions;
+                            $result = move_uploaded_file($fichier['avatar']['tmp_name'],$folder);
+                            if($result){
+                                $fichierImage = $formulaire['title'].".".$uploadExtensions;
+                                $update = new \Model\PostManager();
+                                $updatePost = $update->updatePostDB($formulaire['title'],$formulaire['content'],$author['pseudo'],$fichierImage,$formulaire['id']);
+                                if(!$updatePost) {
+                                    throw new Exception("Une erreur a été rencontré.");
+                                }
+                                else{
+                                Header('location:index.php?action=admin&update=ok');
+                                unlink("public/images/posts/".$delete['images']);
+                                }
                             }
                             else{
-                            Header('location:index.php?action=admin&update=ok');
-                            unlink("public/images/posts/".$delete['images']);
+                                throw new Exception("Nous avons rencontrer une erreur lors de l'importation de votre fichier.");
                             }
                         }
                         else{
-                            throw new Exception("Nous avons rencontrer une erreur lors de l'importation de votre fichier.");
+                            throw new Exception("Votre photo de profil doit être au format jpg, gif ou png.");
                         }
-                    }
+                    }   
                     else{
-                        throw new Exception("Votre photo de profil doit être au format jpg, gif ou png.");
+                        throw new Exception('Votre photo de profil ne doit pas dépasser 2mo.');
                     }
-                }   
-                else{
-                    throw new Exception('Votre photo de profil ne doit pas dépasser 2mo.');
                 }
-            }
-            else{
-                throw new Exception("Une erreur a été rencontré.");
+                else{
+                    throw new Exception('Une erreur a été rencontré.');
+                }
             }
         }
         else{
-            throw new Exception("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
+            throw new MyException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
         }
+    }
+    catch (MyException $e){
+        header('Location: index.php?action=getConnexion&message='.$e->getMessage());
     }
     catch (Exception $e){
         header('Location: index.php?action=updatePost&id=' . $formulaire['id'] . '&message='.$e->getMessage());
@@ -322,39 +357,47 @@ function confirmUpdatePost($fichier,$formulaire,$author){
 function deletePost($id) // Fonction qui permet de supprimer un billet
 {
     try{
+        if(isset($_SESSION['pseudo'])){
 
-        if (isset($id) && ((int)$id)) {
+            if (isset($id) && ((int)$id)) {
 
-            $getAllPosts = new \Model\PostManager();
-            $posts = $getAllPosts->getPosts();
+                $getAllPosts = new \Model\PostManager();
+                $posts = $getAllPosts->getPosts();
 
-            for($i = 0 ; $i < count($posts) ; $i++){
-                $tableau[] = $posts[$i]['id']; 
-            }
-            if (!in_array($id, $tableau)) {
-                throw new Exception("Désolé, le post n°" . $id . " n'existe pas.");
+                for($i = 0 ; $i < count($posts) ; $i++){
+                    $tableau[] = $posts[$i]['id']; 
+                }
+                if (!in_array($id, $tableau)) {
+                    throw new Exception("Désolé, le post n°" . $id . " n'existe pas.");
+                }
+                else{
+
+                $deletePreviousTitle = new \Model\PostManager();
+                $delete = $deletePreviousTitle->getPost($id);
+                $titleDelete = $delete['images'];
+
+                $postManagerDeletePosts = new \Model\PostManager();
+                $deletePost = $postManagerDeletePosts->deletePost($id);
+                
+                }
+                if ($deletePost === false) {
+                    throw new Exception("Une erreur a été rencontré.");
+                }
+                else {
+                    unlink("public/images/posts/".$titleDelete);
+                    header('Location: index.php?action=admin&message=Le post a bien été supprimé!'); 
+                }
             }
             else{
-
-            $deletePreviousTitle = new \Model\PostManager();
-            $delete = $deletePreviousTitle->getPost($id);
-            $titleDelete = $delete['images'];
-
-            $postManagerDeletePosts = new \Model\PostManager();
-            $deletePost = $postManagerDeletePosts->deletePost($id);
-            
-            }
-            if ($deletePost === false) {
                 throw new Exception("Une erreur a été rencontré.");
-            }
-            else {
-                unlink("public/images/posts/".$titleDelete);
-                header('Location: index.php?action=admin&message=Le post a bien été supprimé!'); 
             }
         }
         else{
-            throw new Exception("Une erreur a été rencontré.");
+            throw new MyException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
         }
+    }
+    catch (MyException $e){
+        header('Location: index.php?action=getConnexion&message='.$e->getMessage());
     }
     catch (Exception $e){
         header('Location: index.php?action=admin&message='.$e->getMessage());
@@ -364,35 +407,42 @@ function deletePost($id) // Fonction qui permet de supprimer un billet
 function allowComment($idComment) // Fonction qui autorise un commentaire signalé
 {
     try{
+        if(isset($_SESSION['pseudo'])){
+            if (isset($idComment) && ((int)$idComment)) {
 
-        if (isset($idComment) && ((int)$idComment)) {
+                $getAllComments = new \Model\CommentManager();
+                $getComments = $getAllComments->getAllComments();
 
-            $getAllComments = new \Model\CommentManager();
-            $getComments = $getAllComments->getAllComments();
+                for($i = 0 ; $i < count($getComments) ; $i++){
+                    $tableau[] = $getComments[$i]['id']; 
+                }
+                if (!in_array($idComment, $tableau)) {
+                    throw new Exception("Désolé, le commentaire n°" . $idComment . " n'existe pas.");
+                }
+                else{
 
-            for($i = 0 ; $i < count($getComments) ; $i++){
-                $tableau[] = $getComments[$i]['id']; 
-            }
-            if (!in_array($idComment, $tableau)) {
-                throw new Exception("Désolé, le commentaire n°" . $idComment . " n'existe pas.");
+                    $allow = new \Model\CommentManager();
+
+                    $allowingComment = $allow->allowCommentDB($idComment);
+
+                    if ($allowingComment === false) {
+                        throw new Exception("Une erreur a été rencontré.");
+                    }
+                    else {
+                        header('Location: index.php?action=adminreport&message=Le commentaire a bien été autorisé !');
+                    }
+                }
             }
             else{
-
-                $allow = new \Model\CommentManager();
-
-                $allowingComment = $allow->allowCommentDB($idComment);
-
-                if ($allowingComment === false) {
-                    throw new Exception("Une erreur a été rencontré.");
-                }
-                else {
-                    header('Location: index.php?action=adminreport&message=Le commentaire a bien été autorisé !');
-                }
+                throw new Exception("Une erreur a été rencontré.");
             }
         }
         else{
-            throw new Exception("Une erreur a été rencontré.");
+            throw new MyException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
         }
+    }
+    catch (MyException $e){
+        header('Location: index.php?action=getConnexion&message='.$e->getMessage());
     }
     catch(Exception $e){
         header('Location: index.php?action=adminreport&message='.$e->getMessage());
@@ -402,34 +452,42 @@ function allowComment($idComment) // Fonction qui autorise un commentaire signal
 function deleteComment($id) // Fonction qui permet de supprimer un commentaire signalé
 {
     try{
-        if(isset($id) && ((int)$id)) {
+        if(isset($_SESSION['pseudo'])){
+            if(isset($id) && ((int)$id)) {
 
-            $getAllComments = new \Model\CommentManager();
-            $getComments = $getAllComments->getAllComments();
+                $getAllComments = new \Model\CommentManager();
+                $getComments = $getAllComments->getAllComments();
 
-            for($i = 0 ; $i < count($getComments) ; $i++){
-                $tableau[] = $getComments[$i]['id']; 
-            }
-            if (!in_array($id, $tableau)) {
-                throw new Exception("Désolé, le commentaire n°" . $id . " n'existe pas.");
+                for($i = 0 ; $i < count($getComments) ; $i++){
+                    $tableau[] = $getComments[$i]['id']; 
+                }
+                if (!in_array($id, $tableau)) {
+                    throw new Exception("Désolé, le commentaire n°" . $id . " n'existe pas.");
+                }
+                else{
+
+                    $deleteComment = new \Model\CommentManager();
+
+                    $confirmDeleteComment = $deleteComment->deleteComment($id);
+
+                    if ($confirmDeleteComment === false) {
+                        throw new Exception("Une erreur a été rencontré.");
+                    }
+                    else {
+                        header('Location: index.php?action=adminreport&message=Le commentaire a bien été supprimé !'); 
+                    }
+                }
             }
             else{
-
-                $deleteComment = new \Model\CommentManager();
-
-                $confirmDeleteComment = $deleteComment->deleteComment($id);
-
-                if ($confirmDeleteComment === false) {
-                    throw new Exception("Une erreur a été rencontré.");
-                }
-                else {
-                    header('Location: index.php?action=adminreport&message=Le commentaire a bien été supprimé !'); 
-                }
+                throw new Exception("Désolé, une erreur a été rencontré.");
             }
         }
         else{
-            throw new Exception("Désolé, une erreur a été rencontré.");
+            throw new MyException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
         }
+    }
+    catch (MyException $e){
+        header('Location: index.php?action=getConnexion&message='.$e->getMessage());
     }
     catch(Exception $e){
         header('Location: index.php?action=adminreport&message='.$e->getMessage());
@@ -439,52 +497,59 @@ function deleteComment($id) // Fonction qui permet de supprimer un commentaire s
 function deleteCommentAdmin($commentid,$postid) // Fonction qui permet de supprimer un commentaire signalé
 {
     try{
+        if(isset($_SESSION['pseudo'])){
+            if(isset($postid) && ((int)$postid)) {
 
-        if(isset($postid) && ((int)$postid)) {
+                $getAllPosts = new \Model\PostManager();
+                $posts = $getAllPosts->getPosts();
 
-            $getAllPosts = new \Model\PostManager();
-            $posts = $getAllPosts->getPosts();
-
-            for($i = 0 ; $i < count($posts) ; $i++){
-                $tableau[] = $posts[$i]['id']; 
-            }
-            if (!in_array($postid, $tableau)) {
-                throw new Exception("Désolé, le post n°" . $postid . " n'existe pas.");
-            }
-            else{
-
-                if(isset($commentid) && ((int)$commentid)) {
-
-                    $getAllComments = new \Model\CommentManager();
-                    $getComments = $getAllComments->getAllComments();
-
-                    for($i = 0 ; $i < count($getComments) ; $i++){
-                        $tableau[] = $getComments[$i]['id']; 
-                    }
-                    if (!in_array($commentid, $tableau)) {
-                        throw new Exception("Désolé, le commentaire n°" . $commentid . " n'existe pas.");
-                    }
-                    else{
-                        $deleteComment = new \Model\CommentManager();
-
-                        $confirmDeleteComment = $deleteComment->deleteComment($commentid);
-
-                        if ($confirmDeleteComment === false) {
-                            throw new Exception("Une erreur a été rencontré.");
-                        }
-                        else {
-                            header('Location: index.php?action=post&id=' . $postid . '&message=Le commentaire a bien été supprimé !');
-                        }
-                    }
+                for($i = 0 ; $i < count($posts) ; $i++){
+                    $tableau[] = $posts[$i]['id']; 
+                }
+                if (!in_array($postid, $tableau)) {
+                    throw new Exception("Désolé, le post n°" . $postid . " n'existe pas.");
                 }
                 else{
-                    throw new Exception("Une erreur a été rencontré.");
+
+                    if(isset($commentid) && ((int)$commentid)) {
+
+                        $getAllComments = new \Model\CommentManager();
+                        $getComments = $getAllComments->getAllComments();
+
+                        for($i = 0 ; $i < count($getComments) ; $i++){
+                            $tableau[] = $getComments[$i]['id']; 
+                        }
+                        if (!in_array($commentid, $tableau)) {
+                            throw new Exception("Désolé, le commentaire n°" . $commentid . " n'existe pas.");
+                        }
+                        else{
+                            $deleteComment = new \Model\CommentManager();
+
+                            $confirmDeleteComment = $deleteComment->deleteComment($commentid);
+
+                            if ($confirmDeleteComment === false) {
+                                throw new Exception("Une erreur a été rencontré.");
+                            }
+                            else {
+                                header('Location: index.php?action=post&id=' . $postid . '&message=Le commentaire a bien été supprimé !');
+                            }
+                        }
+                    }
+                    else{
+                        throw new Exception("Une erreur a été rencontré.");
+                    }
                 }
+            }
+            else{
+                throw new Exception("Une erreur a été rencontré.");
             }
         }
         else{
-            throw new Exception("Une erreur a été rencontré.");
+            throw new MyException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
         }
+    }
+    catch (MyException $e){
+        header('Location: index.php?action=getConnexion&message='.$e->getMessage());
     }
     catch(Exception $e){
         header('Location: index.php?action=post&id=' . $postid . '&message='.$e->getMessage());

@@ -1,11 +1,9 @@
-
 <?php 
     $title = 'Accueil'; 
     $meta = 'Page d\'accueil du site de Jean Forteroche';
     $body = "body_home";
     ob_start(); 
 ?>
-
 <div id="presentation" class="container">
     <div class="row">
         <div class=col-lg-12">
@@ -56,9 +54,8 @@
     }
     ?>
 </div>
-
 <?php 
-$content = ob_get_clean(); 
-require('view/template.php'); 
+    $content = ob_get_clean(); 
+    require('view/template.php'); 
 ?>
 

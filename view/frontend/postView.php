@@ -5,11 +5,11 @@
     ob_start(); 
 ?>
 <style>
-body {
-    background-image : url("public/images/posts/<?php echo $post['images'];?>");
-    background-size : cover;
-    background-attachment : fixed;    
-}
+    body {
+        background-image : url("public/images/posts/<?php echo $post['images'];?>");
+        background-size : cover;
+        background-attachment : fixed;    
+    }
 </style>
 <div id="post_wrapper">
     <article id="billet">
@@ -48,10 +48,8 @@ body {
         <input type="submit" class="boutons" value="Envoyer">
     </form>
 </div>
-
 <?php 
-$content = ob_get_clean(); 
-require('view/template.php'); 
+    $content = ob_get_clean(); 
+    require('view/template.php'); 
 ?>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-<script type="text/javascript" src="public/js/script.js"></script>
+

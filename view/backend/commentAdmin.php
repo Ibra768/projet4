@@ -1,22 +1,20 @@
 <?php 
-$title = 'Espace Administration des commentaires'; 
-$meta = 'Espace Administration des commentaires';
-$body = "body_AdminComments";
-ob_start(); 
-
-if(count($getCommentsByPage) == 0){
-    ?>
-    <div class="instructions_Admin container-fluid"><p>Aucun commentaire signalé</p></div>
-    <?php
-    }
-    else{
-    ?>
-    <div class="instructions_Admin container-fluid"><p>Voici la liste des commentaires signalés :</p></div>
-    <?php
-}
-
-for($i=0 ; $i < count($getCommentsByPage) ; $i++)
-{
+  $title = 'Espace Administration des commentaires'; 
+  $meta = 'Espace Administration des commentaires';
+  $body = "body_AdminComments";
+  ob_start(); 
+  if(count($getCommentsByPage) == 0){
+      ?>
+      <div class="instructions_Admin container-fluid"><p>Aucun commentaire signalé</p></div>
+      <?php
+      }
+      else{
+      ?>
+      <div class="instructions_Admin container-fluid"><p>Voici la liste des commentaires signalés :</p></div>
+      <?php
+  }
+  for($i=0 ; $i < count($getCommentsByPage) ; $i++)
+  {
 ?>
 <div id="commentReport" class="container">
   <div class="row">
@@ -29,21 +27,20 @@ for($i=0 ; $i < count($getCommentsByPage) ; $i++)
   </div>
 </div>
 <?php
-}
+  }
 ?>
 <div class="pagination">
-<?php
-for($i=1 ; $i <= $pagesTotalesComments ; $i++){
-	if($i == $pageCouranteComments){
-        echo "<div class='boutons'>" . $i . "</div>";
-	}else {
-		echo '<div class="boutons"><a href="index.php?action=adminreport&pageComment='.$i.'">'.$i.'</a></div>';
-    }
-} 
-?>
+  <?php
+    for($i=1 ; $i <= $pagesTotalesComments ; $i++){
+      if($i == $pageCouranteComments){
+            echo "<div class='boutons'>" . $i . "</div>";
+      }else {
+        echo '<div class="boutons"><a href="index.php?action=adminreport&pageComment='.$i.'">'.$i.'</a></div>';
+        }
+    } 
+  ?>
 </div>
 <?php
-
 $content = ob_get_clean(); 
 require('view/template.php'); 
 ?>

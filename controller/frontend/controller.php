@@ -3,6 +3,7 @@
 require_once('model/CommentManager.php');
 require_once('model/AdminManager.php');
 require_once('model/PostManager.php');
+require_once('model/MyException.php');
 
 function listPostsHome() // Fonction qui récupère toutes les news
 {

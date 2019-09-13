@@ -1,28 +1,28 @@
 <?php 
-$title = 'Espace Administration des billets'; 
-$meta = 'Espace Administration des billets';
-$body = "body_Admin";
-ob_start(); 
+  $title = 'Espace Administration des billets'; 
+  $meta = 'Espace Administration des billets';
+  $body = "body_Admin";
+  ob_start(); 
 ?>
 <div class="instructions_Admin">
-  <p>Bienvenue sur votre espace <?= $_SESSION['pseudo'] ?><br>
+  <p>Bienvenue sur votre espace <?= $_SESSION['pseudo'] ?></p><br>
   <div>
     <a class="boutons" href="index.php?action=add">Ajouter un billet</a>
     <a class="boutons" href="index.php?action=passrequest">Modifier mes accès</a>
     <a class="boutons" href="index.php?action=adminreport">Commentaires signalés</a>
   </div>
-<?php
-if(empty($postsAdminPage)){
-  echo "<p>" . "Aucun billet publié" . "</p>";
-}
-else{
-  echo "<p>" . "Voici la liste des billets publiés" . "</p>";
-}
-?>
+  <?php
+    if(empty($postsAdminPage)){
+      echo "<p>" . "Aucun billet publié" . "</p>";
+    }
+    else{
+      echo "<p>" . "Voici la liste des billets publiés" . "</p>";
+    }
+  ?>
 </div>
 <?php
-for($i=0 ; $i < count($postsAdminPage) ; $i++)
-{
+  for($i=0 ; $i < count($postsAdminPage) ; $i++)
+  {
 ?>
 <div id="tableauAdmin">
   <div><p><?= $postsAdminPage[$i]['title'] ?></p></div>
@@ -34,25 +34,21 @@ for($i=0 ; $i < count($postsAdminPage) ; $i++)
   </div>
 </div>
 <?php
-}
+  }
 ?>
-
 <div class="pagination">
   <?php
     for($i=1 ; $i <= $pagesTotales ; $i++){
       if($i == $pageCourante){
             echo "<div class='boutons'>" . $i . "</div>";
-      }else {
+      }
+      else {
         echo '<div class="boutons"><a href="index.php?action=admin&page='.$i.'">'.$i.'</a></div>';
-        }
+      }
     } 
   ?>
 </div>
-
 <?php
-$content = ob_get_clean(); 
-require('view/template.php'); 
+  $content = ob_get_clean(); 
+  require('view/template.php'); 
 ?>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-<script type="text/javascript" src="public/js/script.js"></script>

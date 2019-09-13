@@ -67,6 +67,8 @@ nav a:visited {
     text-align: center;
     color : white;
     font-size : 1.4em;
+    text-transform: uppercase;
+    font-family: "Nova Flat", "sans-serif";
 }
 .messageActive{
     border : 2px solid black;
@@ -428,6 +430,13 @@ input[name="avatar"]{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.cible_Erreur{
+    animation: colorblink 1s infinite;
+}
+@keyframes colorblink { 
+    0% { }
+    100% { color:red; } 
 }
 
 /*  Media Queries */

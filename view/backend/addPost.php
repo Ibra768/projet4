@@ -1,12 +1,10 @@
 <?php 
-$title = "Ajouter un billet"; 
-$meta = 'Ajout de billet sur le site';
-$body = "body_Modif";
-ob_start(); 
+    $title = "Ajouter un billet"; 
+    $meta = 'Ajout de billet sur le site';
+    $body = "body_Modif";
+    ob_start(); 
 ?>
-
 <h1>Ajouter un billet</h1>
-
 <div class="container">
     <form method="POST" action="index.php?action=addPost" enctype="multipart/form-data">
         <div class="row">
@@ -30,6 +28,6 @@ ob_start();
     </form>
 </div>
 <?php 
-$content = ob_get_clean(); 
-require('view/template.php'); 
+    $content = ob_get_clean(); 
+    require('view/template.php'); 
 ?>
