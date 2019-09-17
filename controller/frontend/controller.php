@@ -25,7 +25,7 @@ function post($postid) // Fonction qui récupère 1 news et les commentaires ass
                 $tableau[] = $posts[$i]['id']; 
             }
             if (!in_array($postid, $tableau)) {
-                throw new Exception("Désolé, le post n°" . $postid . " n'existe pas.");
+                throw new Exception("Désolé, le post n° " . "<span class='cible_Erreur'>" .$postid . "</span>" . " n'existe pas.");
             }
             else{
 
@@ -36,7 +36,7 @@ function post($postid) // Fonction qui récupère 1 news et les commentaires ass
                 $comments = $commentManager->getComments($postid);
 
                 if(empty($post['content'])) {
-                    throw new Exception('Désolé, une erreur a été rencontré. Réessayez plus tard.');
+                    throw new Exception('Désolé, une erreur a été rencontré. Veuillez réessayer..');
                 }
                 else{
                     require('view/frontend/postView.php');
@@ -65,7 +65,7 @@ function reportComment($idReport, $postidReport) // Fonction qui permet de signa
                 $tableau[] = $posts[$i]['id']; 
             }
             if (!in_array($postidReport, $tableau)) {
-                throw new Exception("Désolé, le post n°" . $postidReport . " n'existe pas.");
+                throw new Exception("Désolé, le post n° " . "<span class='cible_Erreur'>" .$postidReport . "</span>" . " n'existe pas.");
             }
             else{
                 if(isset($idReport) && ((int)$idReport)) {
@@ -77,7 +77,7 @@ function reportComment($idReport, $postidReport) // Fonction qui permet de signa
                         $tableau[] = $getComments[$i]['id']; 
                     }
                     if (!in_array($idReport, $tableau)) {
-                        throw new Exception("Désolé, le commentaire n°" . $idReport . " n'existe pas.");
+                        throw new Exception("Désolé, le commentaire n° " . "<span class='cible_Erreur'>" .$idReport . "</span>" . " n'existe pas.");
                     }
                     else{
 
@@ -86,7 +86,7 @@ function reportComment($idReport, $postidReport) // Fonction qui permet de signa
                         $reporting = $report->reportCommentDB($idReport);
 
                         if ($reporting === false) {
-                            throw new Exception('Désolé, une erreur a été rencontré. Réessayez plus tard.');
+                            throw new Exception('Désolé, une erreur a été rencontré. Veuillez réessayer..');
                         }
                         else{
                             header('Location: index.php?action=post&id=' . $postidReport . '&message=Merci pour votre signalement, on s\'en occupe');
@@ -94,12 +94,12 @@ function reportComment($idReport, $postidReport) // Fonction qui permet de signa
                     }
                 }
                 else{
-                    throw new Exception('Désolé, une erreur a été rencontré. Réessayez plus tard.');
+                    throw new Exception('Désolé, une erreur a été rencontré. Veuillez réessayer.');
                 }
             }
         }
         else{
-            throw new Exception('Désolé, une erreur a été rencontré. Réessayez plus tard.');
+            throw new Exception('Désolé, une erreur a été rencontré. Veuillez réessayer.');
         }
     }
     catch (Exception $e){
@@ -117,13 +117,13 @@ function addComment($postId, $author, $comment) // Fonction qui permet d'ajouter
             $affectedLines = $addComments->postComment($postId, $author, $comment);
 
             if ($affectedLines === false) {
-                throw new Exception('Désolé ' . $author . ", une erreur a été rencontré. Réessayez plus tard.");
+                throw new Exception('Désolé ' . "<span class='cible_Erreur'>" . $author . "</span>" . ", une erreur a été rencontré. Réessayez plus tard.");
             }
             else {
                 header('Location: index.php?action=post&add=' . $author . '&id=' . $postId);
             }
         }else{
-            throw new Exception('Désolé ' . $author . ", une erreur a été rencontré. Réessayez plus tard.");
+            throw new Exception('Désolé ' . "<span class='cible_Erreur'>" . $author . "</span>" . ", une erreur a été rencontré. Réessayez plus tard.");
         }
     }
     catch (Exception $e){
@@ -175,7 +175,7 @@ function sendPassword($pseudo) {
             header('Location: index.php?action=forgotpassword&status=ok');
         }
         else{
-            throw new Exception('Pas de compte retrouvé pour l\'utilisateur '.$pseudo);
+            throw new Exception("Pas de compte retrouvé pour l'utilisateur " . "<span class='cible_Erreur'>" . $pseudo . "</span>");
         }
     }
     catch (Exception $e){

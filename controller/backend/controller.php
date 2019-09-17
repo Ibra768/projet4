@@ -4,8 +4,7 @@ require_once('model/CommentManager.php');
 require_once('model/AdminManager.php');
 require_once('model/PostManager.php');
 require_once('model/MyException.php');
-
-                               
+                           
 function dataAdmin($pageCourante) // Fonction qui récupère la liste des billets page par page
 {
     try{
@@ -19,19 +18,19 @@ function dataAdmin($pageCourante) // Fonction qui récupère la liste des billet
 
             $postsTotaleReq = $postsAdmin;
 
-            $postsTotales = $postsTotaleReq->rowCount(); // On compte le nombre de posts
+            $postsTotales = $postsTotaleReq->rowCount(); 
 
-            $pagesTotales = ceil($postsTotales/$postsParPage); // On divise le nombre de post par le nombre de post par page, pour avoir le nombre de page totale
+            $pagesTotales = ceil($postsTotales/$postsParPage);
 
             if($pageCourante > $pagesTotales) {
                 $pageCourante = 1;
             }
         
-            $depart = ($pageCourante-1)*$postsParPage; // On fixe un point de départ, qui correspond à la page actuel x le nombre de page.
+            $depart = ($pageCourante-1)*$postsParPage; 
             
             $postManagerAdmin2 = new \Model\PostManager();
 
-            $postsAdminPage = $postManagerAdmin2->getPostsPage($depart,$postsParPage); // On récupère les posts page par page
+            $postsAdminPage = $postManagerAdmin2->getPostsPage($depart,$postsParPage); 
 
             require('view/backend/admin.php');
         }
@@ -44,7 +43,7 @@ function dataAdmin($pageCourante) // Fonction qui récupère la liste des billet
     }
 }
 
-function adminCommentReport($pageCouranteComments) 
+function adminCommentReport($pageCouranteComments) // Fonction qui permet à l'administrateur d'accéder à la page des commentaires signalés
 {
     try{
         if(isset($_SESSION['pseudo'])){
@@ -57,15 +56,15 @@ function adminCommentReport($pageCouranteComments)
 
             $commentsTotaleReq = $commentsReporting;
 
-            $commentsTotales = $commentsTotaleReq->rowCount();  // On compte le nombre de posts
+            $commentsTotales = $commentsTotaleReq->rowCount();  
   
-            $pagesTotalesComments = ceil($commentsTotales/$commentsParPage); // On divise le nombre de commentaires par le nombre de commentaires par page, pour avoir le nombre de page totale
+            $pagesTotalesComments = ceil($commentsTotales/$commentsParPage);
 
-            $departComments = ($pageCouranteComments-1)*$commentsParPage; // On fixe un point de départ, qui correspond à la page actuel x le nombre de commentaires.
+            $departComments = ($pageCouranteComments-1)*$commentsParPage; 
 
             $commentsByPage = new \Model\CommentManager();
 
-            $getCommentsByPage = $commentsByPage->getCommentsReportByPage($departComments,$commentsParPage); // On récupère les commentaires page par page
+            $getCommentsByPage = $commentsByPage->getCommentsReportByPage($departComments,$commentsParPage); 
 
             require('view/backend/commentAdmin.php');
         }
@@ -89,7 +88,7 @@ function passRequest() // Fonction qui permet d'accéder à la page de modificat
                 require('view/backend/changeAccess.php');
             }
             else{
-                throw new Exception("Une erreur a été rencontré. Veuillez réessayer.");
+                throw new Exception("Une erreur s'est produite. Veuillez réessayer.");
             }
         }
         else{
@@ -104,51 +103,99 @@ function passRequest() // Fonction qui permet d'accéder à la page de modificat
     }
 }
 
-function changeAccess($pseudo,$pass,$newPass)
+function changeAccess($formulaire) // Fonction qui procède au changement des identifiants d'accès
 {
     try{
-
+    
         if(isset($_SESSION['pseudo'])){
-
-            if (isset($pseudo,$pass,$newPass) && !empty($pseudo) && !empty($pass) && !empty($newPass)) {
-
-                $checkAdmin = new \Model\AdminManager();
-                $resultat = $checkAdmin->getAdmin($_SESSION['pseudo']);
             
-                $pass_hache = password_hash($newPass, PASSWORD_DEFAULT);
-                $isPasswordCorrect = password_verify($pass, $resultat['pass']);
+            if(isset($formulaire['changePass'])){
+            
+                if (isset($formulaire['pseudo'],$formulaire['pass'],$formulaire['newPass']) && !empty($formulaire['pseudo']) && !empty($formulaire['pass']) && !empty($formulaire['newPass'])) {
 
-                if (!$resultat)
-                {
-                    throw new Exception("Une erreur s'est produite. Veuillez réessayer.");
-                }
-                else
-                {
-                    if ($isPasswordCorrect) {
-
-                        if($pass == $newPass) {
-                            throw new Exception('Le nouveau mot de passe saisi est identique au précédent.');
-                        }
-                        else{
-
-                        $changeAccess = new \Model\AdminManager();
-                        $resultat = $changeAccess->changeAccess($pseudo,$pass_hache,$_SESSION['pseudo']);
-                        $_SESSION['pseudo'] = $pseudo;
-                        header('Location: index.php?action=admin');
-
-                        }
+                    /*if (!preg_match('#^[a-zA-Z0-9*]{8,30}$#', $formulaire['newPass'])){
+                        throw new Exception("Le mot de passe choisi ne respecte pas les conditions de sécurité.");
+                    }*/
+                    if (strlen($formulaire['newPass']) < 8) {
+                        throw new Exception("Le mot de passe est trop court.");
+                    }
+                    else if (strlen($formulaire['newPass']) > 30) {
+                        throw new Exception("Le mot de passe est trop long.");
                     }
                     else{
-                        throw new Exception('Le mot de passe renseigné ne correspond pas.');
-                    }   
+
+                        $checkAdmin = new \Model\AdminManager();
+                        $resultat = $checkAdmin->getAdmin($_SESSION['pseudo']);
+                    
+                        $pass_hache = password_hash($formulaire['newPass'], PASSWORD_DEFAULT);
+                        $isPasswordCorrect = password_verify($formulaire['pass'], $resultat['pass']);
+
+                        if (!$resultat)
+                        {
+                            throw new Exception("Une erreur s'est produite. Veuillez réessayer");
+                        }
+                        else
+                        {
+                            if ($isPasswordCorrect) {
+
+                                if($formulaire['pass'] == $formulaire['newPass']) {
+                                    throw new Exception('Le nouveau mot de passe saisi est identique au précédent');
+                                }
+                                else{
+
+                                    $changeAccess = new \Model\AdminManager();
+                                    $resultat = $changeAccess->changeAccess($formulaire['pseudo'],$pass_hache,$_SESSION['pseudo']);
+            
+                                    if($_SESSION['pseudo'] == $formulaire['pseudo']){
+                                        header('Location: index.php?action=admin&message=Le mot de passe a bien été modifié !');
+                                    }
+                                    else{
+                                        $_SESSION['pseudo'] = $formulaire['pseudo'];
+                                        header('Location: index.php?action=admin&message=Le pseudo et le mot de passe ont bien été modifiés !');
+                                    }
+                                }
+                            }
+                            else{
+                                throw new Exception('Le mot de passe renseigné ne correspond pas');
+                            }   
+                        }
+                    }
+                }
+                else{
+                    throw new Exception("Une erreur s'est produite. Veuillez réessayer");
                 }
             }
             else{
-                throw new Exception("Une erreur s'est produite. Veuillez réessayer.");
+
+                if (isset($formulaire['pseudo']) && !empty($formulaire['pseudo'])) {
+
+                    if(!preg_match('#^[a-zA-Z0-9-_]{6,12}#', $formulaire['pseudo'])){
+                        throw new Exception("Le pseudo choisi ne respecte pas les conditions de sécurité.");
+                    }
+                    else if (strlen($formulaire['pseudo']) < 6) {
+                            throw new Exception("Le pseudo choisi est trop court");
+                    }
+                    else if (strlen($formulaire['pseudo']) > 12) {
+                        throw new Exception("Le pseudo choisi est trop long");
+                    }
+                    else{
+
+                        $changeAccess = new \Model\AdminManager();
+                        $resultat = $changeAccess->changeOnlyPseudo($formulaire['pseudo'],$_SESSION['pseudo']);
+
+                        $_SESSION['pseudo'] = $formulaire['pseudo'];
+
+                        header('Location: index.php?action=admin&message=Le pseudo a bien été modifié !');
+
+                    }
+                }
+                else{
+                    throw new Exception("Une erreur s'est produite. Veuillez réessayer");
+                }
             }
         }
         else{
-            throw new MyException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
+            throw new MyException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter");
         }
     }
     catch (Exception $e){
@@ -173,7 +220,7 @@ function updatePost($postid) // Fonction qui récupère le billet à modifier (a
                     $tableau[] = $posts[$i]['id']; 
                 }
                 if (!in_array($postid, $tableau)) {
-                    throw new Exception("Désolé, le post n°" . $postid . " n'existe pas.");
+                    throw new Exception("Désolé, le post n° " . "<span class='cible_Erreur'>" .$postid . "</span>" . " n'existe pas.");
                 }
                 else{
 
@@ -199,7 +246,8 @@ function updatePost($postid) // Fonction qui récupère le billet à modifier (a
     }
 }
 
-function getAddPage() {
+function getAddPage() 
+{
     try{
         if(isset($_SESSION['pseudo'])){
             require('view/backend/addPost.php');
@@ -214,7 +262,8 @@ function getAddPage() {
     
 }     
 
-function addPost($fichier,$title,$content,$author){
+function addPost($fichier,$title,$content,$author)
+{
     try{
         if(isset($_SESSION['pseudo'])){
             if(empty($title) || !isset($title)) {
@@ -269,17 +318,14 @@ function addPost($fichier,$title,$content,$author){
     }
 }
 
-function confirmUpdatePost($fichier,$formulaire,$author){
-
+function confirmUpdatePost($fichier,$formulaire)
+{
     try{
         if(isset($_SESSION['pseudo'])){
             if(empty($formulaire["title"]) || !isset($formulaire["title"])){
                 throw new Exception("Le champ " . "<span class='cible_Erreur'>" . "titre" . "</span>" . " est manquant.");
             }
             else if(empty($formulaire["content"]) || !isset($formulaire["content"])){
-                throw new Exception("Le champ " . "<span class='cible_Erreur'>" . "contenu" . "</span>" . " est manquant.");
-            }
-            else if(empty($author) || !isset($author)){
                 throw new Exception("Le champ " . "<span class='cible_Erreur'>" . "contenu" . "</span>" . " est manquant.");
             }
             else{
@@ -292,16 +338,16 @@ function confirmUpdatePost($fichier,$formulaire,$author){
                     $extension = substr($get['images'], -4, 4);
 
                     $update = new \Model\PostManager();
-                    $updatePost = $update->updatePostDB($formulaire["title"],$formulaire["content"],$author['pseudo'],$formulaire['title'].$extension,$formulaire["id"]);
+                    $updatePost = $update->updatePostDB($formulaire["title"],$formulaire["content"],$_SESSION['pseudo'],$formulaire['title'].$extension,$formulaire["id"]);
                     rename("public/images/posts/".$get['images'],"public/images/posts/".$formulaire['title'].$extension);
                     if(!$updatePost) {
                         throw new Exception("Une erreur a été rencontré.");
                     }
                     else{
-                        Header('location:index.php?action=admin&update=ok');
+                        Header('location:index.php?action=admin&message=Le post a bien été modifié !');
                     }
                 }
-                else if(isset($fichier) && !empty($formulaire["title"]) && !empty($formulaire["content"]) && !empty($author)){
+                else if(isset($fichier) && !empty($formulaire["title"]) && !empty($formulaire["content"])){
                     $maxSize = 5000000;
                     $validExtensions = array('jpg','gif','png');
                     
@@ -316,12 +362,12 @@ function confirmUpdatePost($fichier,$formulaire,$author){
                             if($result){
                                 $fichierImage = $formulaire['title'].".".$uploadExtensions;
                                 $update = new \Model\PostManager();
-                                $updatePost = $update->updatePostDB($formulaire['title'],$formulaire['content'],$author['pseudo'],$fichierImage,$formulaire['id']);
+                                $updatePost = $update->updatePostDB($formulaire['title'],$formulaire['content'],$_SESSION['pseudo'],$fichierImage,$formulaire['id']);
                                 if(!$updatePost) {
                                     throw new Exception("Une erreur a été rencontré.");
                                 }
                                 else{
-                                Header('location:index.php?action=admin&update=ok');
+                                Header('location:index.php?action=admin&message=Le post a bien été modifié !');
                                 unlink("public/images/posts/".$delete['images']);
                                 }
                             }
@@ -368,7 +414,7 @@ function deletePost($id) // Fonction qui permet de supprimer un billet
                     $tableau[] = $posts[$i]['id']; 
                 }
                 if (!in_array($id, $tableau)) {
-                    throw new Exception("Désolé, le post n°" . $id . " n'existe pas.");
+                    throw new Exception("Désolé, le post n° " . "<span class='cible_Erreur'>" .$id . "</span>" . " n'existe pas.");
                 }
                 else{
 
@@ -417,7 +463,7 @@ function allowComment($idComment) // Fonction qui autorise un commentaire signal
                     $tableau[] = $getComments[$i]['id']; 
                 }
                 if (!in_array($idComment, $tableau)) {
-                    throw new Exception("Désolé, le commentaire n°" . $idComment . " n'existe pas.");
+                    throw new Exception("Désolé, le commentaire n° " . "<span class='cible_Erreur'>" .$idComment . "</span>" . " n'existe pas.");
                 }
                 else{
 
@@ -462,7 +508,7 @@ function deleteComment($id) // Fonction qui permet de supprimer un commentaire s
                     $tableau[] = $getComments[$i]['id']; 
                 }
                 if (!in_array($id, $tableau)) {
-                    throw new Exception("Désolé, le commentaire n°" . $id . " n'existe pas.");
+                    throw new Exception("Désolé, le commentaire n° " . "<span class='cible_Erreur'>" .$id . "</span>" . " n'existe pas.");
                 }
                 else{
 
@@ -479,7 +525,7 @@ function deleteComment($id) // Fonction qui permet de supprimer un commentaire s
                 }
             }
             else{
-                throw new Exception("Désolé, une erreur a été rencontré.");
+                throw new Exception("Une erreur a été rencontré. Veuillez réessayer.");
             }
         }
         else{
@@ -507,7 +553,7 @@ function deleteCommentAdmin($commentid,$postid) // Fonction qui permet de suppri
                     $tableau[] = $posts[$i]['id']; 
                 }
                 if (!in_array($postid, $tableau)) {
-                    throw new Exception("Désolé, le post n°" . $postid . " n'existe pas.");
+                    throw new Exception("Désolé, le post n° " . "<span class='cible_Erreur'>" .$postid . "</span>" . " n'existe pas.");
                 }
                 else{
 
@@ -520,7 +566,7 @@ function deleteCommentAdmin($commentid,$postid) // Fonction qui permet de suppri
                             $tableau[] = $getComments[$i]['id']; 
                         }
                         if (!in_array($commentid, $tableau)) {
-                            throw new Exception("Désolé, le commentaire n°" . $commentid . " n'existe pas.");
+                            throw new Exception("Désolé, le commentaire n° " . "<span class='cible_Erreur'>" .$commentid . "</span>" . " n'existe pas.");
                         }
                         else{
                             $deleteComment = new \Model\CommentManager();
@@ -528,7 +574,7 @@ function deleteCommentAdmin($commentid,$postid) // Fonction qui permet de suppri
                             $confirmDeleteComment = $deleteComment->deleteComment($commentid);
 
                             if ($confirmDeleteComment === false) {
-                                throw new Exception("Une erreur a été rencontré.");
+                                throw new Exception("Une erreur a été rencontré. Veuillez réessayer.");
                             }
                             else {
                                 header('Location: index.php?action=post&id=' . $postid . '&message=Le commentaire a bien été supprimé !');
@@ -536,12 +582,12 @@ function deleteCommentAdmin($commentid,$postid) // Fonction qui permet de suppri
                         }
                     }
                     else{
-                        throw new Exception("Une erreur a été rencontré.");
+                        throw new Exception("Une erreur a été rencontré. Veuillez réessayer");
                     }
                 }
             }
             else{
-                throw new Exception("Une erreur a été rencontré.");
+                throw new Exception("Une erreur a été rencontré. Veuillez réessayer.");
             }
         }
         else{
@@ -556,13 +602,9 @@ function deleteCommentAdmin($commentid,$postid) // Fonction qui permet de suppri
     }
 }
 
-function disconnect () { // Fonction qui permet la deconnexion de l'admin
-
+function disconnect () // Fonction qui permet la deconnexion de l'admin
+{
     session_unset();
     session_destroy();
     listPostsHome();
-}
-
-function error(){
-    require('view/frontend/error.php');
 }

@@ -15,7 +15,6 @@ class AdminManager extends Manager
 
         return $resultat;
     }
-
     public function changeAccess($newPseudo,$newPass,$currentPseudo) // Modifie un billet
     {
         $db = $this->dbConnect();
@@ -23,7 +22,13 @@ class AdminManager extends Manager
         $req->execute(array($newPseudo,$newPass,$currentPseudo));
         return $req;
     }
-
+    public function changeOnlyPseudo($newPseudo,$currentPseudo) // Modifie un billet
+    {
+        $db = $this->dbConnect();
+        $req = $db->prepare('UPDATE administrateur SET pseudo = ? WHERE pseudo = ?');
+        $req->execute(array($newPseudo,$currentPseudo));
+        return $req;
+    }
     public function addPost($addTitle, $addContent, $addAuthor, $fichier) // Ajoute un billet
     {
         $db = $this->dbConnect();

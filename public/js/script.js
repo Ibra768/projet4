@@ -63,9 +63,10 @@ function confirmDeletePost () {
 }
 
 
+// Apparition/disparition de l'onglet photo sur la page de modification d'un post
 var ckbox = $('#old');
 
-$('#old').on('click',function () {
+ckbox.on('click',function () {
     if (ckbox.is(':checked')) {
         $("#avatar").css("display","none");
         $("#avatar").val("");
@@ -73,6 +74,23 @@ $('#old').on('click',function () {
     } else {
         $("#avatar").css("display","block");
         $("#avatar").prop('required',true);
+
+    }
+});
+
+// Apparition/disparition de l'onglet mot de passe sur la page de changement des identifiants
+var ckboxPass = $('#changePass');
+
+ckboxPass.on('click',function () {
+    if (ckboxPass.is(':checked')) {
+        $(".blocPass").css("visibility","visible");
+        $(".pass").prop('required',true);
+
+    } else {
+        $(".blocPass").css("visibility","hidden");
+        $(".pass").val("");
+        $(".pass").prop('required',false);
+
 
     }
 });

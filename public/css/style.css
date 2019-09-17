@@ -431,6 +431,12 @@ input[name="avatar"]{
     justify-content: center;
     align-items: center;
 }
+#checkBox{
+    text-align: center;
+}
+.blocPass{
+    visibility: hidden;
+}
 .cible_Erreur{
     animation: colorblink 1s infinite;
 }

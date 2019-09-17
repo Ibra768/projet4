@@ -12,13 +12,43 @@ require_once('controller/backend/controller.php');
 // Bloc qui regroupe toutes les actions effectués, en fonction des requêtes GET & POST envoyées
 
 if (isset($_GET['action'])) {
+    
     switch($_GET['action']) {
+
+        // Administrateur
+
+        case 'admin' : // Accès admin post
+            if(isset($_GET["page"]) AND !empty($_GET["page"]) AND $_GET["page"] > 0) {
+                $_GET["page"] = intval($_GET["page"]);
+                $pageCourante = htmlspecialchars($_GET["page"]);
+                dataAdmin($pageCourante);
+            } else{
+                $pageCourante = 1;
+                dataAdmin($pageCourante);
+            }
+            break;
+
+        case 'adminreport' : // Accès administrateur à la page des commentaires signalés
+            if(isset($_GET["pageComment"]) AND !empty($_GET["pageComment"]) AND $_GET["pageComment"] > 0) {
+                $_GET["pageComment"] = intval($_GET["pageComment"]);
+                $pageCouranteComments = htmlspecialchars($_GET["pageComment"]);
+                adminCommentReport($pageCouranteComments);
+            } else{
+                $pageCouranteComments = 1;
+                adminCommentReport($pageCouranteComments);
+            }
+            break;
+
+        case 'passrequest' : // Accès à la page de changement des identifiants d'accès
+            passRequest();
+            break;
+
+        case 'changeaccess' : // accès page changement mot de passe
+            changeAccess($_POST);
+            break;
 
         case 'post' :
             post(htmlspecialchars($_GET['id']));
-            break;
-        case 'error' :
-            error();
             break;
         case 'addComment' : // Ajout commentaire
             addComment(htmlspecialchars($_GET['id']), htmlspecialchars($_POST['author']), htmlspecialchars($_POST['comment'])); 
@@ -40,28 +70,6 @@ if (isset($_GET['action'])) {
         case 'erreurConnexion' : // Erreur de connexion
             getConnexion();
             break;
-
-        case 'admin' : // Accès admin post
-            if(isset($_GET["page"]) AND !empty($_GET["page"]) AND $_GET["page"] > 0) {
-                $_GET["page"] = intval($_GET["page"]);
-                $pageCourante = htmlspecialchars($_GET["page"]);
-                dataAdmin($pageCourante);
-            } else{
-                $pageCourante = 1;
-                dataAdmin($pageCourante);
-            }
-            break;
-
-        case 'adminreport' : // Accès admin commentaires signalés
-            if(isset($_GET["pageComment"]) AND !empty($_GET["pageComment"]) AND $_GET["pageComment"] > 0) {
-                $_GET["pageComment"] = intval($_GET["pageComment"]);
-                $pageCouranteComments = htmlspecialchars($_GET["pageComment"]);
-                adminCommentReport($pageCouranteComments);
-            } else{
-                $pageCouranteComments = 1;
-                adminCommentReport($pageCouranteComments);
-            }
-            break;
         case 'addPost' : // lancement ajout
             addPost($_FILES,htmlspecialchars($_POST['title']),htmlspecialchars($_POST['content']),htmlspecialchars($_SESSION['pseudo']));
             break;
@@ -73,8 +81,7 @@ if (isset($_GET['action'])) {
             break;
         case 'confirmUpdatePost' : // modification du post
             $_POST = array_map('htmlspecialchars', $_POST);
-            $_SESSION = array_map('htmlspecialchars', $_SESSION);
-            confirmUpdatePost($_FILES,$_POST,$_SESSION);
+            confirmUpdatePost($_FILES,$_POST);
             break;
         case 'deletePost' : // Suppression de post
             deletePost(htmlspecialchars($_GET['id']));
@@ -88,17 +95,8 @@ if (isset($_GET['action'])) {
         case 'deleteCommentAdmin' : // Suppression du commentaire dans le post directement
             deleteCommentAdmin(htmlspecialchars($_GET['commentid']),htmlspecialchars($_GET['postid']));
             break;
-        case 'forbidden' : // Deconnexion
-            forbidden();
-            break;
         case 'deconnexion' : // Deconnexion
             disconnect();
-            break;
-        case 'passrequest' : // accès page changement mot de passe
-            passRequest();
-            break;
-        case 'changeaccess' : // accès page changement mot de passe
-        changeAccess(htmlspecialchars($_POST['pseudo']),htmlspecialchars($_POST['pass']),htmlspecialchars($_POST['newPass']));
             break;
         case 'forgotpassword' : // accès page changement mot de passe
         getForgotPassword();
