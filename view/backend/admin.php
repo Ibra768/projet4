@@ -4,8 +4,8 @@
   $body = "body_Admin";
   ob_start(); 
 ?>
+
 <div class="instructions_Admin">
-  <p>Bienvenue sur votre espace <?= $_SESSION['pseudo'] ?></p><br>
   <div>
     <a class="boutons" href="index.php?action=add">Ajouter un billet</a>
     <a class="boutons" href="index.php?action=passrequest">Modifier mes accès</a>
@@ -21,8 +21,7 @@
   ?>
 </div>
 <?php
-  for($i=0 ; $i < count($postsAdminPage) ; $i++)
-  {
+  for($i=0 ; $i < count($postsAdminPage) ; $i++) {
 ?>
 <div id="tableauAdmin">
   <div><p><?= $postsAdminPage[$i]['title'] ?></p></div>
@@ -40,7 +39,7 @@
   <?php
     for($i=1 ; $i <= $pagesTotales ; $i++){
       if($i == $pageCourante){
-            echo "<div class='boutons'>" . $i . "</div>";
+        echo "<div class='boutons'>" . $i . "</div>";
       }
       else {
         echo '<div class="boutons"><a href="index.php?action=admin&page='.$i.'">'.$i.'</a></div>';
@@ -48,6 +47,7 @@
     } 
   ?>
 </div>
+
 <?php
   $content = ob_get_clean(); 
   require('view/template.php'); 

@@ -4,6 +4,7 @@
     $body = "body_post";
     ob_start(); 
 ?>
+
 <style>
     body {
         background-image : url("public/images/posts/<?php echo $post['images'];?>");
@@ -11,6 +12,7 @@
         background-attachment : fixed;    
     }
 </style>
+
 <div id="post_wrapper">
     <article id="billet">
         <h1><?= $post['title'] ?></h1>
@@ -19,25 +21,24 @@
     </article>
     <h2 class="titleComments">Commentaires</h2>
     <?php
-    
-    for($i=0 ; $i < count($comments) ; $i++)
-    {
+        for($i=0 ; $i < count($comments) ; $i++)
+        {
     ?>
     <div id="comments">
-        <p><strong><?= $comments[$i]['author'] ?></strong> 
-        <p>Publié le <?= $comments[$i]['comment_date_fr'] ?>
+        <p><strong><?= $comments[$i]['author'] ?></strong></p>
+        <p>Publié le <?= $comments[$i]['comment_date_fr'] ?></p>
         <p><?= nl2br($comments[$i]['comment']) ?></p>
         <a class="boutons" id="bouton_Signalement" href="index.php?action=report&amp;id=<?= $comments[$i]['id'] ?>&amp;postid=<?= $comments[$i]['post_id'] ?>"><i class="far fa-flag"></i> Signaler</a>
         <?php
-        if(isset($_SESSION['pseudo']) && isset($_SESSION['pass'])) {
+            if(isset($_SESSION['pseudo']) && isset($_SESSION['pass'])) {
         ?>
-            <a class="boutons" onclick="if(window.confirm('Voulez-vous vraiment supprimer ce commentaire ?')){return true;}else{return false;}" href="index.php?action=deleteCommentAdmin&commentid=<?= $comments[$i]['id'] ?>&postid=<?= $_GET['id'] ?>"><i class="far fa-trash-alt"></i></a>
+        <a class="boutons" onclick="if(window.confirm('Voulez-vous vraiment supprimer ce commentaire ?')){return true;}else{return false;}" href="index.php?action=deleteCommentAdmin&commentid=<?= $comments[$i]['id'] ?>&postid=<?= $_GET['id'] ?>"><i class="far fa-trash-alt"></i></a>
         <?php
-        }
+            }
         ?>
     </div>
     <?php
-    }
+        }
     ?>
     <h3 class="titleComments">Ajouter un commentaire</h3>
     <form method="POST" action="index.php?action=addComment&amp;id=<?= $post['id'] ?>">
@@ -48,6 +49,7 @@
         <input type="submit" class="boutons" value="Envoyer">
     </form>
 </div>
+
 <?php 
     $content = ob_get_clean(); 
     require('view/template.php'); 

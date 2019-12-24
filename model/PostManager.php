@@ -6,21 +6,20 @@ require_once("model/Manager.php");
 
 class PostManager extends Manager
 {
-    public function getPosts() // Récupère la liste des billets
+    public function getPosts() // Récupère la liste des billets dans l'ordre souhaité afin de les afficher sur la page d'accueil
     {
         $db = $this->dbConnect();
         $req = $db->query('SELECT id, title, content, images, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr FROM posts ORDER BY creation_date DESC');
         $posts = $req->fetchAll();
         return $posts;
     }
-    public function getPostAdmin() // Récupère la liste des billets
+    public function getPostAdmin() // Récupère la liste des billets (nombre de billets)
     {
         $db = $this->dbConnect();
         $req = $db->query('SELECT ID FROM posts');
         return $req;
     }
-
-    public function getPostsPage($depart,$discussionParPage) // Récupère la liste des billets
+    public function getPostsPage($depart,$discussionParPage) // Récupère la liste des billets pour chaque page
     {
         $db = $this->dbConnect();
         $req = $db->query('SELECT id, title, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr FROM posts ORDER BY ID LIMIT ' . $depart . ',' .$discussionParPage);

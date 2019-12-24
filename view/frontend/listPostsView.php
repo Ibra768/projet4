@@ -4,6 +4,7 @@
     $body = "body_home";
     ob_start(); 
 ?>
+
 <div id="presentation" class="container">
     <div class="row">
         <div class=col-lg-12">
@@ -23,23 +24,23 @@
 </div>
 <div id="portfolio">
     <?php
-    if(empty($posts) && isset($_SESSION['pseudo'])){
-      ?>
-      <div class="instructions_Admin"><a class="boutons" href="index.php?action=add">Ajouter un billet</a></div>
-      <?php
-    }
-    else{
-    }
-    for($i=0 ; $i < count($posts) ; $i++)
-    {
+        if(empty($posts) && isset($_SESSION['pseudo'])){
+    ?>
+    <div class="instructions_Admin"><a class="boutons" href="index.php?action=add">Ajouter un billet</a></div>
+    <?php
+        }
+        else{
+        }
+        for($i=0 ; $i < count($posts) ; $i++)
+            {
     ?>
     <figure>
         <?php
             if(isset($_SESSION['pseudo'])) {
-                ?>
-            <a href="index.php?action=updatePost&amp;id=<?= $posts[$i]['id'] ?>"><span id="boutonSupprimer" class="boutonsAdmin"><i class="fas fa-paint-brush"></i></i></span><a>
-            <a href="index.php?action=deletePost&amp;id=<?= $posts[$i]['id'] ?>" onclick="if(window.confirm('Voulez-vous vraiment supprimer ce billet ?')){return true;}else{return false;}"><span id="boutonModifier" class="boutonsAdmin"><i class="far fa-trash-alt"></i></span></a>
-            <?php
+        ?>
+        <a href="index.php?action=updatePost&amp;id=<?= $posts[$i]['id'] ?>"><span id="boutonSupprimer" class="boutonsAdmin"><i class="fas fa-paint-brush"></i></i></span><a>
+        <a href="index.php?action=deletePost&amp;id=<?= $posts[$i]['id'] ?>" onclick="if(window.confirm('Voulez-vous vraiment supprimer ce billet ?')){return true;}else{return false;}"><span id="boutonModifier" class="boutonsAdmin"><i class="far fa-trash-alt"></i></span></a>
+        <?php
             }
         ?>
         <a href="index.php?action=post&amp;id=<?= $posts[$i]['id'] ?>">
@@ -51,9 +52,10 @@
         </figcaption>
     </figure>
     <?php
-    }
+        }
     ?>
 </div>
+
 <?php 
     $content = ob_get_clean(); 
     require('view/template.php'); 

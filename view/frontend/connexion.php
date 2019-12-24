@@ -3,10 +3,8 @@
     $meta = "Connexion à l'espace ADMIN du site de Jean Forteroche";
     $body = "body_Connexion";
     ob_start(); 
-    if ($_GET['action'] == 'erreurConnexion') {
-            echo  '<div class="message">' . 'Votre pseudo et' . '/' . 'ou votre mot de passe sont incorrect.' . '</div>';
-    }
 ?>  
+
 <div class="flexbox_Center">
     <div>
         <form method="POST" action="index.php?action=connexion">
@@ -31,6 +29,7 @@
         </form>
     </div>
 </div>
+
 <?php 
     $content = ob_get_clean(); 
     require('view/template.php');

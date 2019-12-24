@@ -1,68 +1,13 @@
-function confirmAddComment () {
-    $(document).ready(function(){
-        $(".message").html("Votre commentaire a bien été ajouté!");
-        $(".message").addClass("messageActive");
-    });
-    setTimeout(function() {
-        $(".message").html("");
-        $(".message").removeClass("messageActive");
-    }, 3000);
-}
-function confirmReportComment () {
-    $(document).ready(function(){
-        $(".message").html("Merci pour votre signalement, on s'en occupe !");
-        $(".message").addClass("messageActive");
-    });
-    setTimeout(function() {
-        $(".message").html("");
-        $(".message").removeClass("messageActive");
-    }, 3000);
-}
-
-function confirmDeleteComment () {
-    $(document).ready(function(){
-        $(".message").html("Le commentaire a bien été supprimé");
-        $(".message").addClass("messageActive");
-    });
-    setTimeout(function() {
-        $(".message").html("");
-        $(".message").removeClass("messageActive");
-    }, 3000);
-}
-
-function confirmAddPost () {
-    $(document).ready(function(){
-        $(".message").html("Le billet a bien été ajouté !");
-        $(".message").addClass("messageActive");
-    });
-    setTimeout(function() {
-        $(".message").html("");
-        $(".message").removeClass("messageActive");
-    }, 3000);
-}
-function confirmUpdatePost () {
-    $(document).ready(function(){
-        $(".message").html("Le billet a bien été modifié !");
-        $(".message").addClass("messageActive");
-    });
-    setTimeout(function() {
-        $(".message").html("");
-        $(".message").removeClass("messageActive");
-    }, 3000);
-}
-
-function confirmDeletePost () {
-    $(document).ready(function(){
-        $(".message").html("Le billet a bien été supprimé");
-        $(".message").addClass("messageActive");
-    });
-    setTimeout(function() {
-        $(".message").html("");
-        $(".message").removeClass("messageActive");
-    }, 3000);
-}
-
-
+// Apparition/disparition des messages de confirmation
+$(document).ready(function(){
+    var message = $(".message").html();
+    if(message.length > 21){
+        $(".message").css("display","block");
+        setTimeout(function() {
+            $(".message").css("opacity","0");
+        }, 5000);
+    }
+});
 // Apparition/disparition de l'onglet photo sur la page de modification d'un post
 var ckbox = $('#old');
 
@@ -79,6 +24,7 @@ ckbox.on('click',function () {
 });
 
 // Apparition/disparition de l'onglet mot de passe sur la page de changement des identifiants
+
 var ckboxPass = $('#changePass');
 
 ckboxPass.on('click',function () {
@@ -95,7 +41,8 @@ ckboxPass.on('click',function () {
     }
 });
 
-    
+// Effet au survol du logo du site
+
 $(document).ready(function(){
     document.getElementById("logo").onmouseover = function() 
 {

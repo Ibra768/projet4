@@ -44,7 +44,8 @@ if (isset($_GET['action'])) {
             break;
 
         case 'changeaccess' : // accès page changement mot de passe
-            changeAccess($_POST);
+            $post = array_map('htmlspecialchars', $_POST);
+            changeAccess($post);
             break;
 
         case 'post' :
@@ -80,8 +81,8 @@ if (isset($_GET['action'])) {
             updatePost(htmlspecialchars($_GET['id']));
             break;
         case 'confirmUpdatePost' : // modification du post
-            $_POST = array_map('htmlspecialchars', $_POST);
-            confirmUpdatePost($_FILES,$_POST);
+            $post = array_map('htmlspecialchars', $_POST);
+            confirmUpdatePost($_FILES,$post);
             break;
         case 'deletePost' : // Suppression de post
             deletePost(htmlspecialchars($_GET['id']));

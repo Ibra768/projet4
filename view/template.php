@@ -1,6 +1,3 @@
-<?php
-
-?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -35,24 +32,20 @@
                 <?php
                     }   
                     else{ 
-                    ?>
+                ?>
                 <a href="index.php?action=getConnexion"><span class="glyphicon glyphicon-user"></span> Accès Administration</a>
-                        <?php
-                        }
-                        ?>
+                <?php
+                    }
+                ?>
             </div>
         </nav>
-        <p class="message">
-        <?php
-        if (isset($_GET['message'])){
-            echo $_GET['message'];
-        }
-        ?>
-        </p>
+        <div class="message">
+            <?php
+                if (isset($_GET['message'])){
+                    echo $_GET['message'];
+                }
+            ?>
+        </div>
         <?= $content ?>
     </body>
 </html>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-<script type="text/javascript" src="public/js/script.js"></script>
-
-
