@@ -11,7 +11,7 @@
   }
   else{
 ?>
-<div class="instructions_Admin container-fluid"><p>Voici la liste des commentaires signalés :</p></div>
+<div class="instructions_Admin container-fluid"><p>Il y a <?=$commentsTotales ?> commentaires signalé(s)</p></div>
 <?php
   }
   for($i=0 ; $i < count($getCommentsByPage) ; $i++) {
@@ -19,8 +19,10 @@
 <div id="commentReport" class="container">
   <div class="row">
     <div class="col-lg-12" id="list_Comment">
-      <p>Posté par <?= $getCommentsByPage[$i]['author']?> le <?= $getCommentsByPage[$i]['comment_date_fr'] ?></p>
+      <p>Posté par <?= $getCommentsByPage[$i]['author']?> le <?= $getCommentsByPage[$i]['comment_date_fr'] ?> sur le post n°<?= $getCommentsByPage[$i]['post_id']?></p>
+      <hr>
       <p><?= $getCommentsByPage[$i]['comment'] ?></p>
+      <hr>
       <p>Ce commentaire a été signalé à <?= $getCommentsByPage[$i]['nb_signalements'] ?> reprise(s).</p>
       <p>Que souhaitez-vous faire <?= $_SESSION['pseudo'] ?> ?</p>
       <a class="boutons" href="index.php?action=ignore&amp;id=<?= $getCommentsByPage[$i]['id'] ?>"><i class="fas fa-check"></i></a> <a class="boutons" onclick="if(window.confirm('Voulez-vous vraiment supprimer ce commentaire ?')){return true;}else{return false;}" href="index.php?action=deleteComment&amp;id=<?= $getCommentsByPage[$i]['id'] ?>"><i class="far fa-trash-alt"></i></a>

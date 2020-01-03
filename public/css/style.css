@@ -12,7 +12,7 @@ body{
 
 } 
 nav {
-    height : 50px;
+    height : auto;
     background-color: black;
     display: flex;
     font-family: "Nova Flat", "sans-serif";
@@ -245,7 +245,7 @@ nav a:visited {
     font-family : "Nova Flat", sans-serif;
 }
 #body_Connexion form a{
-    color : gray;
+    color : white;
     font-weight: bold;
     text-shadow: -1px 0 black;
 }
@@ -257,6 +257,7 @@ nav a:visited {
 
 #body_Modif{
     background : url("../../public/images/background/background_modification.jpg") no-repeat fixed center;
+    background-size: cover;
 }
 #body_Modif h1{
 
@@ -264,6 +265,7 @@ nav a:visited {
     color : white;
     text-transform: uppercase;
     font-size : 1.5em;
+    font-family: 'Nova Flat', 'sans-serif';
 }
 #body_Modif form{
     text-align: center;
@@ -305,7 +307,6 @@ input[name="avatar"]{
     margin: auto; 
     padding : 15px;
     background-color: white;
-    word-break: break-all;
 }
 #body_post input{
     width : 250px;
@@ -408,14 +409,30 @@ background-image: url("https://www.transparenttextures.com/patterns/escheresque-
     color : white;
     background-image : url("https://www.transparenttextures.com/patterns/escheresque-dark.png");
 }
+#body_AdminComments #list_Comment p:nth-child(0n+1) {
+    padding-top: 5px;
+    text-transform: uppercase;
+}
+#body_AdminComments #list_Comment p:nth-child(0n+2) {
+    border : 2px solid white;
+}
+#body_AdminComments #list_Comment {
+    border : 2px solid white;
+}
+hr{
+    width: 60%;
+    border-top: 3px double #8c8b8b;
+}
 #tableauAdmin p{
-    word-break: break-all;
     padding-left: 5px;
     padding-right: 5px;
 }
 
 .instructions_Admin .boutons{
     border : 3px solid white;
+}
+.instructions_Admin p{
+    font-family: 'Nova Flat', 'sans-serif';
 }
 #boutons_Admin .boutons{
     border : 3px solid white;
@@ -506,7 +523,12 @@ background-image: url("https://www.transparenttextures.com/patterns/escheresque-
 
 /*  Media Queries */
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 910px) {
+    nav{
+        flex-direction: column;
+    }   
+}
+@media screen and (max-width: 567px) {
     nav {
         height: initial;
         display: block;
@@ -539,5 +561,8 @@ background-image: url("https://www.transparenttextures.com/patterns/escheresque-
     }
     .inputBox{
         margin: auto;
+    }
+    #body_Access form{
+        width: auto;
     }
   }
