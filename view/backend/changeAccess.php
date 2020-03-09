@@ -1,11 +1,10 @@
 <?php 
-    $title = 'Changer vos accès'; 
-    $meta = 'Changements des identifiants';
+    $title = 'Billet Simple pour l\'Alaska - Administration'; 
+    $description = 'Cet espace vous permet de modifier vos identifiants.';
     $body = "body_Access";
     ob_start(); 
 ?>
-
-<div class="flex">
+<div class="flexboxForm">
     <form method="POST" action="index.php?action=changeaccess">
         <h1>Modifier mes accès</h1>
         <div class="flexForm">
@@ -31,8 +30,6 @@
         </div>
     </form>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
-<script src="public/js/script.js"></script>
 <?php 
     $content = ob_get_clean(); 
     require('view/template.php'); 

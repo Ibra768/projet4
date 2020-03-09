@@ -1,16 +1,16 @@
-/* Template */
-
-html{
+html {
     height : 100%;
 } 
-body{
+body {
     font-family : 'Roboto condensed', sans-serif;
     min-height: 100%;
     margin: 0;
     padding: 0;
-    position: relative;
-
+    position: relative;  
 } 
+
+/* TEMPLATE */
+
 nav {
     height : auto;
     background-color: black;
@@ -30,12 +30,12 @@ nav a {
     font-size: 1.4em;
     font-family: "Rock Salt", "sans-serif";
 }
-#menu{
+#menu {
     display: flex;
     justify-content: flex-end;
     flex: auto;
 }
-#menu a{
+#menu a {
     font-size : 1.2em;
     color: white;
 }
@@ -52,7 +52,7 @@ nav a:visited {
     font-weight: bold;
     color: gray;
 }
-#welcome a{
+#welcome a {
     cursor: default;
 }
 .boutons {
@@ -68,7 +68,7 @@ nav a:visited {
     margin-top : 10px;
     margin-bottom : 10px;
 }
-@-webkit-keyframes monanimation { /* Safari, Opera, Chrome */
+@-webkit-keyframes monanimation { 
     0% {
      transform: translateY(-100%);
     }
@@ -85,9 +85,7 @@ nav a:visited {
         transform: translateY(-100%);
     }
 }  
-
-
-@keyframes monanimation { /* Tous les autres navigateurs */
+@keyframes monanimation { 
     0% {
      transform: translateY(-100%);
     }
@@ -104,8 +102,7 @@ nav a:visited {
         transform: translateY(-100%);
     }
 }  
-.message{
-    
+.message {    
     background-color: gray;
     border-bottom-style: solid;
     border-bottom-width : 3px;
@@ -116,11 +113,11 @@ nav a:visited {
     font-size : 1.4em;
     text-transform: uppercase;
     font-family: "Nova Flat", "sans-serif";
-    -webkit-animation: monanimation linear 6s; /* Safari, Opera, Chrome */
-    animation: monanimation linear 6s; /* Tous les autres navigateurs */
+    -webkit-animation: monanimation linear 6s; 
+    animation: monanimation linear 6s; 
 }
 
-/* Page d'accueil */
+/* PAGE D'ACCUEIL*/
 
 #presentation {
     text-align: center;
@@ -128,25 +125,22 @@ nav a:visited {
     text-transform: uppercase;
     font-size: 1.4em;
 }
-#presentation h1{
+#presentation h1 {
     text-transform: none;
     font-family: 'Nova Flat', 'cursive';
 }
-#body_home{
-    background-color : gray;
-    background-image : url("https://www.transparenttextures.com/patterns/escheresque-dark.png");
+#body_home { 
+    background-color: gray;
     position: relative;
 }
-#portfolio
-{
+#portfolio {
 	display: flex;
     flex-wrap : wrap;
 	justify-content: space-around;
     width: 100%;
     text-align: center;
 }
-#portfolio figure
-{
+#portfolio figure {
 	height: 200px;
 	position: relative;
     width: 350px;
@@ -155,19 +149,16 @@ nav a:visited {
     border : 3px solid white;
     overflow: hidden;
 }   
-#portfolio figure img
-{
+#portfolio figure img {
 	height: 100%;
     width: 100%;
     transform: scale(1.5);
     transition : 1s;
 }
-#portfolio figure img:hover
-{
+#portfolio figure img:hover {
     transform: scale(1);
 }
-#portfolio figcaption
-{
+#portfolio figcaption {
     background: rgba(0,0,0,0.4);
     border-top: 2px solid white;
     border-top-right-radius: 50px;
@@ -182,36 +173,35 @@ nav a:visited {
     right:0;
     font-size: 1.3em;
 }
-
-#portfolio figure:hover figcaption
-{
+#portfolio figure:hover figcaption {
     visibility: visible;
+    -webkit-animation: slidein 3s infinite;
     animation: slidein 3s infinite;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
     height: 35%;
 }
-
 @keyframes slidein {
     100% {
       color: white;
     }
-  }
-
-#portfolio figcaption .title_portfolio
-{
+}
+@-webkit-keyframes slidein {
+    100% {
+      color: white;
+    }
+}
+#portfolio figcaption .title_portfolio {
     display : inline-block;
     padding-top : 5px;
 	margin-left: 10px;
 }
-#portfolio figcaption p
-{
+#portfolio figcaption p {
 	font-size: 0.9em;
 	margin-top: 5px;
 	margin-left: 10px;
 }
-.boutonsAdmin
-{
+.boutonsAdmin {
     background-color: #111;
     color: white;
 	border-bottom: 3px solid #fff;
@@ -220,132 +210,189 @@ nav a:visited {
     z-index: 1000;
     transition: 0.8s;
 }
-.boutonsAdmin:hover{
+.boutonsAdmin:hover {
     font-size: 1.4em;
 }
-#boutonModifier{
-
+#boutonModifier {
     right: 0px;
     border-left: 3px solid #fff;
 }
-#boutonSupprimer
-{
+#boutonSupprimer {
     left: 0px;
     border-right: 3px solid #fff;
 }
-/* Page de connexion */
+
+/* PAGE DE CONNEXION */
 
 #body_Connexion {
     background : url("../../public/images/background/background_connexion.jpg") no-repeat fixed center;
     height: 100%;
 }
-#body_Connexion form{
-    font-size : 1.3em;
+#body_Connexion form {
+    font-size : 1.6em;
     text-align: center;
-    font-family : "Nova Flat", sans-serif;
 }
-#body_Connexion form a{
+#body_Connexion form a {
+    font-size : 0.7em;
+    text-transform: uppercase;
     color : white;
     font-weight: bold;
     text-shadow: -1px 0 black;
 }
-#body_Connexion form label{
+#body_Connexion form input[type="text"],input[type="password"] {
+    margin: 10px 0px 10px 0px;
+    width: 80%;
+    height: 25px;
+    font-size: 1em;
+}
+#body_Connexion input[type="submit"] {
+    text-transform: uppercase;
+}
+#body_Connexion form label {
     color: white;
+    font-family : "Nova Flat", sans-serif;
 }
 
 /* Page d'ajout et de modification de billet */
 
-#body_Modif{
+#body_Modif {
     background : url("../../public/images/background/background_modification.jpg") no-repeat fixed center;
     background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
-#body_Modif h1{
-
+#body_Modif h1 {
+    margin: 0;
     text-align: center;
     color : white;
     text-transform: uppercase;
-    font-size : 1.5em;
+    font-size : 3em;
     font-family: 'Nova Flat', 'sans-serif';
 }
-#body_Modif form{
-    text-align: center;
-    width : 70%;
-    margin: auto;
-    color: white; 
-    font-size : 1.2em;
+.formtiny {
+    background-color: black;
+    color: white;
+    opacity: 0.9;
+    font-size: 1.3em;
     font-family : "Nova Flat", sans-serif;
+    width: 80%;
+    padding: 30px;
+    text-align: center;
 }
-#imageUpdate{
+input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 5px 0px 5px 0px;
+    cursor: pointer;
+}
+#update-file-upload {
+    display: none;
+}
+#imageUpdate {
     width: 100px;
     height : 100px;
 }
-input[name="title"]{
+#body_Modif input[name="title"] {
     color: black;
     text-align: center;
+    height: 25px;
+    margin : 10px 0px 10px 0px;
+    width: 40%;
+    font-size: 1em;
 }
-input[name="avatar"]{
+input[name="avatar"] {
     color: white;
 }
-#oldBloc{
+#oldBloc {
     margin-bottom: 20px;    
 }
 
-/* Page article + comments */
+/* PAGE POST */
 
-#post_wrapper{
+#post_wrapper {
     text-align: center;
     display: flex;
     flex-direction: column;
     margin-top : 40px;
     color: black;
-    padding-bottom: 30px;
 }
 #billet {
     font-family: 'Nova Flat', 'cursive';
     font-size: 1.2em;
-    width: 80%;
+    width: 95%;
     margin: auto; 
-    padding : 15px;
+    padding: 15px;
     background-color: white;
+    border-radius: 30px;
+    border : 3px solid black;
+    word-break: break-word;
 }
-#body_post input{
-    width : 250px;
+#body_post input[type="text"] {
+    width : 70%;
     border : 2px solid black;
 }
-#body_post label{
+#body_post label {
     font-size : 1.4em;
     text-transform: uppercase;
     text-shadow: 2px 2px white;
 }
-#body_post textarea{
-    width : 60%;
+#body_post textarea {
+    width : 90%;
     height : 200px;
     border : 2px solid black;
 }
+#body_post form {
+    width: 90%;
+    margin: auto;
+}
 #body_post .titleComments {
+    font-size: 2em;
     text-transform: uppercase;
     text-shadow: 3px 2px white;
 }
-#comments{
-    width: 70%;
+#blocComments {
+    display: flex;
+    width: 95%;
     margin: auto;
+    padding: 15px;
+}
+#addComments {
+    width: 40%;
+    position: sticky;
+    -webkit-position: sticky; 
+    align-self: flex-start;
+    top: 0;
+}
+#readComments {
+    width: 60%;
+}
+#comments {
+    width: 95%;
+    margin: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
     background-color: white;
-    margin-top: 30px;
+    border: 3px solid black;
     font-size: 1.2em;
     padding: 10px; 
+    word-break: break-word;
 }
 
-/* Page Admin */
+/* PAGE ADMIN */
 
-#body_Admin{
-    background-color: #000000;
-background-image: url("https://www.transparenttextures.com/patterns/escheresque-dark.png");
-/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+#body_Admin {
+    background : url("../../public/images/background/escheresque-dark.png") fixed center;
+    background-color: black;
 }
 #body_Admin h1 {
     text-align: center;
 }
-.instructions_Admin{
+.instructions_Admin {
     text-align: center;
     color: white;
     text-transform: uppercase;
@@ -365,7 +412,7 @@ background-image: url("https://www.transparenttextures.com/patterns/escheresque-
     justify-content: space-around;
     align-items: center;
 }
-#boutons_Admin a{
+#boutons_Admin a {
     margin-right: 10px;
 }
 #tableauAdmin {
@@ -380,31 +427,31 @@ background-image: url("https://www.transparenttextures.com/patterns/escheresque-
     width: 33%;
     text-align: center;
 }
-#list_Comment{
+#list_Comment {
     margin-bottom : 20px;
     padding-bottom: 10px;
     text-align: center;
     color : white;
     font-size : 1.3em;
 }
-.pagination{
+.pagination {
     display: flex;
     justify-content: center;
     height: 60px;
     width: 100px;
     margin: auto;
 }
-.pagination div{
+.pagination div {
     font-size : 1.5em;
     font-weight: bold;
     width: 30px;
     background-color: black;
     color: white;
 }
-.pagination a{
+.pagination a {
     color: red;
 }
-#body_AdminComments{
+#body_AdminComments {
     background-color : black;
     color : white;
     background-image : url("https://www.transparenttextures.com/patterns/escheresque-dark.png");
@@ -419,81 +466,88 @@ background-image: url("https://www.transparenttextures.com/patterns/escheresque-
 #body_AdminComments #list_Comment {
     border : 2px solid white;
 }
-hr{
+hr {
     width: 60%;
     border-top: 3px double #8c8b8b;
 }
-#tableauAdmin p{
+#tableauAdmin p {
     padding-left: 5px;
     padding-right: 5px;
 }
 
-.instructions_Admin .boutons{
+.instructions_Admin .boutons {
     border : 3px solid white;
 }
-.instructions_Admin p{
+.instructions_Admin p {
     font-family: 'Nova Flat', 'sans-serif';
 }
-#boutons_Admin .boutons{
+#boutons_Admin .boutons {
     border : 3px solid white;
 }
 
-/* Page changement accès */
+/* PAGE CHANGEMENT ACCES */
 
-#body_Access{
+#body_Access {
     background : url("../../public/images/background/background_access.jpg") no-repeat fixed center;
     background-size: cover;
     color: white;
     height: 100%;
+    display: flex;
+    flex-direction: column;
 }
-.flex{
+.flexboxForm {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 500px;
+    flex: 1;
 }
-#body_Access h1{
+#body_Access h1 {
     text-align: center;
-    margin-bottom: 30px;
+    margin: 10px;
     text-align: center;
     color: white;
     text-transform: uppercase;
     font-size: 2em;
 }
-#body_Access input{
+#body_Access input {
     width: 70%;
+    margin: auto;
 }
-#body_Access input[type="submit"]{
+#body_Access input[type="submit"] {
     width: 100px;
+    text-transform: uppercase;
+    font-weight: bold;
 }
-#body_Access form{
+#body_Access form {
     background-color: black;
     opacity: 0.9;
-    width: 60%;
-    height:auto;
     font-size: 1.3em;
     font-family : "Nova Flat", sans-serif;
+    padding: 60px;
 }
-.inputBox{
+#body_Access #checkBox {
+    margin : 0px 5px 0px 5px;
+}
+.inputBox {
     display: block;
     color: black;
-    text-align: center;
-    width: 50%;
+    width: 60%;
     margin :20px;
-}
-.inputBox input{
     text-align: center;
+    height: 25px;
+    font-size: 1em;
 }
-.labelBox{
-    width: 50%;
+.labelBox {
+    width: 40%;
     display: block;
     text-align: center;
     margin : 20px;
 }
-.formBox{
+.formBox {
     display: flex;
+    margin-right: 10px;
 }
-/* Page erreur */
+/* PAGE ERREUR */
 
 #body_Error {
     background-color: gray;
@@ -501,19 +555,19 @@ hr{
     text-align: center;
     height: 100%;
 }
-.flexbox_Center{
+.flexbox_Center {
     height: 90%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-#checkBox{
+#checkBox {
     text-align: center;
 }
-.blocPass{
+.blocPass {
     visibility: hidden;
 }
-.cible_Erreur{
+.cible_Erreur {
     animation: colorblink 1s infinite;
 }
 @keyframes colorblink { 
@@ -521,48 +575,100 @@ hr{
     100% { color:red; } 
 }
 
-/*  Media Queries */
+/*  MEDIA QUERIES */
 
-@media screen and (max-width: 910px) {
-    nav{
+@media screen and (max-width: 1026px) {
+    nav {
         flex-direction: column;
     }   
 }
-@media screen and (max-width: 567px) {
+@media screen and (max-width: 637px) {
+    #menu {
+        flex-direction: column;
+        text-transform: uppercase;
+    }
     nav {
         height: initial;
         display: block;
         text-align: center;
     }
-    #menu{
-        flex-direction: column;
-        text-transform: uppercase;
+    #menu a {
+        font-size: 1em;
     }
-    #logo{
+    #logo {
         display: block;
+    }
+}
+@media screen and (max-width: 567px) {
+    #body_post input {
+        width: auto;
+    }
+    #billet {
+        padding: 0;
     }
     #tableauAdmin {
         flex-direction: column;
+        border : 3px solid white;
+        margin-bottom: 5px;
     }
     #tableauAdmin div {
         width: initial;
     }
-    .instructions_Admin div{
+    .instructions_Admin div {
+        display: initial;
+        word-break: break-all;
+    }
+    .instructions_Admin a {
+        margin: auto;
+        margin-bottom : 5px;
+    }
+    #boutons_Admin {
+        flex-direction: column;
+    }
+    #blocComments {
+        display: block;
+    }
+    #addComments {
+        position: initial;
+        width: 100%;
+    }
+    #readComments {
+        width: 100%;
+    }
+    .formBox {
         display: initial;
     }
-    #comments{
-        width : 50%;
-    }
-    .formBox{
-        display: initial;
-    }
-    .labelBox{
+    .labelBox {
         margin: auto;
     }
-    .inputBox{
+    .inputBox {
         margin: auto;
+        width: 100%;
+        margin-top: 10px;
     }
-    #body_Access form{
-        width: auto;
+    #body_Access form {
+        width: 100%;
+        padding: 20px 0px 0px 0px;
     }
-  }
+    #body_Access h1 {
+        font-size: 1em;
+    }
+    .flexboxForm {
+        align-items: initial;
+    }
+    #body_Modif input[name="title"] {
+        width: 80%;
+    }
+    #body_Modif h1 {
+        font-size: 1.5em;
+        margin: 15px 0px 15px 0px;
+
+    }
+    .formtiny {
+        width: 100%;
+        padding: 5px;
+    }
+    .boutons {
+        word-break: break-word;
+    }
+}

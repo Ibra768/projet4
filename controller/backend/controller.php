@@ -243,14 +243,14 @@ function addPost($fichier,$title,$content,$author) // Fonction qui permet d'ajou
                 $maxSize = 5000000; // On définit la taille maximale du fichier
                 $validExtensions = array('jpg','jpeg','png','gif'); // On définit les extensions acceptées
                 
-                if ($fichier['avatar']['size'] <= $maxSize){ // Si le fichier correspond à la bonne taille ..
-                    $uploadExtensions = strtolower(substr(strrchr($fichier['avatar']['name'], '.'),1)); // On prend le nom du fichier, on le met en minuscule, on selectionne ce qui se situe après le "." grâce à strrchr (.jpg), puis on récupère uniquement (jpg) grâce à substr.
+                if ($fichier['picture']['size'] <= $maxSize){ // Si le fichier correspond à la bonne taille ..
+                    $uploadExtensions = strtolower(substr(strrchr($fichier['picture']['name'], '.'),1)); // On prend le nom du fichier, on le met en minuscule, on selectionne ce qui se situe après le "." grâce à strrchr (.jpg), puis on récupère uniquement (jpg) grâce à substr.
                     if(in_array($uploadExtensions, $validExtensions)){ // Si l'extension du fichier uploadé correspond à une extension valide ..
                         $folder = "public/images/posts/".$title.".".$uploadExtensions; // On définit le futur chemin du fichier uploadé
-                        $result = move_uploaded_file($fichier['avatar']['tmp_name'],$folder); // On déplace le fichier vers le chemin défini précedemment
+                        $result = move_uploaded_file($fichier['picture']['tmp_name'],$folder); // On déplace le fichier vers le chemin défini précedemment
                         if($result){ // Si le transfert du fichier a réussi ..
                             $fichierImage = $title.".".$uploadExtensions; // On définit le nom du fichier pour la colonne "images" de la table "posts"
-                            $add = new \Model\AdminManager();
+                            $add = new \Model\PostManager();
                             $addPost = $add->addPost($title,$content,$author,$fichierImage); // On procède à l'ajout dans la base de données
                             Header("location:index.php?action=admin&message=L'article a bien été ajouté !");
                         }
@@ -259,7 +259,7 @@ function addPost($fichier,$title,$content,$author) // Fonction qui permet d'ajou
                         }
                     }
                     else{
-                        throw new Exception("L'illustration de l'article doit être au format jpg, jpeg, png.");
+                        throw new Exception("L'illustration de l'article doit être au format jpg, jpeg, png ou gif.");
                     }
                 }   
                 else{
@@ -275,7 +275,7 @@ function addPost($fichier,$title,$content,$author) // Fonction qui permet d'ajou
         header('Location: index.php?action=getConnexion&message='.$e->getMessage());
     }
     catch (Exception $e){
-        header('Location: index.php?action=add&message='.$e->getMessage());
+        header('Location: index.php?action=add&title='.$title.'&content='.html_entity_decode($content).'&message='.$e->getMessage());
     }
 }
 function updatePost($postid) // Fonction qui récupère le billet à modifier (afin de l'insérer dans un formulaire pour le modifier)
@@ -351,14 +351,14 @@ function confirmUpdatePost($fichier,$formulaire) // Fonction qui permet de chang
                     $maxSize = 5000000; // On défini la taille maximale du fichier 
                     $validExtensions = array('jpg','jpeg','gif','png'); // On définit les extensions acceptées
                     
-                    if ($fichier['avatar']['size'] <= $maxSize){ // Si la taille du fichier est conforme ..
-                        $uploadExtensions = strtolower(substr(strrchr($fichier['avatar']['name'], '.'),1)); // On recupère l'extension grâce à strrchr (.jpg), puis on isole (jpg) grâce à substr
+                    if ($fichier['picture']['size'] <= $maxSize){ // Si la taille du fichier est conforme ..
+                        $uploadExtensions = strtolower(substr(strrchr($fichier['picture']['name'], '.'),1)); // On recupère l'extension grâce à strrchr (.jpg), puis on isole (jpg) grâce à substr
                         $deletePreviousTitle = new \Model\PostManager();
                         $delete = $deletePreviousTitle->getPost($formulaire['id']); // On récupère les informations du post en question
                         
                         if(in_array($uploadExtensions, $validExtensions)){ // Si l'extension du fichier est conforme ..
                             $folder = "public/images/posts/".$formulaire['title'].".".$uploadExtensions; // On définit le chemin de destination du fichier
-                            $result = move_uploaded_file($fichier['avatar']['tmp_name'],$folder); // On procède au déplacement du fichier
+                            $result = move_uploaded_file($fichier['picture']['tmp_name'],$folder); // On procède au déplacement du fichier
                             if($result){ // Si le déplacement est réussi ..
                                 $fichierImage = $formulaire['title'].".".$uploadExtensions; // On définit le nom donné à la colonne images pour ce post
                                 $update = new \Model\PostManager();
@@ -396,7 +396,7 @@ function confirmUpdatePost($fichier,$formulaire) // Fonction qui permet de chang
         header('Location: index.php?action=getConnexion&message='.$e->getMessage());
     }
     catch (Exception $e){
-        header('Location: index.php?action=updatePost&id=' . $formulaire['id'] . '&message='.$e->getMessage());
+        header('Location: index.php?action=updatePost&id='.$formulaire['id'].'&title='.$formulaire['title'].'&content='.html_entity_decode($formulaire['content']).'&message='.$e->getMessage());
     }
 }
 

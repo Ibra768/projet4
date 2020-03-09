@@ -1,18 +1,17 @@
 <?php 
-    $title = 'Accueil'; 
-    $meta = 'Page d\'accueil du site de Jean Forteroche';
+    $title = 'Billet Simple pour l\'Alaska - Page d\'accueil' ; 
+    $description = 'Bienvenue sur la page d\'accueil du site de Jean Forteroche. Retrouvez les différents billets de son nouveau roman Billet Simple Pour L\'Alaska.';
     $body = "body_home";
     ob_start(); 
 ?>
-
 <div id="presentation" class="container">
     <div class="row">
-        <div class=col-lg-12">
+        <div>
             <h1> Le premier roman en ligne </h1>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-12">
+        <div>
             <p>Bonjour & bienvenue sur mon site</p>
             <p> Je me présente, je suis Jean Forteroche, auteur d'Un Billet Simple Pour l'Alaska.</p>
             <p>J'ai eu l'idée novatrice de présenter mon roman sous forme de site internet, avec différents épisodes.</p>
@@ -55,7 +54,6 @@
         }
     ?>
 </div>
-
 <?php 
     $content = ob_get_clean(); 
     require('view/template.php'); 

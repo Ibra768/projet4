@@ -1,10 +1,9 @@
 <?php 
-  $title = 'Espace Administration des billets'; 
-  $meta = 'Espace Administration des billets';
+  $title = 'Billet Simple pour l\'Alaska - Administration'; 
+  $description = 'Cet espace vous permet de gérer l\'ensemble du site.';
   $body = "body_Admin";
   ob_start(); 
 ?>
-
 <div class="instructions_Admin">
   <div>
     <a class="boutons" href="index.php?action=add">Ajouter un billet</a>
@@ -47,7 +46,6 @@
     } 
   ?>
 </div>
-
 <?php
   $content = ob_get_clean(); 
   require('view/template.php'); 

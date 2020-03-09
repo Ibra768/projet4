@@ -1,22 +1,21 @@
 <?php 
-  $title = 'Espace Administration des commentaires'; 
-  $meta = 'Espace Administration des commentaires';
+  $title = 'Billet Simple pour l\'Alaska - Administration'; 
+  $description = 'Cet espace vous permet d\'accéder aux commentaires signalés.';
   $body = "body_AdminComments";
   ob_start(); 
   if(count($getCommentsByPage) == 0){
 ?>
-
-<div class="instructions_Admin container-fluid"><p>Aucun commentaire signalé</p><a class="boutons" href="index.php?action=admin">Administration</a></div>
+<div class="instructions_Admin"><p>Aucun commentaire signalé</p><a class="boutons" href="index.php?action=admin">Administration</a></div>
 <?php
   }
   else{
 ?>
-<div class="instructions_Admin container-fluid"><p>Il y a <?=$commentsTotales ?> commentaires signalé(s)</p></div>
+<div class="instructions_Admin"><p>Il y a <?=$commentsTotales ?> commentaires signalé(s)</p></div>
 <?php
   }
   for($i=0 ; $i < count($getCommentsByPage) ; $i++) {
 ?>
-<div id="commentReport" class="container">
+<div id="commentReport">
   <div class="row">
     <div class="col-lg-12" id="list_Comment">
       <p>Posté par <?= $getCommentsByPage[$i]['author']?> le <?= $getCommentsByPage[$i]['comment_date_fr'] ?> sur le post n°<?= $getCommentsByPage[$i]['post_id']?></p>
@@ -44,7 +43,6 @@
     } 
   ?>
 </div>
-
 <?php
   $content = ob_get_clean(); 
   require('view/template.php'); 
