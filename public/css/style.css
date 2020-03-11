@@ -7,11 +7,15 @@ body {
     margin: 0;
     padding: 0;
     position: relative;  
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 } 
+
 
 /* TEMPLATE */
 
-nav {
+header {
     height : auto;
     background-color: black;
     display: flex;
@@ -19,7 +23,7 @@ nav {
     position: relative;
     z-index: 2000;
 }
-nav a {
+header a {
     padding: 0 10px 0 10px;
     display: block;
     line-height: 50px;
@@ -30,24 +34,24 @@ nav a {
     font-size: 1.4em;
     font-family: "Rock Salt", "sans-serif";
 }
-#menu {
+#nav {
     display: flex;
     justify-content: flex-end;
     flex: auto;
 }
-#menu a {
+#nav a {
     font-size : 1.2em;
     color: white;
 }
-nav a {
+.topback a {
     text-decoration : none;
 }
-nav a:hover {
+.topback a:hover {
     text-decoration: none;
     font-weight: bold;
     color: gray;
 }
-nav a:visited {
+.topback a:visited {
     text-decoration: none;
     font-weight: bold;
     color: gray;
@@ -116,6 +120,53 @@ nav a:visited {
     -webkit-animation: monanimation linear 6s; 
     animation: monanimation linear 6s; 
 }
+footer{
+    background-color: black; 
+}
+footer a{
+    text-align: center;
+    line-height: 30px;
+    font-size: 21px;
+    padding: 5px;
+    width: 100%;
+    border-right: 3px solid gray;
+    font-family: 'Nova Flat', 'sans-serif';
+    white-space: nowrap;
+}
+#bloc_Footer{
+    display: flex;
+    justify-content: space-around; 
+}
+.text_Footer{
+    display: none;
+    animation: footer_animation linear 1s;
+    -webkit-animation: footer_animation linear 1s;
+}
+footer a:hover .text_Footer{
+    display: inline-block;
+}
+@-webkit-keyframes footer_animation { 
+    0% {
+     opacity: 0;
+    }
+    50%{
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}  
+@keyframes footer_animation { 
+    0% {
+        opacity: 0;
+    }
+    50%{
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+       }
+} 
 
 /* PAGE D'ACCUEIL*/
 
@@ -324,7 +375,7 @@ input[name="avatar"] {
 #billet {
     font-family: 'Nova Flat', 'cursive';
     font-size: 1.2em;
-    width: 95%;
+    width: 85%;
     margin: auto; 
     padding: 15px;
     background-color: white;
@@ -578,21 +629,29 @@ hr {
 /*  MEDIA QUERIES */
 
 @media screen and (max-width: 1026px) {
-    nav {
+    header {
         flex-direction: column;
     }   
 }
 @media screen and (max-width: 637px) {
-    #menu {
+    #nav {
         flex-direction: column;
         text-transform: uppercase;
     }
-    nav {
+    #bloc_Footer{
+        flex-direction: column;
+        align-items: center;
+    }
+    #bloc_Footer a{
+        border: none;
+        padding: 10px 0px 10px 0px;
+    }
+    header {
         height: initial;
         display: block;
         text-align: center;
     }
-    #menu a {
+    #nav a {
         font-size: 1em;
     }
     #logo {
@@ -627,6 +686,7 @@ hr {
     }
     #blocComments {
         display: block;
+        padding: 0;
     }
     #addComments {
         position: initial;

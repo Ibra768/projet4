@@ -90,5 +90,3 @@ function setFileName() {
     filename = $('#file-upload')[0].files[0]['name'];
     $('.custom-file-upload span').html(filename);
 }
-
-
