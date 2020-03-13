@@ -5,7 +5,7 @@
   ob_start(); 
   if(count($getCommentsByPage) == 0){
 ?>
-<div class="instructions_Admin"><p>Aucun commentaire signalé</p><a class="boutons" href="index.php?action=admin">Administration</a></div>
+<div class="instructions_Admin"><p class='message_data'>Aucun commentaire signalé</p><a class="boutons" href="index.php?action=admin">Administration</a></div>
 <?php
   }
   else{

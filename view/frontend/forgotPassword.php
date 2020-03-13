@@ -1,10 +1,10 @@
 <?php 
-    $title = 'Billet Simple pour l\'Alaska - Administration'; 
-    $description = 'Modification de vos identfiants';
+    $title = 'Billet Simple pour l\'Alaska - Mot de passe oublié'; 
+    $description = 'Ce formulaire vous permet de retrouver votre mot de passe';
     $body = "body_Access";
     ob_start(); 
 ?>
-<div class="flex">
+<div class="flexboxForm">
     <form method="POST" action="index.php?action=sendPassword">
         <h1>Mot de passe oublié</h1>
         <div class="flexForm">

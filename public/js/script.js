@@ -4,7 +4,7 @@ $(document).ready(function(){
     if(message.length > 21){
         $(".message").css("display","block");
         setTimeout(function() {
-            $(".message").css("opacity","0");
+            $(".message").css("display","none");
         }, 5000);
     }
 });

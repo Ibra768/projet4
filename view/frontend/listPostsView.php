@@ -4,24 +4,21 @@
     $body = "body_home";
     ob_start(); 
 ?>
-<div id="presentation" class="container">
-    <div class="row">
-        <div>
-            <h1> Le premier roman en ligne </h1>
-        </div>
-    </div>
-    <div class="row">
-        <div>
-            <p>Bonjour & bienvenue sur mon site</p>
-            <p> Je me présente, je suis Jean Forteroche, auteur d'Un Billet Simple Pour l'Alaska.</p>
-            <p>J'ai eu l'idée novatrice de présenter mon roman sous forme de site internet, avec différents épisodes.</p>
-            <p>Je vous laisse découvrir ce qu'il en est ci-dessous.</p>
-            <p>N'hésitez pas à laisser des commentaires !</p>
-            <p>Bonne lecture :)<p>
-        </div>
-    </div>
-</div>
-<div id="portfolio">
+<section id="presentation">
+    <h1> Le premier roman en ligne </h1>
+    <p>Bonjour & bienvenue sur mon site</p>
+    <p> Je me présente, je suis Jean Forteroche, auteur d'Un Billet Simple Pour l'Alaska.</p>
+    <p>J'ai eu l'idée novatrice de présenter mon roman sous forme de site internet, avec différents épisodes.</p>
+    <p>Je vous laisse découvrir ce qu'il en est ci-dessous.</p>
+    <p>N'hésitez pas à laisser des commentaires !</p>
+    <p>Bonne lecture :)<p>
+</section>
+<?php
+    if(empty($posts)){
+        echo "<p class='message_data'>" . "Aucun billet publié ..." . "</p>";
+    }
+?>
+<section id="portfolio">
     <?php
         if(empty($posts) && isset($_SESSION['pseudo'])){
     ?>
@@ -53,7 +50,7 @@
     <?php
         }
     ?>
-</div>
+</section>
 <?php 
     $content = ob_get_clean(); 
     require('view/template.php'); 

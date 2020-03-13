@@ -22,6 +22,13 @@ class AdminManager extends Manager
         $req->execute(array($newPseudo,$newPass,$currentPseudo));
         return $req;
     }
+    public function temporaryPass($newPass,$pseudo) // Permet d'ajouter un mot de passe temporaire en cas de mot de passe oublié
+    {
+        $db = $this->dbConnect();
+        $req = $db->prepare('UPDATE administrateur SET pass = ? WHERE pseudo = ?');
+        $req->execute(array($newPass,$pseudo));
+        return $req;
+    }
     public function changeOnlyPseudo($newPseudo,$currentPseudo) // Permet de modifier le pseudo uniquement
     {
         $db = $this->dbConnect();

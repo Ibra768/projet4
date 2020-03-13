@@ -12,7 +12,7 @@
   </div>
   <?php
     if(empty($postsAdminPage)){
-      echo "<p>" . "Aucun billet publié" . "</p>";
+      echo "<p class='message_data'>" . "Aucun billet publié" . "</p>";
     }
     else{
       echo "<p>" . "Voici la liste des billets publiés" . "</p>";

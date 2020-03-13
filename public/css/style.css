@@ -184,6 +184,12 @@ footer a:hover .text_Footer{
     background-color: gray;
     position: relative;
 }
+.message_data{
+    font-size: 1.8em;
+    font-family: 'Nova Flat', 'sans-serif';
+    text-align: center;
+    text-transform: uppercase;
+}
 #portfolio {
 	display: flex;
     flex-wrap : wrap;
@@ -656,6 +662,9 @@ hr {
     }
     #logo {
         display: block;
+    }
+    .message_data{
+        font-size: 1em;
     }
 }
 @media screen and (max-width: 567px) {

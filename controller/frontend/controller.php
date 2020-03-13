@@ -179,9 +179,42 @@ function sendPassword($pseudo) { // Fonction qui permet d'envoyer son mot de pas
         $resultat = $getPass->getAdmin($pseudo); // On récupère les informations de l'utilisateur
 
         if($resultat){ // Si l'utilisateur existe, on envoie l'email
-            $message = "<p>" . "Bonjour," . "</p>" . "<br>" . "<p>" . "Suite à votre demande, voici votre mot de passe : " . "</p>" . "<br>" . "<strong>" . $resultat['pass'] . "</strong>";
-            mail($resultat['mail'], 'Votre mot de passe', $message);
-            header('Location: index.php?action=forgotpassword&status=ok');
+
+            function generer_mot_de_passe($nb_caractere = 12){ // Fonction qui permet de générer un mot de passe aléatoire
+                $mot_de_passe = "";
+            
+                $chaine = "abcdefghjkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ023456789+@!$%?&"; // Chaine de caractère possible pour le mot de passe
+                $longeur_chaine = strlen($chaine); 
+            
+                for($i = 1; $i <= $nb_caractere; $i++)
+                {
+                    $place_aleatoire = mt_rand(0,($longeur_chaine-1)); // On choisi un chiffre aléatoire entre 0 et $longueur_chaine-1
+                    $mot_de_passe .= $chaine[$place_aleatoire]; // On abonde $mot de passe avec $chaine, qui est lui même abondé par un caractère aléatoire x 12
+                }
+
+                return $mot_de_passe;   
+            }
+
+            $newPass = generer_mot_de_passe(); // On crée un nouveau mot de passe provisoire
+
+            $temporary = new \Model\AdminManager();
+            $return = $temporary->temporaryPass($newPass,$pseudo); // On insère le nouveau mot de passe dans la BDD
+            if(!$return){
+                throw new Exception("Une erreur a été rencontré. Veuillez réessayer plus tard.");
+            }
+            else{
+        
+                $message =
+
+                "<h1>Votre demande de mot de passe</h1>" .
+                "<p>Bonjour" . $pseudo . ",</p><br>" .
+                "<p>Comme demandé, veuillez trouver ci joint un mot de passe provisoire afin de vous connecter à votre compte administrateur.</p><br>" .
+                "<strong>" . $newPass . "<strong>" .
+                "<p>Pour plus de sécurité, nous vous conseillons de modifier votre mot de passe une fois connecté.</p><br>" .
+                "<p>Cordialement.</p>";
+                mail($resultat['mail'], 'Votre nouveau mot de passe provisoire', $message);
+                header('Location: index.php?action=forgotpassword&message=Un mot de passe provisoire vous a été envoyé par email.');
+            }
         }
         else{
             throw new Exception("Pas de compte retrouvé pour l'utilisateur " . "<span class='cible_Erreur'>" . $pseudo . "</span>");
