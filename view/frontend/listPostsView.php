@@ -40,7 +40,7 @@
             }
         ?>
         <a href="index.php?action=post&amp;id=<?= $posts[$i]['id'] ?>">
-            <img src="public/images/posts/<?= $posts[$i]['images'] ?>" alt="Illustration de l'épisode" />
+            <img src="public/images/posts/<?= $posts[$i]['images'] ?>" alt="Illustration de l'épisode" width='100'/>
         </a>
         <figcaption>
             <span class="title_portfolio"><?= $posts[$i]['title']  ?></span>

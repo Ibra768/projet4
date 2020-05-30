@@ -357,10 +357,10 @@ function confirmUpdatePost($fichier,$formulaire) // Fonction qui permet de chang
                         $delete = $deletePreviousTitle->getPost($formulaire['id']); // On récupère les informations du post en question
                         
                         if(in_array($uploadExtensions, $validExtensions)){ // Si l'extension du fichier est conforme ..
-                            $folder = "public/images/posts/".$formulaire['title'].".".$uploadExtensions; // On définit le chemin de destination du fichier
+                            $folder = "public/images/posts/post_".$formulaire['id'].".".$uploadExtensions; // On définit le chemin de destination du fichier
                             $result = move_uploaded_file($fichier['picture']['tmp_name'],$folder); // On procède au déplacement du fichier
                             if($result){ // Si le déplacement est réussi ..
-                                $fichierImage = $formulaire['title'].".".$uploadExtensions; // On définit le nom donné à la colonne images pour ce post
+                                $fichierImage = 'post_' . $formulaire['id'].".".$uploadExtensions; // On définit le nom donné à la colonne images pour ce post
                                 $update = new \Model\PostManager();
                                 $updatePost = $update->updatePostDB($formulaire['title'],$formulaire['content'],$_SESSION['pseudo'],$fichierImage,$formulaire['id']); // On procède à la mise a jour de la base de données
                                 if(!$updatePost) {
@@ -368,7 +368,6 @@ function confirmUpdatePost($fichier,$formulaire) // Fonction qui permet de chang
                                 }
                                 else{
                                 Header('location:index.php?action=admin&message=Le post a bien été modifié !');
-                                unlink("public/images/posts/".$delete['images']); // On supprime l'ancienne image
                                 }
                             }
                             else{

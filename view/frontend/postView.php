@@ -6,7 +6,7 @@
 ?>
 <style>
     body {
-        background-image : url("public/images/posts/<?php echo $post['images'];?>");
+        background-image : url("public/images/posts/<?= $post['images']; ?>");
         background-size : cover;
         background-attachment : fixed; 
     }

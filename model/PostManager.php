@@ -30,7 +30,7 @@ class PostManager extends Manager
     public function getPostsPage($depart,$billetParPage) // Récupère la liste des billets pour chaque page (espace administrateur)
     {
         $db = $this->dbConnect();
-        $req = $db->query('SELECT id, title, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr FROM posts ORDER BY ID LIMIT ' . $depart . ',' .$billetParPage);
+        $req = $db->query('SELECT id, title, content, images, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr FROM posts ORDER BY ID LIMIT ' . $depart . ',' .$billetParPage);
         $response = $req->fetchAll();
         return $response;
     }

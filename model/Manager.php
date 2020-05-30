@@ -6,7 +6,7 @@ class Manager
 {
     protected function dbConnect() // Permet la connexion a la base de données
     {
-        $db = new \PDO('mysql:host=localhost;dbname=jeankjbu_alaska;charset=utf8', 'jeankjbu_jean', 'forteroche');
+        $db = new \PDO('mysql:host=localhost;dbname=jean;charset=utf8','jean','forteroche');
         return $db;
     }
 }
