@@ -404,17 +404,6 @@ function add_or_update_post($fichier,$formulaire) // Fonction qui permet d'ajout
                                 $file_type = $extension;
                             }
                         }
-                        /*
-                        $check = new \Model\PostManager();
-                        $checkImage = $check->checkImageName($fichier["update_picture"]["name"]);
-
-                        if(!$checkImage){ // Si l'image n'existe pas, on garde son nom
-                            $img_name = $fichier["update_picture"]["name"];
-                        }
-                        else{ // Si elle existe deja pour un autre post, on la renomme
-                            $img_name = str_replace('.', (random_int(0, 100000) . '.'), $fichier["update_picture"]["name"]);
-                        }
-                        */
                         
                         $update = new \Model\PostManager();
                         $checkId = $update->checkImageId($formulaire['id']);

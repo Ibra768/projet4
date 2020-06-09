@@ -182,7 +182,7 @@ function sendPassword($pseudo) { // Fonction qui permet d'envoyer son mot de pas
             function generer_mot_de_passe($nb_caractere = 12){ // Fonction qui permet de générer un mot de passe aléatoire
                 $mot_de_passe = "";
             
-                $chaine = "abcdefghjkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ023456789+@!$%?&"; // Chaine de caractère possible pour le mot de passe
+                $chaine = "abcdefghjkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ023456789"; // Chaine de caractère possible pour le mot de passe
                 $longeur_chaine = strlen($chaine); 
             
                 for($i = 1; $i <= $nb_caractere; $i++)
@@ -195,16 +195,17 @@ function sendPassword($pseudo) { // Fonction qui permet d'envoyer son mot de pas
             }
 
             $newPass = generer_mot_de_passe(); // On crée un nouveau mot de passe provisoire
+            
+            $hashPass = password_hash($newPass, PASSWORD_DEFAULT);
 
             $temporary = new \Model\AdminManager();
-            $return = $temporary->temporaryPass($newPass,$pseudo); // On insère le nouveau mot de passe dans la BDD
+            $return = $temporary->temporaryPass($hashPass,$pseudo); // On insère le nouveau mot de passe dans la BDD
             if(!$return){
                 throw new Exception("Une erreur a été rencontré. Veuillez réessayer plus tard.");
             }
             else{
-        
-                $message =
 
+                $message =
                 "<h1>Votre demande de mot de passe</h1>" .
                 "<p>Bonjour" . $pseudo . ",</p><br>" .
                 "<p>Comme demandé, veuillez trouver ci joint un mot de passe provisoire afin de vous connecter à votre compte administrateur.</p><br>" .
@@ -216,7 +217,7 @@ function sendPassword($pseudo) { // Fonction qui permet d'envoyer son mot de pas
             }
         }
         else{
-            throw new Exception("Pas de compte retrouvé pour l'utilisateur " . "<span class='cible_Erreur'>" . $pseudo . "</span>");
+            throw new Exception("Pas de compte retrouvé pour l'utilisateur" . $pseudo . "</span>");
         }
     }
     catch (Exception $e){
