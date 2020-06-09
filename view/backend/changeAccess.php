@@ -10,7 +10,7 @@
         <div class="flexForm">
             <div class="formBox">
                 <label class="labelBox">Pseudo</label>
-                <input class="inputBox" pattern=".{6,12}" title="Entre 6 et 12 caractères requis" type="text" name="pseudo" value="<?= $getAccess['pseudo'] ?>" required>
+                <input class="inputBox" pattern=".{4,12}" title="Entre 4 et 12 caractères requis" type="text" name="pseudo" value="<?= $getAccess['pseudo'] ?>" required>
             </div>
             <div id="checkBox">
                 <label>Changer le mot de passe?</label><br>

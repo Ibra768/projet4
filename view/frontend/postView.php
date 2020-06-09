@@ -6,7 +6,7 @@
 ?>
 <style>
     body {
-        background-image : url("public/images/posts/<?= $post['images']; ?>");
+        background-image : url("public/images/posts/<?= $post['img']; ?>");
         background-size : cover;
         background-attachment : fixed; 
     }
@@ -27,8 +27,8 @@
 </style>
 <div id="post_wrapper">
     <article id="billet">
-        <h1><?= $post['title'] ?></h1>
-        <em>Publié le <?= $post['creation_date_fr'] ?></em>
+        <h1>Episode <?= $post['id'] ?> : <?= $post['title'] ?></h1>
+        <em>Publié le <?= $post['creation_date_fr'] ?> par <?= $post['author'] ?></em>
         <?= html_entity_decode($post['content']) ?>
     </article>
     <article id="blocComments">

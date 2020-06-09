@@ -27,7 +27,7 @@
   <div><p>Publié le <?= $postsAdminPage[$i]['creation_date_fr'] ?></p></div>
   <div id="boutons_Admin">
       <a id="sisi" class="boutons" href="index.php?action=post&amp;id=<?= $postsAdminPage[$i]['id'] ?>"><i class="far fa-eye"></i></a> 
-      <a class="boutons" href="index.php?action=updatePost&amp;id=<?= $postsAdminPage[$i]['id'] ?>"><i class="fas fa-paint-brush"></i></a>
+      <a class="boutons" href="index.php?action=update&amp;id=<?= $postsAdminPage[$i]['id'] ?>"><i class="fas fa-paint-brush"></i></a>
       <a id="bouton_delete"class="boutons" href="index.php?action=deletePost&amp;id=<?= $postsAdminPage[$i]['id'] ?>" onclick="if(window.confirm('Voulez-vous vraiment supprimer ce billet ?')){return true;}else{return false;}"><i class="far fa-trash-alt"></i></a>
   </div>
 </div>

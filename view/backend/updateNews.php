@@ -6,15 +6,15 @@
 ?>
 <h1>Modifier un billet</h1>
 <div class="flexboxForm">
-    <form onsubmit="return checkFile2()" class="formtiny" method="POST" action="index.php?action=confirmUpdatePost" enctype="multipart/form-data">
+    <form onsubmit="return check_form()" class="formtiny" method="POST" action="index.php?action=add_or_update_post" enctype="multipart/form-data">
         <label for="title">Titre du billet</label><br>
-        <input type="text" name="title"  size="25" maxlength="20" value="<?php echo isset($_GET['title']) ? $_GET['title'] : html_entity_decode($postUp['title']); ?>" required><br>
-        <label for="file-upload" id="update-file-upload" class="custom-file-upload"><i class="fas fa-upload"></i>&nbsp;<span>Nouvelle illustration</span></label><br>
-        <input type="file" onchange="setFileName()" id="file-upload" name="picture"><br>
+        <input type="text" class='input_text' name="title"  size="25" maxlength="20" value="<?php echo isset($_GET['title']) ? $_GET['title'] : html_entity_decode($postUp['title']); ?>" required><br>
+        <label for="file-upload" id='update-file-upload' class="custom-file-upload"><span><i class="fas fa-file-upload"></i> Upload</span></label><br>
+        <input type="file" onchange="setFileName()" id="file-upload" name="update_picture"><br>
         <div id="oldBloc">
-            <label>Conserver l'image?</label><br>
+            <label for="old">Conserver l'image?</label><br>
             <input type="checkbox" name="old" id="old" checked><br>
-            <img src="public/images/posts/<?= html_entity_decode($postUp['images']) ?>" height="100" width="100">
+            <img src="public/images/posts/<?= html_entity_decode($postUp['img']) ?>" height="100" width="100">
         </div> 
         <textarea  type="text"  class="tiny" name="content"><?php echo isset($_GET['content']) ? $_GET['content'] : html_entity_decode($postUp['content']); ?></textarea><br>
         <input type="submit" class="boutons" value="Envoyer">

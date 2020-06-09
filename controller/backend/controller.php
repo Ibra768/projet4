@@ -5,7 +5,8 @@
 require_once('model/CommentManager.php');
 require_once('model/AdminManager.php');
 require_once('model/PostManager.php');
-require_once('model/MyException.php');
+require_once('model/AddException.php');
+require_once('model/AdminException.php');
                            
 function dataAdmin($pageCourante) // Fonction qui récupère la liste des billets page par page
 {
@@ -14,7 +15,7 @@ function dataAdmin($pageCourante) // Fonction qui récupère la liste des billet
 
             $postManagerAdmin = new \Model\PostManager();
 
-            $postsAdmin = $postManagerAdmin->getPostAdmin(); // On récupère la liste des billets
+            $postsAdmin = $postManagerAdmin->allPosts(); // On récupère la liste des billets
 
             $postsParPage = 5; // On définit le nombre de posts par page
 
@@ -94,10 +95,10 @@ function passRequest() // Fonction qui permet d'accéder à la page de modificat
             }
         }
         else{
-            throw new MyException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
+            throw new AdminException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
         }
     }
-    catch(MyException $e){
+    catch(AdminException $e){
         header('Location: index.php?action=getConnexion&message='.$e->getMessage());
     }
     catch(Exception $e){
@@ -171,10 +172,10 @@ function changeAccess($formulaire) // Fonction qui procède au changement des id
 
                 if (isset($formulaire['pseudo']) && !empty($formulaire['pseudo'])) { // On vérifie les données envoyées
 
-                    if(!preg_match('#^[a-zA-Z0-9-_]{6,12}$#', $formulaire['pseudo'])){
+                    if(!preg_match('#^[a-zA-Z0-9-_]{4,12}$#', $formulaire['pseudo'])){
                         throw new Exception("Le pseudo choisi ne respecte pas les conditions de sécurité.");
                     }
-                    else if (strlen($formulaire['pseudo']) < 6) {
+                    else if (strlen($formulaire['pseudo']) < 4) {
                             throw new Exception("Le pseudo choisi est trop court");
                     }
                     else if (strlen($formulaire['pseudo']) > 12) {
@@ -197,13 +198,13 @@ function changeAccess($formulaire) // Fonction qui procède au changement des id
             }
         }
         else{
-            throw new MyException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter");
+            throw new AdminException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter");
         }
     }
     catch (Exception $e){
         header('Location: index.php?action=passrequest&message='.$e->getMessage());
     }
-    catch (MyException $e){
+    catch (AdminException $e){
         header('Location: index.php?action=getConnexion&message='.$e->getMessage());
     }
 }
@@ -214,74 +215,18 @@ function getAddPage() // Fonction qui permet d'accéder à la page d'ajout de po
             require('view/backend/addPost.php');
         }
         else{
-            throw new MyException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
+            throw new AdminException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
         }
     }
-    catch(MyException $e){
+    catch(AdminException $e){
         header('Location: index.php?action=getConnexion&message='.$e->getMessage());
     }
     
 }     
 
-function addPost($fichier,$title,$content,$author) // Fonction qui permet d'ajouter un post
+function getUpdatePage($postid) // Fonction qui récupère le billet à modifier (afin de l'insérer dans un formulaire pour le modifier)
 {
     try{
-        if(isset($_SESSION['pseudo'])){ // On vérifie que c'est bien l'administrateur qui fait la demande, puis on vérifie les données envoyées
-            if(empty($title) || !isset($title)) {
-                throw new Exception("Le champ " . "<span class='cible_Erreur'>" . "titre" . "</span>" . " est manquant.");
-            }
-            else if(empty($content) || !isset($content)){
-                throw new Exception("Le champ " . "<span class='cible_Erreur'>" . "contenu" . "</span>" . " est manquant.");
-            }
-            else if(empty($author) || !isset($author)){
-                throw new Exception("Le champ " . "<span class='cible_Erreur'>" . "auteur" . "</span>" . " est manquant.");
-            }
-            else if(empty($fichier) || !isset($fichier)){
-                throw new Exception("Le" . "<span class='cible_Erreur'>" . "fichier du post" . "</span>" . " est manquant.");
-            }
-            else{
-                $maxSize = 5000000; // On définit la taille maximale du fichier
-                $validExtensions = array('jpg','jpeg','png','gif'); // On définit les extensions acceptées
-                
-                if ($fichier['picture']['size'] <= $maxSize){ // Si le fichier correspond à la bonne taille ..
-                    $uploadExtensions = strtolower(substr(strrchr($fichier['picture']['name'], '.'),1)); // On prend le nom du fichier, on le met en minuscule, on selectionne ce qui se situe après le "." grâce à strrchr (.jpg), puis on récupère uniquement (jpg) grâce à substr.
-                    if(in_array($uploadExtensions, $validExtensions)){ // Si l'extension du fichier uploadé correspond à une extension valide ..
-                        $folder = "public/images/posts/".$title.".".$uploadExtensions; // On définit le futur chemin du fichier uploadé
-                        $result = move_uploaded_file($fichier['picture']['tmp_name'],$folder); // On déplace le fichier vers le chemin défini précedemment
-                        if($result){ // Si le transfert du fichier a réussi ..
-                            $fichierImage = $title.".".$uploadExtensions; // On définit le nom du fichier pour la colonne "images" de la table "posts"
-                            $add = new \Model\PostManager();
-                            $addPost = $add->addPost($title,$content,$author,$fichierImage); // On procède à l'ajout dans la base de données
-                            Header("location:index.php?action=admin&message=L'article a bien été ajouté !");
-                        }
-                        else{
-                            throw new Exception("Nous avons rencontré une erreur lors de l'importation de votre fichier.");
-                        }
-                    }
-                    else{
-                        throw new Exception("L'illustration de l'article doit être au format jpg, jpeg, png ou gif.");
-                    }
-                }   
-                else{
-                    throw new Exception("L'illustration de l'article ne doit pas dépasser 2mo.");
-                }
-            }
-        }
-        else{
-            throw new MyException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
-        }
-    }
-    catch (MyException $e){
-        header('Location: index.php?action=getConnexion&message='.$e->getMessage());
-    }
-    catch (Exception $e){
-        header('Location: index.php?action=add&title='.$title.'&content='.html_entity_decode($content).'&message='.$e->getMessage());
-    }
-}
-function updatePost($postid) // Fonction qui récupère le billet à modifier (afin de l'insérer dans un formulaire pour le modifier)
-{
-    try{
-
         if(isset($_SESSION['pseudo'])){ // On vérifie que c'est bien l'administrateur qui fait la demande
 
             if (isset($postid) && ((int)$postid)) { // On vérifie les données envoyées
@@ -293,7 +238,7 @@ function updatePost($postid) // Fonction qui récupère le billet à modifier (a
                     $tableau[] = $posts[$i]['id']; 
                 }
                 if (!in_array($postid, $tableau)) { // On vérifie que l'ID du billet demandé existe bien, en le comparant aux ID du tableau
-                    throw new Exception("Désolé, le post n° " . "<span class='cible_Erreur'>" .$postid . "</span>" . " n'existe pas.");
+                    throw new Exception("Désolé, le poste n°" .$postid . " n'existe pas.");
                 }
                 else{
 
@@ -318,68 +263,184 @@ function updatePost($postid) // Fonction qui récupère le billet à modifier (a
         header('Location: index.php?action=getConnexion&message='.$e->getMessage());
     }
 }
-function confirmUpdatePost($fichier,$formulaire) // Fonction qui permet de changer un post
+
+function add_or_update_post($fichier,$formulaire) // Fonction qui permet d'ajouter ou de changer un post
 {
     try{
         if(isset($_SESSION['pseudo'])){ // Si l'utilisateur existe .. // On vérifie les données envoyées
             if(empty($formulaire["title"]) || !isset($formulaire["title"])){ 
-                throw new Exception("Le champ " . "<span class='cible_Erreur'>" . "titre" . "</span>" . " est manquant.");
+                throw new AddException("Le champ titre est manquant ou non conforme.");
             }
             else if(empty($formulaire["content"]) || !isset($formulaire["content"])){
-                throw new Exception("Le champ " . "<span class='cible_Erreur'>" . "contenu" . "</span>" . " est manquant.");
+                throw new AddException("Le champ contenu est manquant ou non conforme");
             }
             else{
 
-                if(isset($formulaire["old"])){ // Si l'utilisateur choisi de garder l'ancienne image ..
+                if(isset($formulaire['add'])){ // Si l'action demandé est l'ajout de fichier
 
-                    $getExtension = new \Model\PostManager();
-                    $get = $getExtension->getPost($formulaire['id']); // On récupère le post
-
-                    $extension = strrchr($get['images'], "."); // On isole l'extension grâce à strrchr
-
-                    $update = new \Model\PostManager();
-                    $updatePost = $update->updatePostDB($formulaire["title"],$formulaire["content"],$_SESSION['pseudo'],$formulaire['title'].$extension,$formulaire["id"]); // On met a jour le post dans la base de données
-                    rename("public/images/posts/".$get['images'],"public/images/posts/".$formulaire['title'].$extension); // On renomme le fichier avec le nouveau titre
-                    if(!$updatePost) {
-                        throw new Exception("Une erreur a été rencontré.");
+                    if(empty($formulaire['id']) || !preg_match('#^[0-9]*$#', $formulaire['id'])){ // On vérifie que l'ID est bien un nombre
+                        throw new AddException('Le champ ID est manquant ou non conforme.'  ); 
                     }
                     else{
-                        Header('location:index.php?action=admin&message=Le post a bien été modifié !');
-                    }
-                }
-                else if(isset($fichier) && !empty($formulaire["title"]) && !empty($formulaire["content"])){ // Si l'utilisateur décide de changer la photo
-                    $maxSize = 5000000; // On défini la taille maximale du fichier 
-                    $validExtensions = array('jpg','jpeg','gif','png'); // On définit les extensions acceptées
-                    
-                    if ($fichier['picture']['size'] <= $maxSize){ // Si la taille du fichier est conforme ..
-                        $uploadExtensions = strtolower(substr(strrchr($fichier['picture']['name'], '.'),1)); // On recupère l'extension grâce à strrchr (.jpg), puis on isole (jpg) grâce à substr
-                        $deletePreviousTitle = new \Model\PostManager();
-                        $delete = $deletePreviousTitle->getPost($formulaire['id']); // On récupère les informations du post en question
-                        
-                        if(in_array($uploadExtensions, $validExtensions)){ // Si l'extension du fichier est conforme ..
-                            $folder = "public/images/posts/post_".$formulaire['id'].".".$uploadExtensions; // On définit le chemin de destination du fichier
-                            $result = move_uploaded_file($fichier['picture']['tmp_name'],$folder); // On procède au déplacement du fichier
-                            if($result){ // Si le déplacement est réussi ..
-                                $fichierImage = 'post_' . $formulaire['id'].".".$uploadExtensions; // On définit le nom donné à la colonne images pour ce post
-                                $update = new \Model\PostManager();
-                                $updatePost = $update->updatePostDB($formulaire['title'],$formulaire['content'],$_SESSION['pseudo'],$fichierImage,$formulaire['id']); // On procède à la mise a jour de la base de données
-                                if(!$updatePost) {
-                                    throw new Exception("Une erreur a été rencontré.");
+        
+                        $is_id_exist = new \Model\PostManager(); // On vérifie si l'id existe deja
+                        $check_id = $is_id_exist->checkId($formulaire['id']);
+
+                        if($check_id){
+                            throw new AddException('Il existe déjà un épisode ' . $formulaire['id'] . '. Veuillez corriger votre saisie.');
+                        }
+                        else{
+
+                            $max_size = 5242880;
+
+                            if(isset($fichier['add_picture']['error']) && $fichier['add_picture']['error'] >= 3){ // Si aucun fichier n'a été téléchargé
+
+                                throw new AddException("Aucun fichier n'a été téléchargé.");
+                            }
+                            else if($fichier['add_picture']['size'] > $max_size){
+                                throw new AddException("Le fichier selectionné est trop volumineux.");
+                            }
+                            else{
+
+                                if(isset($formulaire['extension'])){ // Si JS envoie bien l'extension du fichier (si JS n'est pas desactivé par l'utilisateur)
+
+                                    $file_type = $formulaire['extension'];
+                                    
                                 }
                                 else{
-                                Header('location:index.php?action=admin&message=Le post a bien été modifié !');
+                                    
+                                    $path_parts = pathinfo($fichier["add_picture"]["name"]); // Sinon on récupère l'extension via PHP
+                                    $extension = $path_parts['extension'];
+                                    
+                                    $validExtensions = array('jpg','JPG','jpeg','JPEG','png','PNG','gif','GIF'); // On définit les extensions acceptées
+        
+                                    if(!in_array($extension,$validExtensions)){ // Si l'extension n'est pas bonne
+                                        throw new AddException('L\'illustration du billet doit être au format jpg, jpeg, gif ou png.');
+                                    }
+                                    else{
+                                        $file_type = $extension;
+                                    }
+                                }
+
+                                $add = new \Model\PostManager();
+                                $addPost = $add->addPost($formulaire['id'],$formulaire['title'],$formulaire['content'],$_SESSION['pseudo']); // On procède à l'ajout dans la base de données
+                                $addImage = $add->addImage($formulaire['id'],$fichier['add_picture']['name'],$fichier['add_picture']['size'],$file_type);
+
+                                if($addPost){
+
+                                    if($addImage){
+
+                                        $folder = "public/images/posts/".$fichier['add_picture']['name']; // On définit le futur chemin du fichier uploadé
+                                        $result = move_uploaded_file($fichier['add_picture']['tmp_name'],$folder); // On déplace le fichier vers le chemin défini précedemment
+                                        if($result){ // Si le transfert du fichier a réussi ..
+                                            Header("location:index.php?action=post&id=".$formulaire['id']."&message=L'article a bien été ajouté !");
+                                        }
+                                        else{
+                                            throw new AddException("Nous avons rencontré une erreur lors de l'importation de votre fichier.");
+                                        }
+                                    }
+                                    else{
+                                        throw new AddException("Une erreur a été rencontré lors de l'importation de l'image.");
+                                    }
+                                }
+                                else{
+                                    throw new AddException("Une erreur a été rencontré lors de l'importation du billet.");
+                                }
+                            }
+                        }
+                    }
+                }
+                else if(isset($formulaire["old"])){ // Si l'utilisateur choisi de garder l'ancienne image ..
+
+                    $post = new \Model\PostManager();
+                    $addPost = $post->getPost($formulaire['id']);
+
+                    // On prévoit le cas ou l'utilisateur demande a modifier l'article mais laisse les champs tel quel
+                    if ($formulaire['title'] === $addPost['title'] && $formulaire['content'] === $addPost['content'] && $_SESSION['pseudo'] === $addPost['author']){
+                        Header('location:index.php?action=admin&message=Rien n\'a été modifié !');
+                    }
+                    else{
+                        // Si l'utilisateur a bien changer les champs, on procède a l'actualisation du post
+                        $update = new \Model\PostManager();
+                        $updatePost = $update->updatePostDBWithoutImage($formulaire["title"],$formulaire["content"],$_SESSION['pseudo'],$formulaire['id']); // On met a jour le post dans la base de données
+
+                        if($updatePost = 1) {
+                            Header('location:index.php?action=admin&message=Le post a bien été modifié !');
+                        }
+                        else{
+                            throw new Exception("Une erreur a été rencontré.");
+                        }
+                    }
+                }
+                else if(isset($fichier)){ // Si l'utilisateur décide de changer la photo
+                    
+                    $max_size = 5242880;
+
+                    if(isset($fichier['update_picture']['error']) && $fichier['update_picture']['error'] >= 3){ // Si aucun fichier n'a été téléchargé
+
+                        throw new Exception("Aucun fichier n'a été téléchargé.");
+                    }
+                    else if($fichier['update_picture']['size'] > $max_size){
+                        throw new Exception("Le fichier selectionné est trop volumineux.");
+                    }
+                    else{
+                        
+                        if(isset($formulaire['extension'])){ // Si JS envoie bien l'extension du fichier (si JS n'est pas desactivé par l'utilisateur)
+
+                            $file_type = $formulaire['extension'];
+                            
+                        }
+                        else{
+            
+                            $path_parts = pathinfo($fichier["update_picture"]["name"]); // Sinon on récupère l'extension via PHP
+                            $extension = $path_parts['extension'];
+                            
+                            $validExtensions = array('jpg','JPG','jpeg','JPEG','png','PNG','gif','GIF'); // On définit les extensions acceptées
+
+                            if(!in_array($extension,$validExtensions)){ // Si l'extension n'est pas bonne
+                                throw new Exception('L\'illustration du billet doit être au format jpg, jpeg, gif ou png.');
+                            }
+                            else{
+                                $file_type = $extension;
+                            }
+                        }
+                        /*
+                        $check = new \Model\PostManager();
+                        $checkImage = $check->checkImageName($fichier["update_picture"]["name"]);
+
+                        if(!$checkImage){ // Si l'image n'existe pas, on garde son nom
+                            $img_name = $fichier["update_picture"]["name"];
+                        }
+                        else{ // Si elle existe deja pour un autre post, on la renomme
+                            $img_name = str_replace('.', (random_int(0, 100000) . '.'), $fichier["update_picture"]["name"]);
+                        }
+                        */
+                        
+                        $update = new \Model\PostManager();
+                        $checkId = $update->checkImageId($formulaire['id']);
+                        $img_name = $checkId['img_nom'];
+
+                        $updatePost = $update->updatePostDB($formulaire['title'],$formulaire['content'],$_SESSION['pseudo'],$formulaire['id']); // On procède à la mise a jour de la base de données
+                        $updateImage = $update->updateImage($img_name,$fichier["update_picture"]["size"],$file_type,$formulaire['id']);
+                        
+                        if($updatePost){
+
+                            if($updateImage){
+                                $result = move_uploaded_file($fichier['update_picture']['tmp_name'],"public/images/posts/".$img_name); // On déplace le fichier vers le chemin défini précedemment
+                                if($result){ // Si le transfert du fichier a réussi ..
+                                    Header("location:index.php?action=post&id=".$formulaire['id']."&message=L'article a bien été ajouté !");
+                                }
+                                else{
+                                    throw new AddException("Nous avons rencontré une erreur lors de l'importation de votre fichier.");
                                 }
                             }
                             else{
-                                throw new Exception("Nous avons rencontrer une erreur lors de l'importation de votre fichier.");
+                                throw new AddException("Une erreur a été rencontré lors de l'importation de l'image.");
                             }
                         }
                         else{
-                            throw new Exception("Votre photo de profil doit être au format jpg, gif ou png.");
-                        }
-                    }   
-                    else{
-                        throw new Exception('Votre photo de profil ne doit pas dépasser 2mo.');
+                            throw new AddException("Une erreur a été rencontré lors de l'importation du billet.");
+                        }  
                     }
                 }
                 else{
@@ -388,14 +449,19 @@ function confirmUpdatePost($fichier,$formulaire) // Fonction qui permet de chang
             }
         }
         else{
-            throw new MyException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
+            throw new AdminException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
         }
     }
-    catch (MyException $e){
+    catch (AdminException $e){
         header('Location: index.php?action=getConnexion&message='.$e->getMessage());
     }
-    catch (Exception $e){
-        header('Location: index.php?action=updatePost&id='.$formulaire['id'].'&title='.$formulaire['title'].'&content='.html_entity_decode($formulaire['content']).'&message='.$e->getMessage());
+    catch (AddException $e){ // Exception qui gère les erreurs du formulaire d'ajout
+        $contenu = urlencode($formulaire['content']); 
+        header('Location: index.php?action=add&title='.$formulaire['title'].'&content='.$contenu.'&message='.$e->getMessage());
+    }
+    catch (Exception $e){ // Exception qui gère les erreurs du formulaire de modification
+        $contenu = urlencode($formulaire['content']); // On fait appel a urlencode car si il y a des retours a la ligne dans le contenu, on a une erreur
+        header('Location: index.php?action=updatePost&id='.$formulaire['id'].'&title='.$formulaire['title'].'&content='.$contenu.'&message='.$e->getMessage());
     }
 }
 
@@ -413,13 +479,14 @@ function deletePost($id) // Fonction qui permet de supprimer un billet
                     $tableau[] = $posts[$i]['id']; // On remplit un tableau avec l'id de tous les posts
                 }
                 if (!in_array($id, $tableau)) { // On vérifie que le post a supprimé est bien contenu dans le tableau (qu'il existe)
-                    throw new Exception("Désolé, le post n° " . "<span class='cible_Erreur'>" .$id . "</span>" . " n'existe pas.");
+                    throw new Exception("Désolé, le post n° " .$id . " n'existe pas.");
                 }
                 else{
 
                 $deletePreviousTitle = new \Model\PostManager();
                 $delete = $deletePreviousTitle->getPost($id); // On récupère le post en question
-                $titleDelete = $delete['images'];
+
+                $deleteImage = $delete['img'];
 
                 $postManagerDeletePosts = new \Model\PostManager();
                 $deletePost = $postManagerDeletePosts->deletePost($id); // On le supprime
@@ -429,7 +496,7 @@ function deletePost($id) // Fonction qui permet de supprimer un billet
                     throw new Exception("Une erreur a été rencontré.");
                 }
                 else {
-                    unlink("public/images/posts/".$titleDelete); // On supprime l'image du post
+                    unlink("public/images/posts/".$deleteImage); // On supprime l'image du post
                     header('Location: index.php?action=admin&message=Le post a bien été supprimé!'); 
                 }
             }
@@ -438,10 +505,10 @@ function deletePost($id) // Fonction qui permet de supprimer un billet
             }
         }
         else{
-            throw new MyException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
+            throw new AdminException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
         }
     }
-    catch (MyException $e){
+    catch (AdminException $e){
         header('Location: index.php?action=getConnexion&message='.$e->getMessage());
     }
     catch (Exception $e){
@@ -462,7 +529,7 @@ function allowComment($idComment) // Fonction qui autorise un commentaire signal
                     $tableau[] = $getComments[$i]['id']; // On remplit un tableau avec tous les id de tous les commentaires
                 }
                 if (!in_array($idComment, $tableau)) { // On vérifie que l'id du commentaire autorisé est présent dans le tableau, sinon ..
-                    throw new Exception("Désolé, le commentaire n° " . "<span class='cible_Erreur'>" .$idComment . "</span>" . " n'existe pas.");
+                    throw new Exception("Désolé, le commentaire n° " .$idComment . " n'existe pas.");
                 }
                 else{ // Si il est présent ..
 
@@ -483,10 +550,10 @@ function allowComment($idComment) // Fonction qui autorise un commentaire signal
             }
         }
         else{
-            throw new MyException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
+            throw new AdminException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
         }
     }
-    catch (MyException $e){
+    catch (AdminException $e){
         header('Location: index.php?action=getConnexion&message='.$e->getMessage());
     }
     catch(Exception $e){
@@ -507,7 +574,7 @@ function deleteComment($id) // Fonction qui permet de supprimer un commentaire s
                     $tableau[] = $getComments[$i]['id']; 
                 }
                 if (!in_array($id, $tableau)) { // Si l'ID du commentaire à supprimé est présent dans le tableau, on peut continuer, sinon ..
-                    throw new Exception("Désolé, le commentaire n° " . "<span class='cible_Erreur'>" .$id . "</span>" . " n'existe pas.");
+                    throw new Exception("Désolé, le commentaire n° " .$id. " n'existe pas.");
                 }
                 else{
 
@@ -528,10 +595,10 @@ function deleteComment($id) // Fonction qui permet de supprimer un commentaire s
             }
         }
         else{
-            throw new MyException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
+            throw new AdminException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
         }
     }
-    catch (MyException $e){
+    catch (AdminException $e){
         header('Location: index.php?action=getConnexion&message='.$e->getMessage());
     }
     catch(Exception $e){
@@ -552,7 +619,7 @@ function deleteCommentAdmin($commentid,$postid) // Fonction qui permet à l'admi
                     $tableau[] = $posts[$i]['id']; // Si l'id du post selectionné dans lequel se trouve le commentaire est présent dans le tableau, on peut continuer, sinon ..
                 }
                 if (!in_array($postid, $tableau)) {
-                    throw new Exception("Désolé, le post n° " . "<span class='cible_Erreur'>" .$postid . "</span>" . " n'existe pas.");
+                    throw new Exception("Désolé, le post n° " . $postid . " n'existe pas.");
                 }
                 else{ // Si l'id matche ..
 
@@ -565,7 +632,7 @@ function deleteCommentAdmin($commentid,$postid) // Fonction qui permet à l'admi
                             $tableau[] = $getComments[$i]['id']; 
                         }
                         if (!in_array($commentid, $tableau)) { // Si l'id du commentaire à supprimer est présent dans le tableau, on continue, sinon ..
-                            throw new Exception("Désolé, le commentaire n° " . "<span class='cible_Erreur'>" .$commentid . "</span>" . " n'existe pas.");
+                            throw new Exception("Désolé, le commentaire n° " . $commentid . " n'existe pas.");
                         }
                         else{
                             $deleteComment = new \Model\CommentManager();
@@ -590,10 +657,10 @@ function deleteCommentAdmin($commentid,$postid) // Fonction qui permet à l'admi
             }
         }
         else{
-            throw new MyException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
+            throw new AdminException("Vous n'avez pas le droit d'accéder à cette page. Veuillez vous connecter.");
         }
     }
-    catch (MyException $e){
+    catch (AdminException $e){
         header('Location: index.php?action=getConnexion&message='.$e->getMessage());
     }
     catch(Exception $e){

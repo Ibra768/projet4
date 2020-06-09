@@ -42,12 +42,10 @@ if (isset($_GET['action'])) {
         case 'passrequest' : // Accès à la page de changement des identifiants d'accès
             passRequest();
             break;
-
         case 'changeaccess' : // accès page changement mot de passe
             $post = array_map('htmlspecialchars', $_POST);
             changeAccess($post);
             break;
-
         case 'post' :
             post(htmlspecialchars($_GET['id']));
             break;
@@ -71,18 +69,15 @@ if (isset($_GET['action'])) {
         case 'erreurConnexion' : // Erreur de connexion
             getConnexion();
             break;
-        case 'addPost' : // lancement ajout
-            addPost($_FILES,htmlspecialchars($_POST['title']),htmlspecialchars($_POST['content']),htmlspecialchars($_SESSION['pseudo']));
-            break;
         case 'add' : // accès à la page d'ajout de post
             getAddPage();
             break;
-        case 'updatePost' : // accès a la page de modification de post
-            updatePost(htmlspecialchars($_GET['id']));
-            break;
-        case 'confirmUpdatePost' : // modification du post
+        case 'add_or_update_post' : // ajout ou modification d'un post
             $post = array_map('htmlspecialchars', $_POST);
-            confirmUpdatePost($_FILES,$post);
+            add_or_update_post($_FILES,$post);
+            break;
+        case 'update' : // accès a la page de modification de post
+            getUpdatePage(htmlspecialchars($_GET['id']));
             break;
         case 'deletePost' : // Suppression de post
             deletePost(htmlspecialchars($_GET['id']));
