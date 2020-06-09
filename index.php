@@ -100,6 +100,9 @@ if (isset($_GET['action'])) {
         case 'sendPassword' : // accès page changement mot de passe
         sendPassword($_POST['pseudo']);
             break;
+        case 'forbidden' : // accès interdit
+            forbidden();
+            break;
         default :
         listPostsHome();
     }

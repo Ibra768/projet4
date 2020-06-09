@@ -224,3 +224,12 @@ function sendPassword($pseudo) { // Fonction qui permet d'envoyer son mot de pas
         header('Location: index.php?action=forgotpassword&message='.$e->getMessage());
     }
 }
+
+function forbidden(){
+    try{
+        throw new Exception("L'accès a cette page est interdit.");
+    }
+    catch (Exception $e){
+        header('Location: /projet4/index.php?message='.$e->getMessage());
+    }
+}
