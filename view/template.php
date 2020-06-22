@@ -47,7 +47,7 @@
         <?= $content ?> 
         <footer class="topback">
             <div id="bloc_Footer">
-                <a href=""><i class="fas fa-sitemap icons"></i><span class="text_Footer">&nbsp;Sitemap</span></a>
+                <a href="../sitemap.xml"><i class="fas fa-sitemap icons"></i><span class="text_Footer">&nbsp;Sitemap</span></a>
                 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode"><i class="fas fa-copyright icons"></i><span class="text_Footer">&nbsp;<i class="fab fa-creative-commons"></i>&nbsp;<i class="fab fa-creative-commons-by"></i>&nbsp;<i class="fab fa-creative-commons-nc">&nbsp;<i class="fab fa-creative-commons-nd"></i></i></span></a>
                 <a href="https://www.facebook.com/"><i class="fab fa-facebook-square icons"></i><span class="text_Footer">&nbsp;Facebook</span></a>
                 <a href="https://twitter.com/"><i class="fab fa-twitter icons"></i><span class="text_Footer">&nbsp;Twitter</span></a>
