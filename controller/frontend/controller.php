@@ -197,23 +197,40 @@ function sendPassword($pseudo) { // Fonction qui permet d'envoyer son mot de pas
             $newPass = generer_mot_de_passe(); // On crée un nouveau mot de passe provisoire
             
             $hashPass = password_hash($newPass, PASSWORD_DEFAULT);
-
+    
             $temporary = new \Model\AdminManager();
             $return = $temporary->temporaryPass($hashPass,$pseudo); // On insère le nouveau mot de passe dans la BDD
             if(!$return){
                 throw new Exception("Une erreur a été rencontré. Veuillez réessayer plus tard.");
             }
             else{
-
+        
                 $message =
-                "<h1>Votre demande de mot de passe</h1>" .
-                "<p>Bonjour" . $pseudo . ",</p><br>" .
-                "<p>Comme demandé, veuillez trouver ci joint un mot de passe provisoire afin de vous connecter à votre compte administrateur.</p><br>" .
-                "<strong>" . $newPass . "<strong>" .
-                "<p>Pour plus de sécurité, nous vous conseillons de modifier votre mot de passe une fois connecté.</p><br>" .
-                "<p>Cordialement.</p>";
-                mail($resultat['mail'], 'Votre nouveau mot de passe provisoire', $message);
-                header('Location: index.php?action=forgotpassword&message=Un mot de passe provisoire vous a été envoyé par email.');
+                "<html>
+                    <head>
+                        <title>Demande de nouveau mot de passe</title>
+                    </head>
+                    <body>
+                        <h1>Votre demande de mot de passe</h1>
+                        <p>Bonjour " . $pseudo . ",</p>
+                        <p>Comme demandé, veuillez trouver ci joint un mot de passe provisoire afin de vous connecter à votre compte administrateur.</p><br>
+                        <strong>" . $newPass . "</strong>
+                        <p>Pour plus de sécurité, nous vous conseillons de modifier votre mot de passe une fois connecté.</p><br>
+                        <p>Cordialement.</p>
+                    </body>
+                </html>";
+
+                // En-têtes pour l'envoie de l'email en HTML
+                $headers[] = 'MIME-Version: 1.0';
+                $headers[] = 'Content-type: text/html; charset=iso-8859-1';
+
+                $send_mail = mail('i.benfaiala@gmail.com', 'Votre nouveau mot de passe provisoire', $message, implode("\r\n", $headers));
+                if($send_mail){
+                    header('Location: index.php?action=forgotpassword&message=Un mot de passe provisoire vous a été envoyé par email.');
+                }
+                else{
+                    throw new Exception("Une erreur a été rencontré. Veuillez réessayer plus tard.");
+                }
             }
         }
         else{
