@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
     <title><?= $title ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="language" content="fr-FR" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content= <?= $description  ?> />
+    <meta name="description" content= "<?= $description ?>" />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:500,900|Roboto+Condensed:700|Nova+Flat|Rock+Salt|Anton|Courgette|Luckiest+Guy" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nova+Flat&family=Roboto+Condensed&family=Rock+Salt&display=swap" rel="stylesheet">
     <link href="public/css/style.css" rel="stylesheet"/>
     <script type="text/javascript" src="public/js/jquery.min.js"></script> 
     <script type="text/javascript" src="public/tinymce/plugin/tinymce.min.js"></script>

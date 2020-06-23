@@ -1,6 +1,6 @@
 <?php 
     $title = "Billet Simple pour l'Alaska - Page d'accueil" ; 
-    $description = 'Bienvenue sur la page d\'accueil du site de Jean Forteroche. Retrouvez les différents billets de son nouveau roman Billet Simple Pour L\'Alaska.';
+    $description = "Bienvenue sur la page d'accueil du site de Jean Forteroche. Retrouvez les différents billets de son nouveau roman Billet Simple Pour L'Alaska.";
     $body = "body_home";
     ob_start(); 
 ?>
